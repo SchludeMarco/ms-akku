@@ -25,7 +25,8 @@ Frage: Welche Daten gibt es, wo liegen sie, was verlässt das Gerät?
 | Symptomauswahl, Belastung 1–10, eigene Symptomnamen | ja | IndexedDB |
 | Symptom-, Aktivitäts-, Schlafeinträge, Momente | ja | IndexedDB |
 | Berechnete Beobachtungen | ja | IndexedDB |
-| Einstellungen (Ton, Onboarding, Nutzungsart, Google-Einwilligung) | nein | localStorage (`ms-akku-settings`) |
+| Einstellungen (Ton, Tipp-Rückmeldung, Erscheinungsbild, Onboarding, Nutzungsart, Google-Einwilligung) | nein | localStorage (`ms-akku-settings`) |
+| Zuletzt gezeigte Lichtstimmung („sunny“ oder „rest“), abgeleitet aus Befinden und Akku des Tages | mittelbar | localStorage (`ms-akku-mood`), nur für den flackerfreien Start |
 | Kopie der App-Dateien für den Offline-Betrieb (keine Einträge) | nein | Cache des Browsers, verwaltet von `public/sw.js` |
 
 Es gibt keine Datenbank auf einem Server, kein Konto, keine Cookies.

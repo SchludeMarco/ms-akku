@@ -19,6 +19,9 @@ interface SettingsState {
   completeOnboarding: () => void;
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  /** Hintergrund und Lichtstimmung folgen Befinden und Akku des Tages. */
+  moodColors: boolean;
+  toggleMoodColors: () => void;
   usageMode: UsageMode;
   setUsageMode: (mode: UsageMode) => void;
   /** Ausdrückliche Einwilligung in die Sicherung bei Google Drive (widerrufbar). */
@@ -48,6 +51,9 @@ export const useSettingsStore = create<SettingsState>()(
       completeOnboarding: () => set({ onboardingCompleted: true }),
       theme: "dark",
       setTheme: (theme) => set({ theme }),
+      moodColors: true,
+      toggleMoodColors: () =>
+        set((state) => ({ moodColors: !state.moodColors })),
       usageMode: "self",
       setUsageMode: (usageMode) => set({ usageMode }),
       googleConsent: false,

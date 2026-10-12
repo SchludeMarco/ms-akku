@@ -136,6 +136,22 @@ Die App hat jetzt neben „Dunkel“ ein wählbares Erscheinungsbild „Pastell�
 Jeder Text erreicht mindestens 4,5 : 1. Unter 3 : 1 liegen nur Schmuck-Symbole
 (Pfeile in Listenzeilen, leere Auswahlkreise) – wie schon im dunklen Schema.
 
+## Nachtrag 12.10.2026: Sonnige Begrüßung und Farben nach Stimmung
+
+- „Heute“ beginnt mit einer Begrüßungskarte: Gruß nach Tageszeit, Datum, ein
+  freundlicher Satz und eine weiche, ruhende Sonne als Farbverlauf.
+- Seitengrund und Lichtstimmung folgen der letzten Angabe des Tages (Befinden
+  oder Akku): warm bei „ruhig“, „konzentriert“ oder hohem Akku; kühl und
+  gedämpft bei „müde“, „verspannt“ oder niedrigem Akku; sonst unverändert.
+  Karten, Schrift und Akzente bleiben gleich. Abschaltbar unter
+  „Mehr → Erscheinungsbild“.
+
+Folgeprompt für Stitch:
+
+```text
+Ergänze den Screen „Heute“ um eine einladende Begrüßungskarte ganz oben: Gruß nach Tageszeit („Guten Morgen“), Datum als Überschrift, ein freundlicher Satz, rechts oben eine weiche Sonne als ruhender Farbverlauf (kein Symbol mit harten Strahlen, keine Bewegung, nicht grell). Zeige den Screen in drei Stimmungen, jeweils für Dunkel und Pastell: „sonnig“ (warmer Grund, im Pastell Creme #F4EEDF, im Dunklen #17150F mit bernsteinfarbenem Schein), „neutral“ (Standardgrund) und „Ruhe“ (kühler Grund, im Pastell #E4ECF4, im Dunklen #0B121E mit blauem Schein). Zwischen den Stimmungen ändern sich nur Seitengrund und Lichtschein, nie Karten, Schrift oder Kontraste. „Ruhe“ wirkt beruhigend, nie traurig oder alarmierend.
+```
+
 ## Befunde der Durchsicht (12.10.2026)
 
 Gemessen im Browser bei 375 × 812 px mit Beispieldaten.

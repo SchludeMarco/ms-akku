@@ -62,6 +62,8 @@ export default function MehrPage() {
   const usageMode = useSettingsStore((state) => state.usageMode);
   const theme = useSettingsStore((state) => state.theme);
   const setTheme = useSettingsStore((state) => state.setTheme);
+  const moodColors = useSettingsStore((state) => state.moodColors);
+  const toggleMoodColors = useSettingsStore((state) => state.toggleMoodColors);
 
   const [demoState, setDemoState] = useState<"idle" | "loading" | "done">("idle");
   const [confirmClear, setConfirmClear] = useState(false);
@@ -142,6 +144,35 @@ export default function MehrPage() {
                   );
                 })}
               </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={moodColors}
+                onClick={toggleMoodColors}
+                className="flex min-h-[56px] w-full items-center justify-between gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 text-left"
+              >
+                <span className="min-w-0">
+                  <span className="block text-label-md text-on-surface">
+                    Farben folgen der Stimmung
+                  </span>
+                  <span className="block text-body-sm text-on-surface-variant">
+                    Wärmer an guten Tagen, kühler und ruhiger an müden
+                  </span>
+                </span>
+                <span
+                  className={cn(
+                    "flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
+                    moodColors ? "bg-primary-container" : "bg-surface-container-highest",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "h-5 w-5 rounded-full transition-transform",
+                      moodColors ? "translate-x-5 bg-on-primary" : "bg-outline",
+                    )}
+                  />
+                </span>
+              </button>
             </div>
             <LinkRow
               href="/willkommen/nutzung"
