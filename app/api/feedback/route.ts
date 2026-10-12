@@ -10,6 +10,9 @@ import { FEEDBACK_CATEGORIES, feedbackSchema } from "@/lib/feedback";
 // Datenschutz: Es wird nur gespeichert, was die Person selbst eingetippt hat.
 // Keine IP-Adresse, kein User-Agent, keine Einträge aus der App. Die
 // Kontaktadresse steht nur in der Mail, nie im Repository.
+//
+// Ein Eintrag in feedback.md ist ein Commit. Damit nicht jedes Feedback die
+// App neu baut, überspringt vercel.json Commits, die nur feedback.md ändern.
 
 const REPO = process.env.FEEDBACK_GITHUB_REPO || "SchludeMarco/ms-akku";
 const BRANCH = process.env.FEEDBACK_GITHUB_BRANCH || "main";

@@ -88,7 +88,7 @@ export interface CatalogSymptom {
   category: CategoryId;
   /** Ein Satz zum Wiedererkennen. */
   short: string;
-  /** So beschreiben Betroffene es im Alltag. */
+  /** Wie es sich im Alltag zeigen kann. Selbst formuliert, keine Zitate. */
   examples: string[];
   /** Was das Symptom verstärken kann – als Beobachtung, nicht als Ursache. */
   amplifiers?: string[];
@@ -224,11 +224,10 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
         "info",
         "Kapitel Fatigue",
       ),
-      dmsg("Auf regelmäßigen Schlaf achten.", "selbst"),
     ],
     doctor:
       "Bei lautem Schnarchen mit Atemaussetzern oder ausgeprägter Tagesmüdigkeit kann eine Untersuchung im Schlaflabor sinnvoll sein.",
-    sources: ["dgn", "dmsg-therapie"],
+    sources: ["dgn"],
     keywords: ["einschlafen", "durchschlafen", "wach", "schlaflos", "insomnie"],
   },
   {
@@ -271,7 +270,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     ],
     measures: [
       dgn(
-        "Physiotherapie mit Gang- und Gleichgewichtstraining nach den Empfehlungen der Fachgesellschaft für Neurologische Rehabilitation.",
+"Nicht medikamentöse Behandlung, etwa Physiotherapie, nach der Leitlinie der Fachgesellschaft für Neurologische Rehabilitation. Ziele sind unter anderem Gehstrecke, Gangsicherheit und Gleichgewicht.",
         "therapie",
         "soll",
         "Empfehlung D12",
@@ -305,10 +304,9 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     ],
     measures: [
       dgn(
-        "Regelmäßige Physiotherapie, ergänzt durch eigenständiges Üben.",
+        "Für Muskelschwäche gibt es in der MS-Leitlinie keine eigene Empfehlung. Schränkt sie das Gehen ein, gelten die Empfehlungen zur Gehfähigkeit.",
         "therapie",
-        "soll",
-        "Empfehlungen D6 und D12",
+        "info",
       ),
       TRAINING,
     ],
@@ -455,7 +453,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     ],
     measures: [
       dgn(
-        "Belasten die Missempfindungen oder schmerzen sie, richtet sich die Behandlung nach den Leitlinien für Nervenschmerzen.",
+"Sind die Missempfindungen schmerzhaft, richtet sich die Behandlung nach den Schmerz-Leitlinien, unter anderem der für Nervenschmerzen.",
         "arzt",
         "soll",
         "Empfehlung D38",
@@ -514,10 +512,10 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
         "soll",
         "Empfehlung D39",
       ),
-      dmsg("Physiotherapie bei Muskel- und Gelenkschmerzen.", "therapie"),
+      dmsg("Bei Gelenk-, Muskel- und Rückenschmerzen bevorzugt Physiotherapie.", "therapie"),
     ],
     doctor:
-      "Die Leitlinie hält fest, dass Schmerzen bei MS ärztlich oft zu wenig beachtet werden. Sprich sie aktiv an.",
+      "Die Leitlinie sieht bei Schmerzen und Missempfindungen Nachholbedarf in der Behandlung. Sprich sie aktiv an.",
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
     keywords: ["schmerz", "weh", "brennen", "stechen", "kopfschmerzen", "rückenschmerzen", "neuropathisch"],
   },
@@ -534,7 +532,10 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     ],
     amplifiers: ["Berührung oder andere Sinnesreize", "Bewegung oder Lagewechsel", "Schnelles, tiefes Atmen", "Wärme"],
     measures: [
-      dmsg("Ein Tagebuch führen und bekannte Auslöser meiden.", "selbst"),
+      dmsg(
+        "Ein Tagebuch kann helfen zu erkennen, in welchen Situationen die Beschwerden auftreten.",
+        "selbst",
+      ),
       dgn(
         "Die Behandlung erfolgt vor allem mit Medikamenten. Bei einschießenden Gesichtsschmerzen ist sie fast immer nötig, bei leichteren Beschwerden oft nicht.",
         "arzt",
@@ -562,7 +563,10 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     ],
     amplifiers: ["Wärme", "Anstrengung"],
     measures: [
-      dmsg("Wenn Wärme das Sehen verschlechtert: für Abkühlung sorgen.", "selbst"),
+      dmsg(
+        "Verschlechtert sich das Sehen bei Wärme oder Anstrengung, kann Abkühlung zur Besserung führen.",
+        "selbst",
+      ),
     ],
     doctor:
       "Eine neue Sehverschlechterung, besonders mit Schmerzen bei Augenbewegungen, sollte zeitnah augenärztlich oder neurologisch abgeklärt werden.",
@@ -719,7 +723,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
       ),
     ],
     doctor:
-      "Diese Beschwerden werden laut Leitlinie besonders oft verschwiegen, lassen sich aber gut behandeln. Brennen beim Wasserlassen, Fieber oder trüber Urin können auf einen Infekt hinweisen und sollten zeitnah abgeklärt werden.",
+      "Darmbeschwerden gehören laut Leitlinie zu den am häufigsten verschwiegenen Symptomen. Es lohnt sich, sie anzusprechen. Brennen beim Wasserlassen, Fieber oder trüber Urin können auf einen Infekt hinweisen und sollten zeitnah abgeklärt werden.",
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
     keywords: ["harndrang", "inkontinenz", "toilette", "wasserlassen", "verstopfung", "stuhlgang", "urin"],
   },

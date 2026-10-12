@@ -96,7 +96,14 @@ function subscribeToHash(onChange: () => void) {
   return () => window.removeEventListener("hashchange", onChange);
 }
 
-const readHash = () => decodeURIComponent(window.location.hash.slice(1));
+function readHash(): string {
+  const raw = window.location.hash.slice(1);
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
 
 export default function SymptomDetailPage() {
   const id = useSyncExternalStore(subscribeToHash, readHash, () => null);
@@ -237,7 +244,7 @@ export default function SymptomDetailPage() {
           </section>
 
           <section className="space-y-space-sm">
-            <SectionTitle icon="forum">So beschreiben es Betroffene</SectionTitle>
+            <SectionTitle icon="forum">So kann es sich anfühlen</SectionTitle>
             <ul className="space-y-2">
               {symptom.examples.map((example) => (
                 <li
