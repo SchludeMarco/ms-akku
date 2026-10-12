@@ -177,7 +177,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Erschöpfung kann auch andere, behandelbare Gründe haben (Schlaf, Medikamente, Blutwerte, Depression). Das lässt sich ärztlich abklären.",
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
-    keywords: ["erschöpfung", "müdigkeit", "müde", "kraftlos", "matt"],
+    keywords: ["erschöpfung", "müdigkeit", "müde", "kraftlos", "matt", "schlapp", "kaputt", "ausgelaugt", "erschöpft", "energielos", "platt", "fertig"],
   },
   {
     id: "energie",
@@ -228,7 +228,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Bei lautem Schnarchen mit Atemaussetzern oder ausgeprägter Tagesmüdigkeit kann eine Untersuchung im Schlaflabor sinnvoll sein.",
     sources: ["dgn"],
-    keywords: ["einschlafen", "durchschlafen", "wach", "schlaflos", "insomnie"],
+    keywords: ["einschlafen", "durchschlafen", "wach", "schlaflos", "insomnie", "schlafe schlecht", "wache auf", "aufwachen", "unausgeschlafen", "gerädert"],
   },
   {
     id: "hitze",
@@ -253,7 +253,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Eine Verschlechterung durch Wärme gilt laut Leitlinie nicht als Schub. Halten Beschwerden nach dem Abkühlen an, ist eine Abklärung sinnvoll.",
     sources: ["dgn", "dmsg-therapie"],
-    keywords: ["uhthoff", "hitze", "sommer", "sauna", "fieber", "temperatur"],
+    keywords: ["uhthoff", "hitze", "sommer", "sauna", "fieber", "temperatur", "heiß", "warm", "wärme", "schwitzen", "duschen"],
   },
 
   // --- Bewegung & Gleichgewicht -------------------------------------------
@@ -290,7 +290,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
       ),
     ],
     sources: ["dgn", "dmsg-therapie"],
-    keywords: ["gehen", "laufen", "gang", "gehstrecke", "fußheber", "stolpern", "mobilität", "schwere beine", "treppe"],
+    keywords: ["gehen", "laufen", "gang", "gehstrecke", "fußheber", "stolpern", "mobilität", "schwere beine", "treppe", "hinke", "schleife", "humpeln", "gehe langsam"],
   },
   {
     id: "schwaeche",
@@ -313,7 +313,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Eine neue oder deutlich zunehmende Schwäche, die länger als einen Tag anhält, sollte zeitnah neurologisch abgeklärt werden.",
     sources: ["dgn", "dmsg-symptome"],
-    keywords: ["lähmung", "kraftlos", "parese", "schwach", "motorik", "schwere beine", "bleiern"],
+    keywords: ["lähmung", "kraftlos", "parese", "schwach", "motorik", "schwere beine", "bleiern", "kraft fehlt", "schlaff", "knicke ein"],
   },
   {
     id: "spastik",
@@ -359,7 +359,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
       ),
     ],
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
-    keywords: ["steif", "krampf", "krämpfe", "verkrampfen", "spasmen", "muskelspannung"],
+    keywords: ["steif", "krampf", "krämpfe", "verkrampfen", "spasmen", "muskelspannung", "verkrampft", "verspannt", "hart", "zucken"],
   },
   {
     id: "gleichgewicht",
@@ -387,7 +387,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
       ),
     ],
     sources: ["dgn", "dmsg-therapie"],
-    keywords: ["ataxie", "koordination", "schwanken", "unsicher", "sturz", "stürzen", "balance"],
+    keywords: ["ataxie", "koordination", "schwanken", "unsicher", "sturz", "stürzen", "balance", "wackelig", "torkeln", "torkle", "taumeln", "kippe"],
   },
   {
     id: "tremor",
@@ -415,7 +415,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
       ),
     ],
     sources: ["dgn", "dmsg-therapie"],
-    keywords: ["tremor", "zittern", "wackeln", "feinmotorik"],
+    keywords: ["tremor", "zittern", "wackeln", "feinmotorik", "zittert", "zittrig", "zittere"],
   },
   {
     id: "schwindel",
@@ -437,7 +437,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Schwindel hat viele mögliche Gründe, auch außerhalb der MS. Neu auftretender oder anhaltender Schwindel sollte ärztlich abgeklärt werden.",
     sources: ["dmsg-symptome", "dgn"],
-    keywords: ["drehschwindel", "schwanken", "benommen"],
+    keywords: ["drehschwindel", "schwanken", "benommen", "schwindelig", "schwindlig", "dreht sich", "schwummrig"],
   },
 
   // --- Empfinden & Schmerz ------------------------------------------------
@@ -462,7 +462,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Neue Missempfindungen, die länger als einen Tag anhalten, sollten neurologisch abgeklärt werden.",
     sources: ["dgn", "dmsg-symptome"],
-    keywords: ["missempfindung", "ameisenlaufen", "brennen", "parästhesie", "lhermitte", "pelzig"],
+    keywords: ["missempfindung", "ameisenlaufen", "brennen", "parästhesie", "lhermitte", "pelzig", "kribbelt", "prickeln", "prickelt", "nadelstiche", "eingeschlafen", "bitzeln"],
   },
   {
     id: "taubheit",
@@ -485,7 +485,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Ein neues Taubheitsgefühl, das länger als einen Tag anhält, sollte neurologisch abgeklärt werden.",
     sources: ["dgn", "dmsg-symptome"],
-    keywords: ["taub", "pelzig", "gefühllos", "sensibilität", "gefühlsstörung"],
+    keywords: ["taub", "pelzig", "gefühllos", "sensibilität", "gefühlsstörung", "spüre nichts", "watte", "fremd"],
   },
   {
     id: "schmerzen",
@@ -517,7 +517,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Die Leitlinie sieht bei Schmerzen und Missempfindungen Nachholbedarf in der Behandlung. Sprich sie aktiv an.",
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
-    keywords: ["schmerz", "weh", "brennen", "stechen", "kopfschmerzen", "rückenschmerzen", "neuropathisch"],
+    keywords: ["schmerz", "weh", "brennen", "stechen", "kopfschmerzen", "rückenschmerzen", "neuropathisch", "tut weh", "schmerzt", "wehtun", "ziehen", "stechend"],
   },
   {
     id: "anfallsartig",
@@ -546,7 +546,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Einzelne kurze Episoden gelten laut Leitlinie nicht als Schub. Wiederholen sie sich über mehr als 24 Stunden, sollte das abgeklärt werden.",
     sources: ["dgn", "dmsg-therapie"],
-    keywords: ["trigeminus", "neuralgie", "gesichtsschmerz", "paroxysmal", "blitzartig", "einschießend"],
+    keywords: ["trigeminus", "neuralgie", "gesichtsschmerz", "paroxysmal", "blitzartig", "einschießend", "stromschlag", "blitz", "zuckt"],
   },
 
   // --- Sehen ---------------------------------------------------------------
@@ -571,7 +571,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Eine neue Sehverschlechterung, besonders mit Schmerzen bei Augenbewegungen, sollte zeitnah augenärztlich oder neurologisch abgeklärt werden.",
     sources: ["dmsg-symptome", "dmsg-therapie"],
-    keywords: ["sehstörung", "verschwommen", "nebelsehen", "sehnerv", "optikusneuritis", "auge"],
+    keywords: ["sehstörung", "verschwommen", "nebelsehen", "sehnerv", "optikusneuritis", "auge", "unscharf", "schleier", "trüb", "sehe schlecht", "blass"],
   },
   {
     id: "doppelbilder",
@@ -599,7 +599,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     ],
     doctor: "Neu auftretende Doppelbilder sollten zeitnah abgeklärt werden.",
     sources: ["dgn"],
-    keywords: ["doppelt sehen", "nystagmus", "augenzittern", "wackeln", "augenbewegung"],
+    keywords: ["doppelt sehen", "nystagmus", "augenzittern", "wackeln", "augenbewegung", "doppelt", "sehe doppelt", "bild springt"],
   },
 
   // --- Denken & Stimmung ---------------------------------------------------
@@ -632,7 +632,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Ein kurzer standardisierter Test in der neurologischen Praxis kann zeigen, ob eine ausführliche Untersuchung sinnvoll ist.",
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
-    keywords: ["aufmerksamkeit", "kognition", "kognitiv", "denken", "nebel", "brain fog", "ablenkbar"],
+    keywords: ["aufmerksamkeit", "kognition", "kognitiv", "denken", "nebel", "brain fog", "ablenkbar", "unkonzentriert", "zerstreut", "faden verliere", "abgelenkt", "benebelt"],
   },
   {
     id: "gedaechtnis",
@@ -655,7 +655,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
       dgn("Eigenständige körperliche Aktivität.", "selbst", "sollte", "Empfehlung D23"),
     ],
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
-    keywords: ["merkfähigkeit", "vergesslich", "vergessen", "erinnern", "kognition"],
+    keywords: ["merkfähigkeit", "vergesslich", "vergessen", "erinnern", "kognition", "vergesse", "vergessen", "merken", "entfallen", "namen"],
   },
   {
     id: "stimmung",
@@ -684,7 +684,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Erschöpfung und Depression können sich ähnlich anfühlen und werden unterschiedlich behandelt. Hält gedrückte Stimmung an, sprich mit einer Ärztin oder einem Arzt. Bei Gedanken, dir etwas anzutun: sofort Hilfe holen – Telefonseelsorge 0800 111 0 111 (kostenlos, rund um die Uhr) oder Notruf 112.",
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
-    keywords: ["depression", "depressiv", "traurig", "niedergeschlagen", "antrieb", "psyche", "angst"],
+    keywords: ["depression", "depressiv", "traurig", "niedergeschlagen", "antrieb", "psyche", "angst", "weine", "weinen", "hoffnungslos", "lustlos", "antriebslos", "bedrückt", "leer"],
   },
 
   // --- Blase, Darm & Sexualität --------------------------------------------
@@ -725,7 +725,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Darmbeschwerden gehören laut Leitlinie zu den am häufigsten verschwiegenen Symptomen. Es lohnt sich, sie anzusprechen. Brennen beim Wasserlassen, Fieber oder trüber Urin können auf einen Infekt hinweisen und sollten zeitnah abgeklärt werden.",
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
-    keywords: ["harndrang", "inkontinenz", "toilette", "wasserlassen", "verstopfung", "stuhlgang", "urin"],
+    keywords: ["harndrang", "inkontinenz", "toilette", "wasserlassen", "verstopfung", "stuhlgang", "urin", "pinkeln", "klo", "wc", "muss ständig", "dringend", "einnässen", "verstopft"],
   },
   {
     id: "sexualitaet",
@@ -755,7 +755,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Laut Leitlinie betrifft das einen großen Teil der Menschen mit MS. Es ist ein medizinisches Thema wie jedes andere.",
     sources: ["dgn", "dmsg-symptome", "dmsg-therapie"],
-    keywords: ["libido", "lust", "erektion", "orgasmus", "sex", "partnerschaft"],
+    keywords: ["libido", "lust", "erektion", "orgasmus", "sex", "partnerschaft", "erregung", "intim", "keine lust"],
   },
 
   // --- Sprechen & Schlucken -------------------------------------------------
@@ -785,7 +785,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
       ),
     ],
     sources: ["dgn", "dmsg-therapie"],
-    keywords: ["dysarthrie", "aussprache", "undeutlich", "lallen", "stimme", "logopädie"],
+    keywords: ["dysarthrie", "aussprache", "undeutlich", "lallen", "stimme", "logopädie", "nuscheln", "nuschle", "verwaschen", "leise stimme"],
   },
   {
     id: "schlucken",
@@ -809,7 +809,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Leichte Schluckstörungen werden laut Leitlinie oft nicht bemerkt. Häufiges Verschlucken, Husten beim Essen oder wiederkehrende Lungenentzündungen sollten abgeklärt werden.",
     sources: ["dgn", "dmsg-therapie"],
-    keywords: ["verschlucken", "dysphagie", "husten", "essen", "trinken"],
+    keywords: ["verschlucken", "dysphagie", "husten", "essen", "trinken", "verschlucke", "würgen", "kloß", "steckt im hals"],
   },
 ];
 
