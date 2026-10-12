@@ -132,7 +132,7 @@ Drei Screens der Einführung ohne untere Navigation und ohne Haus-Knopf. „Will
 
 Die App hat jetzt neben „Dunkel“ ein wählbares Erscheinungsbild „Pastell“
 (Mehr → Erscheinungsbild). Die Werte stehen in `app/globals.css` unter
-`:root[data-theme="pastel"]` und im Hauptprompt oben. Gemessen auf 13 Screens:
+`:root[data-theme="pastel"]` und im Hauptprompt oben. Gemessen auf 12 Screens:
 Jeder Text erreicht mindestens 4,5 : 1. Unter 3 : 1 liegen nur Schmuck-Symbole
 (Pfeile in Listenzeilen, leere Auswahlkreise) – wie schon im dunklen Schema.
 
