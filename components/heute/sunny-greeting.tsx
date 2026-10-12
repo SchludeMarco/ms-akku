@@ -1,5 +1,8 @@
+"use client";
+
 import { Icon } from "@/components/icon";
 import { formatLongDate } from "@/lib/dates";
+import { useSettingsStore } from "@/lib/stores/settings-store";
 
 function greeting(date: Date): string {
   const hour = date.getHours();
@@ -15,6 +18,9 @@ function greeting(date: Date): string {
  * ohne harte Helligkeit, damit sie freundlich wirkt, ohne zu blenden.
  */
 export function SunnyGreeting({ now }: { now: Date }) {
+  const dark = useSettingsStore((state) => state.theme) === "dark";
+  const setTheme = useSettingsStore((state) => state.setTheme);
+
   return (
     <section
       aria-labelledby="greeting-heading"
@@ -29,9 +35,15 @@ export function SunnyGreeting({ now }: { now: Date }) {
           <h2 id="greeting-heading" className="text-headline-md text-on-surface">
             {greeting(now)}
           </h2>
-          <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-surface-container-high/80 text-primary">
-            <Icon name="spa" filled className="text-[24px]" />
-          </span>
+          {/* Schnellumschalter Hell/Dunkel. Das Symbol zeigt, wohin man wechselt. */}
+          <button
+            type="button"
+            onClick={() => setTheme(dark ? "pastel" : "dark")}
+            aria-label={dark ? "Zum hellen Erscheinungsbild wechseln" : "Zum dunklen Erscheinungsbild wechseln"}
+            className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-outline-variant/30 bg-surface-container-high/80 text-primary transition-colors active:bg-surface-container-highest"
+          >
+            <Icon name={dark ? "light_mode" : "dark_mode"} filled className="text-[24px]" />
+          </button>
         </div>
         <p className="mb-2 text-body-md text-on-surface-variant">{formatLongDate(now)}</p>
         <div className="inline-flex items-center gap-2 self-start rounded-full border border-outline-variant/30 bg-surface-container-low px-3 py-1.5 text-on-surface-variant shadow-sm">
