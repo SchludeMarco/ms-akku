@@ -13,6 +13,29 @@ im selben Schritt `app/datenschutz/page.tsx` und diese Datei.
 
 ---
 
+## Nachtrag 12.10.2026 – Vereinfachung der App (Branch `simplify`)
+
+Mit der Vereinfachung sind zwei Datenflüsse ganz entfallen. Alles, was weiter
+unten zu ihnen steht, beschreibt den früheren Stand und gilt nicht mehr:
+
+- **Google-Drive-Sicherung entfernt** (`lib/google-drive.ts` gelöscht, keine
+  Einwilligung und kein Google-Skript mehr im Code).
+- **Feedback entfernt** (Formular, `/api/feedback`, Resend und GitHub als
+  Empfänger). Die App hat damit keinen eigenen Server-Endpunkt mehr.
+- **Was bleibt:** Hosting bei Vercel (Server-Logs beim Laden der Seiten),
+  Speicherung im Browser, Export und Wiederherstellen als Datei.
+- **Einstellungen in `ms-akku-settings`:** Nutzungsart, Google-Einwilligung und
+  Stimmungsfarben entfallen; neu sind drei Schalter für ausgeblendete
+  Funktionen (Symptombibliothek, Symptome erfassen, Muster). Der Schlüssel
+  `ms-akku-mood` wird nicht mehr geschrieben.
+- **Datenschutzerklärung** entsprechend gekürzt (Abschnitte zu Google Drive und
+  Feedback gestrichen, neu nummeriert).
+- Die offenen Punkte zu Resend, GitHub, Google und zur Löschfrist für Feedback
+  sind damit erledigt. Offen bleiben: Anschrift im Impressum bestätigen,
+  Vercel-Auftragsverarbeitung, fachkundige Prüfung der Texte.
+
+---
+
 ## Durchgang 1 – Architektur und Datenspeicherung
 
 Frage: Welche Daten gibt es, wo liegen sie, was verlässt das Gerät?

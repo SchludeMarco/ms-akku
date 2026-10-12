@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
 import { AppHeader } from "@/components/app-header";
 import { Icon } from "@/components/icon";
-import { clearAllEntries, loadDemoData } from "@/lib/demo";
-import { canVibrate } from "@/lib/haptics";
-import { playSuccess, playToggleFeedback } from "@/lib/sound";
-import { useSettingsStore, type ThemeMode } from "@/lib/stores/settings-store";
+import { clearAllEntries } from "@/lib/entries";
+import { playToggleFeedback } from "@/lib/sound";
+import {
+  useSettingsStore,
+  type ExtraKey,
+  type ThemeMode,
+} from "@/lib/stores/settings-store";
 import { cn } from "@/lib/utils";
-
-const subscribeNever = () => () => {};
 
 const THEMES: { key: ThemeMode; label: string; icon: string }[] = [
   { key: "auto", label: "Automatisch", icon: "brightness_auto" },
@@ -19,111 +20,83 @@ const THEMES: { key: ThemeMode; label: string; icon: string }[] = [
   { key: "pastel", label: "Hell", icon: "light_mode" },
 ];
 
-function LinkRow({
-  href,
-  icon,
-  title,
-  hint,
-}: {
-  href: string;
-  icon: string;
-  title: string;
-  hint: string;
-}) {
+/** Funktionen, die ab Werk ausgeblendet sind und sich hier einschalten lassen. */
+const EXTRAS: { key: ExtraKey; title: string; hint: string }[] = [
+  {
+    key: "library",
+    title: "Symptombibliothek",
+    hint: "Symptome nachschlagen, auswählen und bewerten",
+  },
+  {
+    key: "capture",
+    title: "Symptome erfassen",
+    hint: "Knopf zum Festhalten von Veränderungen",
+  },
+  { key: "patterns", title: "Muster", hint: "Zusammenhänge in deinen Einträgen" },
+];
+
+const ROW =
+  "flex min-h-[64px] w-full items-center justify-between gap-3 rounded-xl border border-outline-variant/30 bg-surface-container p-4 text-left shadow-sm";
+
+const HEADING = "text-label-sm font-semibold uppercase tracking-wider text-primary";
+
+function Toggle({ on }: { on: boolean }) {
   return (
-    <Link
-      href={href}
-      className="flex min-h-[64px] w-full items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container p-4 shadow-sm transition-colors active:bg-surface-container-high"
+    <span
+      className={cn(
+        "flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
+        on ? "bg-primary-container" : "bg-surface-container-highest",
+      )}
     >
-      <div className="flex min-w-0 items-center gap-3.5">
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
-          <Icon name={icon} className="text-[22px]" />
-        </div>
-        <div className="min-w-0">
-          <div className="truncate text-label-lg text-on-surface">{title}</div>
-          <div className="truncate text-body-sm text-on-surface-variant">{hint}</div>
-        </div>
-      </div>
-      <Icon name="chevron_right" className="ml-2 text-[22px] text-outline-variant" />
+      <span
+        className={cn(
+          "h-5 w-5 rounded-full transition-transform",
+          on ? "translate-x-5 bg-on-primary" : "bg-outline",
+        )}
+      />
+    </span>
+  );
+}
+
+function LinkRow({ href, icon, title }: { href: string; icon: string; title: string }) {
+  return (
+    <Link href={href} className={cn(ROW, "transition-colors active:bg-surface-container-high")}>
+      <span className="flex min-w-0 items-center gap-3">
+        <Icon name={icon} className="text-[24px] text-primary" />
+        <span className="text-label-lg text-on-surface">{title}</span>
+      </span>
+      <Icon name="chevron_right" className="text-[22px] text-on-surface-variant" />
     </Link>
   );
 }
 
 export default function MehrPage() {
-  const soundEnabled = useSettingsStore((state) => state.soundEnabled);
-  const toggleSound = useSettingsStore((state) => state.toggleSound);
-  const hapticsEnabled = useSettingsStore((state) => state.hapticsEnabled);
-  const toggleHaptics = useSettingsStore((state) => state.toggleHaptics);
-  // Ob das Gerät vibrieren kann, weiß erst der Browser.
-  const vibrationAvailable = useSyncExternalStore(
-    subscribeNever,
-    canVibrate,
-    () => false,
-  );
-  const usageMode = useSettingsStore((state) => state.usageMode);
   const themeMode = useSettingsStore((state) => state.themeMode);
   const setThemeMode = useSettingsStore((state) => state.setThemeMode);
   const lightHours = useSettingsStore((state) => state.lightHours);
   const setLightHours = useSettingsStore((state) => state.setLightHours);
-  const moodColors = useSettingsStore((state) => state.moodColors);
-  const toggleMoodColors = useSettingsStore((state) => state.toggleMoodColors);
+  const feedbackOn = useSettingsStore((state) => state.soundEnabled || state.hapticsEnabled);
+  const setTapFeedback = useSettingsStore((state) => state.setTapFeedback);
+  const extras = useSettingsStore((state) => state.extras);
+  const setExtra = useSettingsStore((state) => state.setExtra);
 
-  const [demoState, setDemoState] = useState<"idle" | "loading" | "done">("idle");
   const [confirmClear, setConfirmClear] = useState(false);
-
-  async function handleLoadDemo() {
-    setDemoState("loading");
-    await loadDemoData();
-    playSuccess();
-    setDemoState("done");
-  }
+  const [cleared, setCleared] = useState(false);
 
   async function handleClear() {
     await clearAllEntries();
     setConfirmClear(false);
-    setDemoState("idle");
+    setCleared(true);
   }
 
   return (
     <>
       <AppHeader title="Mehr" />
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col pb-28 pt-16">
-        <div className="flex w-full flex-col space-y-space-md px-margin pb-space-lg pt-space-md">
-          <div className="flex items-center gap-space-sm rounded-xl border border-outline-variant/30 bg-surface-container-low p-space-md shadow-sm">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/15 text-primary">
-              <Icon name="lock" className="text-[20px]" />
-            </div>
-            <div className="flex min-w-0 flex-col">
-              <span className="text-headline-sm text-on-surface">Lokal auf deinem Gerät</span>
-              <p className="text-body-sm text-on-surface-variant">
-                Ohne Konto. Deine Einträge verlassen dieses Gerät nur, wenn du sie selbst
-                exportierst oder sicherst.
-              </p>
-            </div>
-          </div>
-
+        <div className="flex w-full flex-col gap-space-lg px-margin pb-space-lg pt-space-md">
           <section className="space-y-2">
-            <h2 className="text-label-sm font-semibold uppercase tracking-wider text-primary">
-              Persönliche Einstellungen
-            </h2>
-            <LinkRow
-              href="/symptome"
-              icon="checklist"
-              title="Symptombibliothek"
-              hint="Auswählen, Belastung bewerten, Hilfen lesen"
-            />
+            <h2 className={HEADING}>Darstellung</h2>
             <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-4 shadow-sm">
-              <div className="flex items-center gap-3.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
-                  <Icon name="palette" className="text-[22px]" />
-                </div>
-                <div className="min-w-0">
-                  <div className="text-label-lg text-on-surface">Erscheinungsbild</div>
-                  <div className="text-body-sm text-on-surface-variant">
-                    Automatisch wechselt nach Uhrzeit zwischen Hell und Dunkel
-                  </div>
-                </div>
-              </div>
               <div role="radiogroup" aria-label="Erscheinungsbild" className="grid grid-cols-3 gap-2">
                 {THEMES.map((option) => {
                   const on = themeMode === option.key;
@@ -148,195 +121,47 @@ export default function MehrPage() {
                 })}
               </div>
               {themeMode === "auto" && (
-                <div className="space-y-2 rounded-xl border border-outline-variant/30 bg-surface-container-low p-3">
-                  <div className="grid grid-cols-2 gap-2">
-                    <label className="flex flex-col gap-1">
-                      <span className="text-label-md text-on-surface">Hell ab</span>
-                      <input
-                        type="time"
-                        value={lightHours.from}
-                        onChange={(event) =>
-                          event.target.value && setLightHours({ from: event.target.value })
-                        }
-                        className="min-h-[48px] w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 text-body-md tabular-nums text-on-surface focus:border-primary focus:outline-none"
-                      />
-                    </label>
-                    <label className="flex flex-col gap-1">
-                      <span className="text-label-md text-on-surface">Dunkel ab</span>
-                      <input
-                        type="time"
-                        value={lightHours.until}
-                        onChange={(event) =>
-                          event.target.value && setLightHours({ until: event.target.value })
-                        }
-                        className="min-h-[48px] w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 text-body-md tabular-nums text-on-surface focus:border-primary focus:outline-none"
-                      />
-                    </label>
-                  </div>
-                  <p className="text-body-sm text-on-surface-variant">
-                    {lightHours.from === lightHours.until
-                      ? "Beide Zeiten sind gleich: Die App bleibt dunkel."
-                      : `Von ${lightHours.from} bis ${lightHours.until} Uhr hell, sonst dunkel. Der Knopf auf „Heute“ übersteuert das bis zum nächsten Wechsel.`}
-                  </p>
-                </div>
+                <p className="text-body-sm text-on-surface-variant">
+                  Von {lightHours.from} bis {lightHours.until} Uhr hell, sonst dunkel.
+                </p>
               )}
-              <button
-                type="button"
-                role="switch"
-                aria-checked={moodColors}
-                onClick={toggleMoodColors}
-                className="flex min-h-[56px] w-full items-center justify-between gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 text-left"
-              >
-                <span className="min-w-0">
-                  <span className="block text-label-md text-on-surface">
-                    Farben folgen der Stimmung
-                  </span>
-                  <span className="block text-body-sm text-on-surface-variant">
-                    Wärmer an guten Tagen, kühler und ruhiger an müden
-                  </span>
-                </span>
-                <span
-                  className={cn(
-                    "flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
-                    moodColors ? "bg-primary-container" : "bg-surface-container-highest",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "h-5 w-5 rounded-full transition-transform",
-                      moodColors ? "translate-x-5 bg-on-primary" : "bg-outline",
-                    )}
-                  />
-                </span>
-              </button>
             </div>
-            <LinkRow
-              href="/willkommen/nutzung"
-              icon="favorite"
-              title="Nutzungspräferenz"
-              hint={usageMode === "self" ? "Für mich selbst" : "Zusätzlich für Arzttermine"}
-            />
             <button
               type="button"
               role="switch"
-              aria-checked={soundEnabled}
+              aria-checked={feedbackOn}
               onClick={() => {
-                toggleSound();
+                setTapFeedback(!feedbackOn);
                 playToggleFeedback();
               }}
-              className="flex min-h-[64px] w-full items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container p-4 text-left shadow-sm transition-colors active:bg-surface-container-high"
+              className={ROW}
             >
-              <div className="flex min-w-0 items-center gap-3.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
-                  <Icon name={soundEnabled ? "volume_up" : "volume_off"} className="text-[22px]" />
-                </div>
-                <div className="min-w-0">
-                  <div className="truncate text-label-lg text-on-surface">Audiosignale</div>
-                  <div className="truncate text-body-sm text-on-surface-variant">
-                    Dezente Töne beim Erfassen
-                  </div>
-                </div>
-              </div>
-              <span
-                className={cn(
-                  "ml-2 flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
-                  soundEnabled ? "bg-primary-container" : "bg-surface-container-highest",
-                )}
-              >
-                <span
-                  className={cn(
-                    "h-5 w-5 rounded-full transition-transform",
-                    soundEnabled ? "translate-x-5 bg-on-primary" : "bg-outline",
-                  )}
-                />
+              <span className="flex min-w-0 items-center gap-3">
+                <Icon name="vibration" className="text-[24px] text-primary" />
+                <span className="min-w-0">
+                  <span className="block text-label-lg text-on-surface">
+                    Rückmeldung beim Tippen
+                  </span>
+                  <span className="block text-body-sm text-on-surface-variant">
+                    Leiser Ton, kurzes Vibrieren, Nachfedern
+                  </span>
+                </span>
               </span>
+              <Toggle on={feedbackOn} />
             </button>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={hapticsEnabled}
-              onClick={() => {
-                toggleHaptics();
-              }}
-              className="flex min-h-[64px] w-full items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container p-4 text-left shadow-sm transition-colors active:bg-surface-container-high"
-            >
-              <div className="flex min-w-0 items-center gap-3.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
-                  <Icon name={hapticsEnabled ? "vibration" : "do_not_touch"} className="text-[22px]" />
-                </div>
-                <div className="min-w-0">
-                  <div className="truncate text-label-lg text-on-surface">Tipp-Rückmeldung</div>
-                  <div className="truncate text-body-sm text-on-surface-variant">
-                    {vibrationAvailable
-                      ? "Vibrieren und Nachfedern"
-                      : "Nachfedern beim Antippen"}
-                  </div>
-                </div>
-              </div>
-              <span
-                className={cn(
-                  "ml-2 flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
-                  hapticsEnabled ? "bg-primary-container" : "bg-surface-container-highest",
-                )}
-              >
-                <span
-                  className={cn(
-                    "h-5 w-5 rounded-full transition-transform",
-                    hapticsEnabled ? "translate-x-5 bg-on-primary" : "bg-outline",
-                  )}
-                />
-              </span>
-            </button>
-            <LinkRow
-              href="/willkommen"
-              icon="waving_hand"
-              title="Einführung ansehen"
-              hint="Willkommens-Screens erneut zeigen"
-            />
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-label-sm font-semibold uppercase tracking-wider text-primary">
-              Daten
-            </h2>
-            <LinkRow
-              href="/daten"
-              icon="save"
-              title="Sicherung & Export"
-              hint="Daten als Datei mitnehmen oder sichern"
-            />
-            <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-space-md shadow-sm">
-              <div className="flex items-start gap-space-sm">
-                <Icon name="science" className="mt-0.5 text-[22px] text-secondary" />
-                <p className="text-body-sm leading-relaxed text-on-surface-variant">
-                  <strong className="block text-label-md text-on-surface">Beispieldaten</strong>
-                  Füllt die App mit vier Wochen erfundener Einträge, damit du Verlauf und
-                  Muster ausprobieren kannst.
+            <h2 className={HEADING}>Deine Daten</h2>
+            <p className="text-body-sm text-on-surface-variant">
+              Alles liegt nur auf diesem Gerät, ohne Konto.
+            </p>
+            <LinkRow href="/daten" icon="save" title="Sichern und mitnehmen" />
+            {confirmClear ? (
+              <div className="space-y-space-sm rounded-xl border border-error/30 bg-surface-container p-4">
+                <p className="text-body-md text-on-surface">
+                  Alle Einträge löschen? Das lässt sich nicht rückgängig machen.
                 </p>
-              </div>
-              <button
-                type="button"
-                disabled={demoState === "loading"}
-                onClick={handleLoadDemo}
-                className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl border border-outline-variant/30 bg-surface-container-high text-label-lg text-primary transition-colors hover:bg-surface-bright disabled:opacity-50"
-              >
-                <Icon name={demoState === "done" ? "check" : "download"} className="text-[20px]" />
-                {demoState === "done" ? "Beispieldaten geladen" : "Beispieldaten laden"}
-              </button>
-            </div>
-
-            <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-space-md shadow-sm">
-              <div className="flex items-start gap-space-sm">
-                <Icon name="delete_sweep" className="mt-0.5 text-[22px] text-error" />
-                <p className="text-body-sm leading-relaxed text-on-surface-variant">
-                  <strong className="block text-label-md text-on-surface">
-                    Alle Einträge löschen
-                  </strong>
-                  Entfernt Akku-, Symptom-, Aktivitäts- und Schlafeinträge. Das lässt sich
-                  nicht rückgängig machen.
-                </p>
-              </div>
-              {confirmClear ? (
                 <div className="flex gap-2">
                   <button
                     type="button"
@@ -353,48 +178,95 @@ export default function MehrPage() {
                     Wirklich löschen
                   </button>
                 </div>
-              ) : (
+              </div>
+            ) : (
+              <button type="button" onClick={() => setConfirmClear(true)} className={ROW}>
+                <span className="flex min-w-0 items-center gap-3">
+                  <Icon name="delete" className="text-[24px] text-error" />
+                  <span className="text-label-lg text-on-surface">
+                    {cleared ? "Einträge gelöscht" : "Alle Einträge löschen"}
+                  </span>
+                </span>
+              </button>
+            )}
+          </section>
+
+          {(extras.library || extras.capture) && (
+            <section className="space-y-2">
+              <h2 className={HEADING}>Eingeschaltet</h2>
+              {extras.library && (
+                <LinkRow href="/symptome" icon="menu_book" title="Symptombibliothek" />
+              )}
+              {extras.capture && (
+                <LinkRow href="/erfassen" icon="bolt" title="Veränderung erfassen" />
+              )}
+            </section>
+          )}
+
+          <details className="group rounded-xl border border-outline-variant/30 bg-surface-container-low">
+            <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-2 px-4 text-label-lg text-on-surface [&::-webkit-details-marker]:hidden">
+              Erweitert
+              <Icon
+                name="expand_more"
+                className="text-[24px] text-on-surface-variant transition-transform group-open:rotate-180"
+              />
+            </summary>
+            <div className="flex flex-col gap-2 px-3 pb-3">
+              <p className="px-1 text-body-sm text-on-surface-variant">
+                Zusätzliche Funktionen. Ab Werk aus, damit die App einfach bleibt.
+              </p>
+              {EXTRAS.map((extra) => (
                 <button
+                  key={extra.key}
                   type="button"
-                  onClick={() => setConfirmClear(true)}
-                  className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl border border-error/30 bg-surface-container-high text-label-lg text-error transition-colors hover:bg-surface-bright"
+                  role="switch"
+                  aria-checked={extras[extra.key]}
+                  onClick={() => setExtra(extra.key, !extras[extra.key])}
+                  className={ROW}
                 >
-                  Einträge löschen …
+                  <span className="min-w-0">
+                    <span className="block text-label-lg text-on-surface">{extra.title}</span>
+                    <span className="block text-body-sm text-on-surface-variant">
+                      {extra.hint}
+                    </span>
+                  </span>
+                  <Toggle on={extras[extra.key]} />
                 </button>
+              ))}
+              {themeMode === "auto" && (
+                <div className="grid grid-cols-2 gap-2 rounded-xl border border-outline-variant/30 bg-surface-container p-3">
+                  <label className="flex flex-col gap-1">
+                    <span className="text-label-md text-on-surface">Hell ab</span>
+                    <input
+                      type="time"
+                      value={lightHours.from}
+                      onChange={(event) =>
+                        event.target.value && setLightHours({ from: event.target.value })
+                      }
+                      className="min-h-[48px] w-full rounded-lg border border-outline-variant/40 bg-surface-container-low px-3 text-body-md tabular-nums text-on-surface focus:border-primary focus:outline-none"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1">
+                    <span className="text-label-md text-on-surface">Dunkel ab</span>
+                    <input
+                      type="time"
+                      value={lightHours.until}
+                      onChange={(event) =>
+                        event.target.value && setLightHours({ until: event.target.value })
+                      }
+                      className="min-h-[48px] w-full rounded-lg border border-outline-variant/40 bg-surface-container-low px-3 text-body-md tabular-nums text-on-surface focus:border-primary focus:outline-none"
+                    />
+                  </label>
+                </div>
               )}
             </div>
-          </section>
+          </details>
 
           <section className="space-y-2">
-            <h2 className="text-label-sm font-semibold uppercase tracking-wider text-primary">
-              Über MS Akku
-            </h2>
-            <LinkRow
-              href="/feedback"
-              icon="rate_review"
-              title="Feedback geben"
-              hint="Lob, Tadel, Vorschläge und Wünsche"
-            />
-            <LinkRow
-              href="/datenschutz"
-              icon="shield"
-              title="Datenschutz"
-              hint="Was gespeichert wird und was nicht"
-            />
-            <LinkRow
-              href="/impressum"
-              icon="badge"
-              title="Impressum"
-              hint="Wer hinter MS Akku steht"
-            />
+            <h2 className={HEADING}>Über MS Akku</h2>
+            <LinkRow href="/datenschutz" icon="shield" title="Datenschutz" />
+            <LinkRow href="/impressum" icon="badge" title="Impressum" />
           </section>
-
-          <div className="flex items-center justify-center gap-1.5 pt-space-xs text-on-surface-variant">
-            <Icon name="verified_user" className="text-[16px] text-primary" />
-            <span className="text-label-sm">
-              Keine Registrierung erforderlich • offline nutzbar
-            </span>
-          </div>
         </div>
       </main>
     </>

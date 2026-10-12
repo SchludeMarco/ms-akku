@@ -1,198 +1,242 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { AppHeader } from "@/components/app-header";
-import { AkkuCard } from "@/components/heute/akku-card";
-import { DayPlan } from "@/components/heute/day-plan";
-import { SunnyGreeting } from "@/components/heute/sunny-greeting";
 import { TodayHistory } from "@/components/heute/today-history";
 import { Icon } from "@/components/icon";
 import { db, newId } from "@/lib/db";
-import { startOfDay } from "@/lib/dates";
-import { FEELINGS, type FeelingKey } from "@/lib/feelings";
-import { MIN_ENTRIES_FOR_PATTERN } from "@/lib/patterns";
-import { playTick } from "@/lib/sound";
-import { usePatterns } from "@/lib/use-patterns";
+import { formatLongDate, formatTime } from "@/lib/dates";
+import { ZONE_PILL, ZONE_STYLES, zoneOf } from "@/lib/energy";
+import { playSuccess, playTick } from "@/lib/sound";
 import { cn } from "@/lib/utils";
+
+// "Heute" ist der Kern der App: den Akku in ein paar Sekunden festhalten.
+// Zahl, Regler, Speichern – mehr braucht es nicht. Notiz und Stichworte sind
+// freiwillig und bleiben zugeklappt.
+
+const QUICK = [
+  { level: 20, label: "Ruhig" },
+  { level: 50, label: "Ausgeglichen" },
+  { level: 80, label: "Kraftvoll" },
+] as const;
+
+/** Was nach eigenem Empfinden beigetragen hat – als Stichwort am Eintrag. */
+const FACTORS = ["Schlaf", "Bewegung", "Termin", "Wetter / Hitze", "Ruhepause"] as const;
+
+const MAX_NOTE = 280;
 
 export default function HeutePage() {
   const [now] = useState(() => new Date());
 
-  const feeling = useLiveQuery(async () => {
-    const todays = await db.moments
-      .where("timestamp")
-      .aboveOrEqual(startOfDay(now).toISOString())
-      .filter((moment) => moment.kind === "feeling")
-      .sortBy("timestamp");
-    return todays.at(-1)?.value ?? null;
-  }, [now]);
+  const latest = useLiveQuery(
+    () =>
+      db.batteryEntries
+        .orderBy("timestamp")
+        .last()
+        .then((entry) => entry ?? null),
+    [],
+  );
 
-  const { patterns, batteryCount } = usePatterns(now);
-  const insight = patterns?.[0];
+  const [draft, setDraft] = useState<number | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
+  const [note, setNote] = useState("");
+  const [saving, setSaving] = useState(false);
 
-  async function selectFeeling(key: FeelingKey) {
-    if (key === feeling) return;
-    await db.moments.add({
-      id: newId(),
-      timestamp: new Date().toISOString(),
-      kind: "feeling",
-      value: key,
-    });
+  const level = draft ?? latest?.energyLevel ?? 50;
+  const zone = zoneOf(level);
+  const styles = ZONE_STYLES[zone];
+  // Gespeichert ist der Stand, solange nichts verändert wurde.
+  const changed = draft !== null || tags.length > 0 || note.trim().length > 0;
+
+  function choose(value: number) {
     playTick();
+    setDraft(value);
+  }
+
+  async function save() {
+    if (saving) return;
+    setSaving(true);
+    const timestamp = new Date().toISOString();
+    const trimmed = note.trim();
+    await db.batteryEntries.add({
+      id: newId(),
+      timestamp,
+      energyLevel: level,
+      createdAt: timestamp,
+      ...(trimmed ? { note: trimmed } : {}),
+      ...(tags.length > 0 ? { tags } : {}),
+    });
+    playSuccess();
+    setDraft(null);
+    setTags([]);
+    setNote("");
+    setSaving(false);
   }
 
   return (
     <>
       <AppHeader title="Heute" />
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col pb-28 pt-16">
-        <div className="flex w-full flex-col space-y-6 px-margin pb-10">
-          <div className="pt-4">
-            <SunnyGreeting now={now} />
-          </div>
+        <div className="flex w-full flex-col gap-space-md px-margin pb-10 pt-space-md">
+          <p className="text-body-md text-on-surface-variant">{formatLongDate(now)}</p>
 
-          <AkkuCard now={now} />
-
-          <TodayHistory now={now} />
-
-          <section aria-labelledby="current-state-heading" className="space-y-2">
-            <div className="flex items-center justify-between">
-              <h3 id="current-state-heading" className="text-headline-sm text-on-surface">
-                Wie fühlst du dich gerade?
-              </h3>
-              <span className="text-label-sm text-on-surface-variant">
-                Tippen zum Wählen
+          <section
+            aria-labelledby="akku-heading"
+            className="flex flex-col gap-space-md rounded-2xl border border-outline-variant/30 bg-surface-container-low p-5 shadow-md"
+          >
+            <div className="flex items-start justify-between gap-2">
+              <h2 id="akku-heading" className="text-headline-md text-on-surface">
+                Wie voll ist dein Akku?
+              </h2>
+              <span
+                className={cn(
+                  "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-label-md",
+                  styles.badge,
+                )}
+              >
+                <span className={cn("h-2 w-2 rounded-full", styles.fill)} />
+                {ZONE_PILL[zone].label}
               </span>
             </div>
-            <div
-              role="radiogroup"
-              aria-label="Körperliches und mentales Befinden"
-              className="grid grid-cols-2 gap-2"
-            >
-              {FEELINGS.map((option) => {
-                const checked = feeling === option.key;
+
+            <div className="flex flex-col items-center gap-2">
+              <span
+                className={cn("text-[56px] font-bold leading-none tabular-nums", styles.text)}
+                aria-live="polite"
+              >
+                {level} %
+              </span>
+              <div className="h-5 w-full overflow-hidden rounded-full bg-surface-container-highest p-0.5">
+                <div
+                  className={cn("h-full rounded-full transition-all duration-300", styles.fill)}
+                  style={{ width: `${level}%` }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="sr-only" htmlFor="akku-regler">
+                Akku in Prozent
+              </label>
+              <input
+                id="akku-regler"
+                type="range"
+                min={0}
+                max={100}
+                step={5}
+                value={level}
+                onChange={(event) => setDraft(Number(event.target.value))}
+                className="akku-range w-full"
+                style={{ "--range-color": `rgb(var(--energy-${zone}))` } as React.CSSProperties}
+              />
+              <div className="flex justify-between text-label-sm text-on-surface-variant">
+                <span>leer</span>
+                <span>voll</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2">
+              {QUICK.map((option) => {
+                const optionStyles = ZONE_STYLES[zoneOf(option.level)];
+                const on = level === option.level;
                 return (
                   <button
-                    key={option.key}
+                    key={option.level}
                     type="button"
-                    role="radio"
-                    aria-checked={checked}
-                    onClick={() => selectFeeling(option.key)}
+                    aria-pressed={on}
+                    onClick={() => choose(option.level)}
                     className={cn(
-                      "flex min-h-[56px] items-center justify-between gap-2 rounded-xl border px-4 py-3 text-left shadow-sm transition-colors",
-                      checked
-                        ? "border-primary/50 bg-surface-container-high"
-                        : "border-outline-variant/30 bg-surface-container active:bg-surface-container-high",
+                      "flex min-h-[56px] flex-col items-center justify-center rounded-xl border px-1 text-center transition-colors",
+                      on ? optionStyles.badge : "border-outline-variant/30 bg-surface-container",
                     )}
                   >
-                    <div className="flex items-center gap-2">
-                      <Icon
-                        name={option.icon}
-                        className={cn(
-                          "text-[22px]",
-                          checked ? "text-primary" : "text-on-surface-variant",
-                        )}
-                      />
-                      <span className="text-label-md font-medium text-on-surface">
-                        {option.label}
-                      </span>
-                    </div>
-                    <Icon
-                      name={checked ? "check_circle" : "radio_button_unchecked"}
-                      className={cn(
-                        "text-[20px]",
-                        checked ? "text-primary" : "text-outline-variant",
-                      )}
-                    />
+                    <span className={cn("text-label-lg tabular-nums", optionStyles.text)}>
+                      {option.level} %
+                    </span>
+                    <span className="text-label-sm text-on-surface-variant">{option.label}</span>
                   </button>
                 );
               })}
             </div>
-          </section>
 
-          <section>
-            <Link
-              href="/erfassen"
-              className="group flex min-h-[64px] w-full items-center justify-between rounded-xl border border-primary/40 bg-surface-container-high p-4 shadow-lg transition-all active:bg-surface-variant"
-            >
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary-fixed shadow-md">
-                  <Icon name="add_circle" className="text-[28px] font-semibold" />
+            <details className="group rounded-xl border border-outline-variant/30 bg-surface-container">
+              <summary className="flex min-h-[48px] cursor-pointer list-none items-center justify-between gap-2 px-3 text-label-md text-on-surface [&::-webkit-details-marker]:hidden">
+                Mehr dazu (freiwillig)
+                <Icon
+                  name="expand_more"
+                  className="text-[24px] text-on-surface-variant transition-transform group-open:rotate-180"
+                />
+              </summary>
+              <div className="flex flex-col gap-space-sm px-3 pb-3">
+                <div className="flex flex-wrap gap-2">
+                  {FACTORS.map((factor) => {
+                    const on = tags.includes(factor);
+                    return (
+                      <button
+                        key={factor}
+                        type="button"
+                        aria-pressed={on}
+                        onClick={() => {
+                          playTick();
+                          setTags((current) =>
+                            on ? current.filter((tag) => tag !== factor) : [...current, factor],
+                          );
+                        }}
+                        className={cn(
+                          "min-h-[48px] rounded-full border px-4 text-label-md transition-colors",
+                          on
+                            ? "border-primary/50 bg-primary-container font-semibold text-on-primary-fixed"
+                            : "border-outline-variant/30 bg-surface-container-low text-on-surface",
+                        )}
+                      >
+                        {factor}
+                      </button>
+                    );
+                  })}
                 </div>
-                <div className="flex flex-col text-left">
-                  <span className="text-headline-sm font-semibold leading-snug text-primary transition-colors group-hover:text-primary-fixed">
-                    + Veränderung erfassen
-                  </span>
-                  <span className="text-body-sm leading-tight text-on-surface-variant">
-                    Symptom, Akku-Wechsel oder gutes Gefühl (ca. 10 Sek.)
-                  </span>
-                </div>
-              </div>
-              <Icon name="chevron_right" className="text-[24px] text-primary" />
-            </Link>
-          </section>
-
-          <Link
-            href="/symptome"
-            className="flex min-h-[64px] w-full items-center justify-between gap-3 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm transition-colors active:bg-surface-container-high"
-          >
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary-container/20 text-secondary">
-                <Icon name="menu_book" className="text-[24px]" />
-              </div>
-              <div className="min-w-0">
-                <span className="block text-label-lg text-on-surface">Symptombibliothek</span>
-                <span className="block text-body-sm text-on-surface-variant">
-                  Symptome nachschlagen, auswählen und aufklappen
-                </span>
-              </div>
-            </div>
-            <Icon name="arrow_forward" className="text-[22px] text-secondary" />
-          </Link>
-
-          <DayPlan now={now} />
-
-          <section aria-labelledby="insight-heading" className="space-y-1.5">
-            <div className="flex items-center gap-1.5">
-              <Icon name="lightbulb" className="text-[20px] text-secondary" />
-              <h3 id="insight-heading" className="text-headline-sm text-on-surface">
-                Auffällig
-              </h3>
-            </div>
-            <div className="space-y-4 rounded-xl border border-outline-variant/30 bg-surface-container p-4 shadow-sm">
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-secondary/30 bg-secondary-container/20 text-secondary">
-                  <Icon
-                    name={insight?.summaryIcon ?? "hourglass_top"}
-                    className="text-[22px]"
+                <label className="flex flex-col gap-1">
+                  <span className="text-label-md text-on-surface">Notiz</span>
+                  <textarea
+                    value={note}
+                    onChange={(event) => setNote(event.target.value)}
+                    maxLength={MAX_NOTE}
+                    rows={2}
+                    className="w-full rounded-xl border border-outline-variant/40 bg-surface-container-low px-3 py-2 text-body-md text-on-surface focus:border-primary focus:outline-none"
                   />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-body-md leading-relaxed text-on-surface">
-                    {insight
-                      ? insight.summary
-                      : "MS Akku sammelt noch Einträge. Erste Muster zeigen sich nach etwa fünf Akku-Einschätzungen."}
-                  </p>
-                  <span className="inline-block text-label-sm text-on-surface-variant">
-                    {insight
-                      ? `Basierend auf deinen Einträgen · ${insight.evidence}`
-                      : `${Math.min(batteryCount, MIN_ENTRIES_FOR_PATTERN)} von ${MIN_ENTRIES_FOR_PATTERN} Einträgen vorhanden`}
-                  </span>
-                </div>
+                </label>
               </div>
-              <div className="flex items-center justify-end pt-1">
-                <Link
-                  href="/muster"
-                  className="flex min-h-[48px] items-center gap-1.5 rounded-lg border border-outline-variant/30 bg-surface-container-high px-4 text-label-md font-semibold text-primary transition-colors active:bg-surface-bright"
-                >
-                  <span>Muster ansehen</span>
-                  <Icon name="arrow_forward" className="text-[18px]" />
-                </Link>
-              </div>
-            </div>
+            </details>
+
+            <button
+              type="button"
+              onClick={save}
+              disabled={saving}
+              className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-cta text-label-lg font-semibold text-on-cta shadow-lg transition-transform active:scale-[0.99] disabled:opacity-50"
+            >
+              <Icon name="check_circle" className="text-[22px]" />
+              Speichern
+            </button>
+
+            <p
+              className="flex items-center justify-center gap-1.5 text-body-sm text-on-surface-variant"
+              aria-live="polite"
+            >
+              <Icon name={changed ? "edit" : "lock"} className="text-[16px]" />
+              {changed
+                ? "Noch nicht gespeichert"
+                : latest
+                  ? `Zuletzt gespeichert um ${formatTime(latest.timestamp)} Uhr`
+                  : "Deine Einschätzung bleibt auf diesem Gerät"}
+            </p>
           </section>
+
+          <TodayHistory now={now} />
+
+          <p className="text-center text-body-sm text-on-surface-variant">
+            Dein Akku ist deine persönliche Einschätzung, kein medizinischer Messwert.
+          </p>
         </div>
       </main>
     </>
