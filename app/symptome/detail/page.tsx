@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 
@@ -10,10 +10,12 @@ import { db } from "@/lib/db";
 import { playTick } from "@/lib/sound";
 import {
   CATALOG_REVIEWED,
+  CATEGORIES,
   GENERAL_DOCTOR_HINT,
   KIND_LABELS,
   SOURCES,
   STRENGTH_LABELS,
+  SYMPTOM_CATALOG,
   catalogById,
   type Measure,
   type MeasureKind,
@@ -101,6 +103,11 @@ export default function SymptomDetailPage() {
   const symptom = id ? catalogById.get(id) : undefined;
   const stored = useLiveQuery(() => (id ? db.symptoms.get(id) : undefined), [id]);
 
+  // Beim Wechsel zu einem verwandten Symptom wieder oben beginnen.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
   // Auf dem Server und beim ersten Rendern ist der Hash noch unbekannt.
   if (id === null) return <AppHeader title="Symptom" back />;
 
@@ -121,6 +128,10 @@ export default function SymptomDetailPage() {
   }
 
   const active = stored?.active ?? false;
+  const category = CATEGORIES.find((item) => item.id === symptom.category);
+  const related = SYMPTOM_CATALOG.filter(
+    (item) => item.category === symptom.category && item.id !== symptom.id,
+  );
   const burden = stored?.burden;
 
   return (
@@ -295,6 +306,37 @@ export default function SymptomDetailPage() {
               <p className="text-body-sm text-on-surface-variant">{GENERAL_DOCTOR_HINT}</p>
             </div>
           </section>
+
+          {related.length > 0 && (
+            <section className="space-y-space-sm">
+              <SectionTitle icon="hub">Verwandte Symptome</SectionTitle>
+              <p className="text-body-sm text-on-surface-variant">
+                Aus dem Bereich „{category?.name}“. Vielleicht erkennst du dort etwas wieder.
+              </p>
+              <ul className="space-y-2">
+                {related.map((item) => (
+                  <li key={item.id}>
+                    {/* Normaler Anker statt Link: Nur so meldet der Browser den Hash-Wechsel. */}
+                    <a
+                      href={`#${item.id}`}
+                      className="flex min-h-touch-lg items-center gap-3 rounded-xl bg-surface-container-low p-space-sm transition-colors active:bg-surface-container-high"
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-variant text-on-surface-variant">
+                        <Icon name={item.icon} className="text-[22px]" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-label-lg text-on-surface">{item.name}</div>
+                        <p className="line-clamp-1 text-body-sm text-on-surface-variant">
+                          {item.short}
+                        </p>
+                      </div>
+                      <Icon name="chevron_right" className="text-[22px] text-outline-variant" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <section className="space-y-space-sm">
             <SectionTitle icon="menu_book">Quellen</SectionTitle>

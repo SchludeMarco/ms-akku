@@ -8,12 +8,8 @@ import { AppHeader } from "@/components/app-header";
 import { Icon } from "@/components/icon";
 import { db, newId } from "@/lib/db";
 import { playTick } from "@/lib/sound";
-import {
-  CATEGORIES,
-  SYMPTOM_CATALOG,
-  matchesQuery,
-  type CatalogSymptom,
-} from "@/lib/symptom-catalog";
+import { CATEGORIES, SYMPTOM_CATALOG, type CatalogSymptom } from "@/lib/symptom-catalog";
+import { SEARCH_SUGGESTIONS, searchSymptoms, type SearchHit } from "@/lib/symptom-search";
 import { CUSTOM_SYMPTOM_ICON, ensureSymptomsSeeded, setSymptomActive } from "@/lib/symptoms";
 import { cn } from "@/lib/utils";
 
@@ -43,13 +39,14 @@ export default function SymptomkatalogPage() {
 
   const storedById = new Map((stored ?? []).map((symptom) => [symptom.id, symptom]));
   const custom = (stored ?? []).filter((symptom) => symptom.isCustom);
-  const matches = SYMPTOM_CATALOG.filter((symptom) => matchesQuery(symptom, query));
+  const searching = query.trim().length > 0;
+  const hits = searching ? searchSymptoms(query) : [];
   const customMatches = custom.filter((symptom) =>
     symptom.name.toLowerCase().includes(query.trim().toLowerCase()),
   );
   const activeCount = (stored ?? []).filter((symptom) => symptom.active).length;
 
-  function renderRow(symptom: CatalogSymptom) {
+  function renderRow(symptom: CatalogSymptom, reason?: SearchHit["reason"]) {
     const entry = storedById.get(symptom.id);
     const active = entry?.active ?? false;
     return (
@@ -103,6 +100,11 @@ export default function SymptomkatalogPage() {
               )}
             </div>
             <p className="line-clamp-2 text-body-sm text-on-surface-variant">{symptom.short}</p>
+            {reason && (
+              <p className="mt-1 line-clamp-2 text-label-sm text-primary">
+                {reason.label}: {reason.text}
+              </p>
+            )}
           </div>
           <Icon name="chevron_right" className="text-[22px] text-outline-variant" />
         </Link>
@@ -117,7 +119,7 @@ export default function SymptomkatalogPage() {
         <div className="flex w-full flex-col gap-space-md px-margin pb-space-xl pt-space-md">
           <p className="text-body-md text-on-surface-variant">
             Hake ab, was du beobachten möchtest. Tippe auf ein Symptom für Beschreibung,
-            Belastung und Hilfen.
+            Belastung und Hilfen. Die Suche versteht auch Alltagsworte und Tippfehler.
           </p>
 
           <label className="relative block">
@@ -130,7 +132,7 @@ export default function SymptomkatalogPage() {
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Suchen, z. B. müde, taub, Krämpfe"
+              placeholder="Beschreib es in deinen Worten"
               className="min-h-[52px] w-full rounded-xl border border-outline-variant/40 bg-surface-container pl-11 pr-3 text-body-md text-on-surface placeholder:text-outline focus:border-primary focus:outline-none"
             />
           </label>
@@ -142,8 +144,39 @@ export default function SymptomkatalogPage() {
             </span>
           </div>
 
+          {!searching && (
+            <div className="space-y-2">
+              <span className="text-label-sm text-on-surface-variant">Zum Stöbern:</span>
+              <div className="flex flex-wrap gap-2">
+                {SEARCH_SUGGESTIONS.map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    onClick={() => setQuery(suggestion)}
+                    className="min-h-[44px] rounded-full border border-outline-variant/40 bg-surface-container-low px-4 text-label-md text-on-surface transition-colors active:bg-surface-container-high"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {searching && hits.length > 0 && (
+            <section className="space-y-2" aria-live="polite">
+              <h2 className="flex items-center gap-1.5 text-label-sm font-semibold uppercase tracking-wider text-primary">
+                <Icon name="search" className="text-[16px]" />
+                {hits.length === 1 ? "1 Treffer" : `${hits.length} Treffer`}, beste zuerst
+              </h2>
+              <ul className="space-y-2">
+                {hits.map((hit) => renderRow(hit.symptom, hit.reason))}
+              </ul>
+            </section>
+          )}
+
           {CATEGORIES.map((category) => {
-            const items = matches.filter((symptom) => symptom.category === category.id);
+            if (searching) return null;
+            const items = SYMPTOM_CATALOG.filter((symptom) => symptom.category === category.id);
             if (items.length === 0) return null;
             return (
               <section key={category.id} className="space-y-2">
@@ -152,7 +185,7 @@ export default function SymptomkatalogPage() {
                   {category.name}
                 </h2>
                 <ul className="space-y-2">
-                  {items.map(renderRow)}
+                  {items.map((symptom) => renderRow(symptom))}
                 </ul>
               </section>
             );
@@ -200,9 +233,10 @@ export default function SymptomkatalogPage() {
             </section>
           )}
 
-          {matches.length === 0 && customMatches.length === 0 && (
+          {searching && hits.length === 0 && customMatches.length === 0 && (
             <div className="rounded-xl bg-surface-container-low p-space-md text-body-sm text-on-surface-variant">
-              Nichts gefunden. Du kannst unten ein eigenes Symptom in deinen Worten anlegen.
+              Dazu steht nichts im Katalog. Versuch ein anderes Wort oder leg unten ein
+              eigenes Symptom in deinen Worten an.
             </div>
           )}
 

@@ -11,6 +11,38 @@ standardmäßig auf dem Gerät.
 
 ---
 
+## 12.10.2026 – Intelligente Symptomsuche und tiefere Detailansicht
+
+**Status:** Umgesetzt am 12.10.2026 · **Quelle:** Marco
+
+Bereits erfasste und erforschte Symptome sollen sich leicht finden und
+entdecken lassen. Von einem Symptom aus soll man weiter in die Tiefe gehen
+können.
+
+**Umgesetzt**
+
+- Suche im Symptomkatalog versteht Alltagsworte („müde“, „Beine schwer“),
+  mehrere Wörter, Umlaut-Schreibweisen („muede“), gebeugte Formen und kleine
+  Tippfehler („vergeslich“). Beste Treffer stehen oben, und unter jedem
+  Treffer steht, warum er passt (`lib/symptom-search.ts`).
+- Durchsucht werden Name, Beschreibung, Alltagsbeispiele, Verstärker und
+  Hilfen.
+- Vorschläge zum Stöbern unter dem Suchfeld.
+- Detailansicht zeigt verwandte Symptome aus demselben Bereich, sodass man
+  von einem Symptom zum nächsten weitergehen kann.
+- Die Suche läuft vollständig auf dem Gerät: keine KI, kein Server, keine
+  Kosten, Suchbegriffe verlassen das Gerät nicht.
+
+**Offen**
+
+- Eine Suche, die frei formulierte Sätze wirklich „versteht“, bräuchte ein
+  KI-Modell. Das hieße: Kosten und Gesundheitsangaben an einen Dienst senden.
+  Bewusst nicht gebaut; nur nach ausdrücklicher Entscheidung.
+- Der Katalog deckt 23 Symptome ab. Seltene Symptome fehlen noch und lassen
+  sich bisher nur als eigenes Symptom anlegen.
+
+---
+
 ## 10.10.2026 – DSGVO-Prüfung in drei Durchgängen
 
 **Status:** Umgesetzt am 12.10.2026 (Ergebnis: `docs/dsgvo-pruefung.md`), rechtliche Punkte offen · **Quelle:** Marco (ausgearbeitet im ChatGPT-Chat)

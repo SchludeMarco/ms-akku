@@ -291,7 +291,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
       ),
     ],
     sources: ["dgn", "dmsg-therapie"],
-    keywords: ["gehen", "laufen", "gang", "gehstrecke", "fußheber", "stolpern", "mobilität"],
+    keywords: ["gehen", "laufen", "gang", "gehstrecke", "fußheber", "stolpern", "mobilität", "schwere beine", "treppe"],
   },
   {
     id: "schwaeche",
@@ -315,7 +315,7 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
     doctor:
       "Eine neue oder deutlich zunehmende Schwäche, die länger als einen Tag anhält, sollte zeitnah neurologisch abgeklärt werden.",
     sources: ["dgn", "dmsg-symptome"],
-    keywords: ["lähmung", "kraftlos", "parese", "schwach", "motorik"],
+    keywords: ["lähmung", "kraftlos", "parese", "schwach", "motorik", "schwere beine", "bleiern"],
   },
   {
     id: "spastik",
@@ -810,16 +810,6 @@ export const SYMPTOM_CATALOG: CatalogSymptom[] = [
 ];
 
 export const catalogById = new Map(SYMPTOM_CATALOG.map((symptom) => [symptom.id, symptom]));
-
-/** Sucht in Name, Kurzbeschreibung, Alltagsbeispielen und Suchbegriffen. */
-export function matchesQuery(symptom: CatalogSymptom, query: string): boolean {
-  const needle = query.trim().toLowerCase();
-  if (!needle) return true;
-  return [symptom.name, symptom.short, ...symptom.examples, ...(symptom.keywords ?? [])]
-    .join(" ")
-    .toLowerCase()
-    .includes(needle);
-}
 
 /** Leitlinien-Definition des Schubs, sinngemäß für alle Detailseiten. */
 export const GENERAL_DOCTOR_HINT =
