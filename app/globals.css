@@ -84,6 +84,17 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Sofortige Antwort beim Berühren: Die Fläche gibt leicht nach, noch bevor
+     etwas passiert. `scale` statt `transform`, damit Verschiebungen einzelner
+     Elemente erhalten bleiben. */
+  :where(button, a, [role="radio"], [role="checkbox"], [role="switch"]) {
+    transition: scale 90ms ease-out;
+  }
+
+  :where(button, a, [role="radio"], [role="checkbox"], [role="switch"]):active:not(:disabled) {
+    scale: 0.97;
+  }
+
   ::-webkit-scrollbar {
     display: none;
   }

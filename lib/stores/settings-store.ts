@@ -6,6 +6,9 @@ export type UsageMode = "self" | "doctor";
 interface SettingsState {
   soundEnabled: boolean;
   toggleSound: () => void;
+  /** Vibration und sichtbares Nachfedern beim Antippen. */
+  hapticsEnabled: boolean;
+  toggleHaptics: () => void;
   onboardingCompleted: boolean;
   completeOnboarding: () => void;
   usageMode: UsageMode;
@@ -30,6 +33,9 @@ export const useSettingsStore = create<SettingsState>()(
       soundEnabled: true,
       toggleSound: () =>
         set((state) => ({ soundEnabled: !state.soundEnabled })),
+      hapticsEnabled: true,
+      toggleHaptics: () =>
+        set((state) => ({ hapticsEnabled: !state.hapticsEnabled })),
       onboardingCompleted: false,
       completeOnboarding: () => set({ onboardingCompleted: true }),
       usageMode: "self",

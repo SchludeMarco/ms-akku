@@ -6,6 +6,7 @@ import "material-symbols/outlined.css";
 import "./globals.css";
 
 import { ServiceWorker } from "@/components/service-worker";
+import { TapFeedback } from "@/components/tap-feedback";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -51,6 +52,7 @@ export default function RootLayout({
       <body>
         {children}
         <ServiceWorker />
+        <TapFeedback />
       </body>
     </html>
   );

@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 
 import { AppHeader } from "@/components/app-header";
 import { Icon } from "@/components/icon";
 import { clearAllEntries, loadDemoData } from "@/lib/demo";
+import { canVibrate } from "@/lib/haptics";
 import { playSuccess, playToggleFeedback } from "@/lib/sound";
 import { useSettingsStore } from "@/lib/stores/settings-store";
 import { cn } from "@/lib/utils";
+
+const subscribeNever = () => () => {};
 
 function LinkRow({
   href,
@@ -43,6 +46,14 @@ function LinkRow({
 export default function MehrPage() {
   const soundEnabled = useSettingsStore((state) => state.soundEnabled);
   const toggleSound = useSettingsStore((state) => state.toggleSound);
+  const hapticsEnabled = useSettingsStore((state) => state.hapticsEnabled);
+  const toggleHaptics = useSettingsStore((state) => state.toggleHaptics);
+  // Ob das Gerät vibrieren kann, weiß erst der Browser.
+  const vibrationAvailable = useSyncExternalStore(
+    subscribeNever,
+    canVibrate,
+    () => false,
+  );
   const usageMode = useSettingsStore((state) => state.usageMode);
 
   const [demoState, setDemoState] = useState<"idle" | "loading" | "done">("idle");
@@ -126,6 +137,42 @@ export default function MehrPage() {
                   className={cn(
                     "h-5 w-5 rounded-full transition-transform",
                     soundEnabled ? "translate-x-5 bg-on-primary" : "bg-outline",
+                  )}
+                />
+              </span>
+            </button>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={hapticsEnabled}
+              onClick={() => {
+                toggleHaptics();
+              }}
+              className="flex min-h-[64px] w-full items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container p-4 text-left shadow-sm transition-colors active:bg-surface-container-high"
+            >
+              <div className="flex min-w-0 items-center gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
+                  <Icon name={hapticsEnabled ? "vibration" : "do_not_touch"} className="text-[22px]" />
+                </div>
+                <div className="min-w-0">
+                  <div className="truncate text-label-lg text-on-surface">Tipp-Rückmeldung</div>
+                  <div className="truncate text-body-sm text-on-surface-variant">
+                    {vibrationAvailable
+                      ? "Vibrieren und Nachfedern"
+                      : "Nachfedern beim Antippen"}
+                  </div>
+                </div>
+              </div>
+              <span
+                className={cn(
+                  "ml-2 flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
+                  hapticsEnabled ? "bg-primary-container" : "bg-surface-container-highest",
+                )}
+              >
+                <span
+                  className={cn(
+                    "h-5 w-5 rounded-full transition-transform",
+                    hapticsEnabled ? "translate-x-5 bg-on-primary" : "bg-outline",
                   )}
                 />
               </span>

@@ -159,9 +159,14 @@ Gemessen im Browser bei 375 × 812 px mit Beispieldaten.
 
 **Zur Haptik**
 
-- Rückmeldung beim Tippen gibt es als leisen Ton und als leichtes
-  Zusammenziehen der Fläche. Vibration gibt es nicht.
-- Vibration lässt sich im Web auf Android einbauen, auf dem iPhone nicht.
+- Stand der Durchsicht: Rückmeldung gab es nur als leisen Ton und an einigen
+  Stellen als leichtes Zusammenziehen der Fläche.
+- Seit 12.10.2026 ergänzt: Jede bedienbare Fläche gibt beim Berühren leicht
+  nach und federt beim Loslassen kurz zurück. Auf Android kommt ein kurzer
+  Vibrationsimpuls dazu, beim Speichern ein Doppelimpuls. Abschaltbar unter
+  „Mehr → Tipp-Rückmeldung“.
+- Safari auf dem iPhone erlaubt Webseiten keine Vibration; dort bleibt es bei
+  der sichtbaren Rückmeldung.
 
 **Nicht geprüft**
 
