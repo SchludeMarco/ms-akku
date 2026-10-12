@@ -66,6 +66,11 @@ export default function DatenschutzPage() {
           werden nicht an einen Server übertragen.
         </p>
         <p>
+          Damit MS Akku auch ohne Internet startet, legt dein Browser außerdem eine Kopie
+          der App selbst (Seiten, Skripte, Schriften, Symbole) auf deinem Gerät ab. Diese
+          Kopie enthält keine deiner Einträge.
+        </p>
+        <p>
           Diese Speicherung ist für die von dir gewünschte Funktion unbedingt
           erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Du kannst die Einträge jederzeit unter
           „Mehr“ löschen oder alles entfernen, indem du die Websitedaten in deinem

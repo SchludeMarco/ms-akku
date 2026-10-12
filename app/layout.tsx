@@ -5,6 +5,8 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "material-symbols/outlined.css";
 import "./globals.css";
 
+import { ServiceWorker } from "@/components/service-worker";
+
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   subsets: ["latin"],
@@ -21,6 +23,15 @@ export const metadata: Metadata = {
   title: "MS Akku",
   description:
     "Dein persönliches Energie-Tagebuch. Alle Daten bleiben auf deinem Gerät.",
+  applicationName: "MS Akku",
+  appleWebApp: { capable: true, title: "MS Akku", statusBarStyle: "black-translucent" },
+  icons: {
+    icon: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export const viewport: Viewport = {
@@ -37,7 +48,10 @@ export default function RootLayout({
       lang="de"
       className={`dark ${plusJakarta.variable} ${inter.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <ServiceWorker />
+      </body>
     </html>
   );
 }

@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Der Service Worker selbst darf nie aus dem Zwischenspeicher kommen,
+        // sonst erreichen Updates die Geräte nicht.
+        source: "/sw.js",
+        headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }],
+      },
+      {
         source: "/:path*",
         headers: [
           { key: "Referrer-Policy", value: "no-referrer" },

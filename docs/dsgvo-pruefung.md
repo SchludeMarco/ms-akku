@@ -26,6 +26,7 @@ Frage: Welche Daten gibt es, wo liegen sie, was verlässt das Gerät?
 | Symptom-, Aktivitäts-, Schlafeinträge, Momente | ja | IndexedDB |
 | Berechnete Beobachtungen | ja | IndexedDB |
 | Einstellungen (Ton, Onboarding, Nutzungsart, Google-Einwilligung) | nein | localStorage (`ms-akku-settings`) |
+| Kopie der App-Dateien für den Offline-Betrieb (keine Einträge) | nein | Cache des Browsers, verwaltet von `public/sw.js` |
 
 Es gibt keine Datenbank auf einem Server, kein Konto, keine Cookies.
 
@@ -138,8 +139,13 @@ App angesehen.
 - **Feedback-Endpunkt:** nimmt nur die im Schema erlaubten Felder an, lehnt
   alles ohne `consent: true` ab, schreibt in Fehlerfällen nur die technische
   Fehlermeldung ins Log, nie den Feedback-Text.
-- **Browser-Speicher:** nur IndexedDB (Dexie) und ein localStorage-Eintrag für
-  Einstellungen. Keine Cookies, kein sessionStorage.
+- **Browser-Speicher:** nur IndexedDB (Dexie), ein localStorage-Eintrag für
+  Einstellungen und der Offline-Vorrat der App-Dateien. Keine Cookies, kein
+  sessionStorage.
+- **Service Worker (ergänzt am 12.10.2026):** speichert nur Dateien der App
+  vom eigenen Server, beantwortet nur GET-Anfragen an die eigene Adresse und
+  reicht alles andere (Feedback, Google) unverändert durch. Er überträgt
+  nichts und speichert keine Einträge.
 - **Import:** eingelesene Sicherungen werden mit Zod geprüft und erst nach
   ausdrücklicher Bestätigung übernommen.
 - **Erklärung gegen Code:** Jeder in `/datenschutz` beschriebene Fluss

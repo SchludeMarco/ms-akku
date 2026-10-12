@@ -235,7 +235,7 @@ export default function MehrPage() {
           <div className="flex items-center justify-center gap-1.5 pt-space-xs text-on-surface-variant">
             <Icon name="verified_user" className="text-[16px] text-primary" />
             <span className="text-label-sm">
-              Keine Registrierung erforderlich • 100% offline nutzbar
+              Keine Registrierung erforderlich • offline nutzbar
             </span>
           </div>
         </div>
