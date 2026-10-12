@@ -106,7 +106,7 @@ export default function MehrPage() {
             <LinkRow
               href="/symptome"
               icon="checklist"
-              title="Symptomkatalog"
+              title="Symptombibliothek"
               hint="Auswählen, Belastung bewerten, Hilfen lesen"
             />
             <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-4 shadow-sm">

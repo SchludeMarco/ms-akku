@@ -11,6 +11,7 @@ import { playTick } from "@/lib/sound";
 import {
   CATEGORIES,
   SYMPTOM_CATALOG,
+  catalogById,
   type CatalogSymptom,
   type CategoryId,
 } from "@/lib/symptom-catalog";
@@ -27,6 +28,8 @@ export default function SymptomkatalogPage() {
   const [query, setQuery] = useState("");
   const [customName, setCustomName] = useState("");
   const [area, setArea] = useState<CategoryId | "all">("all");
+  // Immer nur eine Karte ist aufgeklappt, damit die Liste überschaubar bleibt.
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   async function addCustom(event: React.FormEvent) {
     event.preventDefault();
@@ -61,6 +64,8 @@ export default function SymptomkatalogPage() {
     const entry = storedById.get(symptom.id);
     const active = entry?.active ?? false;
     const categoryName = CATEGORIES.find((item) => item.id === symptom.category)?.name;
+    const open = expanded === symptom.id;
+    const details = catalogById.get(symptom.id);
     return (
       <li
         key={symptom.id}
@@ -71,7 +76,13 @@ export default function SymptomkatalogPage() {
             : "border-outline-variant/30 bg-surface-container-low",
         )}
       >
-        <div className="flex items-start gap-3">
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={`symptom-${symptom.id}`}
+          onClick={() => setExpanded(open ? null : symptom.id)}
+          className="-m-2 flex items-start gap-3 rounded-xl p-2 text-left"
+        >
           <div
             className={cn(
               "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
@@ -97,8 +108,63 @@ export default function SymptomkatalogPage() {
               )}
             </div>
           </div>
-        </div>
+          <Icon
+            name={open ? "expand_less" : "expand_more"}
+            className="mt-1 text-[26px] text-on-surface-variant"
+          />
+        </button>
         <p className="text-body-md text-on-surface-variant">{symptom.short}</p>
+        {open && (
+          <div
+            id={`symptom-${symptom.id}`}
+            className="flex flex-col gap-space-sm border-t border-outline-variant/30 pt-space-sm"
+          >
+            {details ? (
+              <>
+                <div className="space-y-2">
+                  <h4 className="text-label-md uppercase tracking-wider text-primary">
+                    So kann es sich anfühlen
+                  </h4>
+                  <ul className="space-y-1.5">
+                    {details.examples.map((example) => (
+                      <li
+                        key={example}
+                        className="rounded-xl bg-surface-container-high/60 px-3 py-2 text-body-md text-on-surface"
+                      >
+                        {example}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <h4 className="text-label-md uppercase tracking-wider text-primary">
+                    Was helfen kann
+                  </h4>
+                  <ul className="space-y-1.5">
+                    {details.measures.slice(0, 3).map((measure) => (
+                      <li
+                        key={measure.text}
+                        className="flex items-start gap-2 text-body-md text-on-surface"
+                      >
+                        <Icon name="check_circle" className="mt-0.5 text-[20px] text-secondary" />
+                        <span>{measure.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-body-sm text-on-surface-variant">
+                    Aus Leitlinie und Fachgesellschaft, keine persönliche Empfehlung. Quellen
+                    und alle Hilfen stehen in der vollständigen Ansicht.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <p className="text-body-md text-on-surface-variant">
+                Zu einem eigenen Symptom gibt es keine Beschreibung aus dem Katalog. In der
+                vollständigen Ansicht kannst du es bewerten, umbenennen oder löschen.
+              </p>
+            )}
+          </div>
+        )}
         {reason && (
           <p className="text-label-md text-primary">
             Passt zu: {reason.text}
@@ -131,7 +197,7 @@ export default function SymptomkatalogPage() {
             href={`/symptome/detail#${symptom.id}`}
             className="flex min-h-[52px] flex-1 items-center justify-between gap-2 rounded-xl bg-surface-container-high px-4 text-label-lg text-on-surface transition-colors active:bg-surface-container-highest"
           >
-            Details &amp; Hilfen
+            {open ? "Vollständige Ansicht" : "Details & Hilfen"}
             <Icon name="arrow_forward" className="text-[20px] text-secondary" />
           </Link>
         </div>
@@ -141,12 +207,12 @@ export default function SymptomkatalogPage() {
 
   return (
     <>
-      <AppHeader title="Symptomkatalog" back />
+      <AppHeader title="Symptombibliothek" back />
       <main className="pb-safe mx-auto flex w-full max-w-xl flex-1 flex-col pt-16">
         <div className="flex w-full flex-col gap-space-md px-margin pb-space-xl pt-space-md">
           <p className="text-body-md text-on-surface-variant">
-            Hake ab, was du beobachten möchtest. Tippe auf ein Symptom für Beschreibung,
-            Belastung und Hilfen. Die Suche versteht auch Alltagsworte und Tippfehler.
+Tippe auf ein Symptom, um es aufzuklappen. Hake ab, was du beobachten möchtest.
+            Die Suche versteht auch Alltagsworte und Tippfehler.
           </p>
 
           <label className="relative block">

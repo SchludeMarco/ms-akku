@@ -134,6 +134,24 @@ export default function HeutePage() {
             </Link>
           </section>
 
+          <Link
+            href="/symptome"
+            className="flex min-h-[64px] w-full items-center justify-between gap-3 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm transition-colors active:bg-surface-container-high"
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary-container/20 text-secondary">
+                <Icon name="menu_book" className="text-[24px]" />
+              </div>
+              <div className="min-w-0">
+                <span className="block text-label-lg text-on-surface">Symptombibliothek</span>
+                <span className="block text-body-sm text-on-surface-variant">
+                  Symptome nachschlagen, auswählen und aufklappen
+                </span>
+              </div>
+            </div>
+            <Icon name="arrow_forward" className="text-[22px] text-secondary" />
+          </Link>
+
           <DayPlan now={now} />
 
           <section aria-labelledby="insight-heading" className="space-y-1.5">
