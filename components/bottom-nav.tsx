@@ -7,12 +7,12 @@ import { Icon } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 const LEFT = [
-  { href: "/", label: "Heute", icon: "battery_charging_full" },
-  { href: "/verlauf", label: "Verlauf", icon: "calendar_today" },
+  { href: "/", label: "Heute", icon: "calendar_today" },
+  { href: "/verlauf", label: "Verlauf", icon: "history" },
 ] as const;
 
 const RIGHT = [
-  { href: "/muster", label: "Muster", icon: "insights" },
+  { href: "/muster", label: "Muster", icon: "auto_graph" },
   { href: "/mehr", label: "Mehr", icon: "more_horiz" },
 ] as const;
 
@@ -32,42 +32,45 @@ function NavItem({
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "flex min-h-[48px] flex-1 flex-col items-center justify-center py-1 transition-colors",
-        active
-          ? "font-bold text-primary"
-          : "text-on-surface-variant hover:text-primary",
+        "flex min-h-[48px] min-w-[48px] flex-1 flex-col items-center justify-center rounded-xl transition-colors",
+        active ? "font-semibold text-nav-active" : "text-on-surface-variant",
       )}
     >
       <Icon name={icon} className="text-[24px]" filled={active} />
-      <span className="mt-1 text-label-sm">{label}</span>
+      <span className="mt-1 text-label-sm leading-none">{label}</span>
     </Link>
   );
 }
 
+/** Untere Navigation nach dem Stitch-Redesign, mit angehobenem Erfassen-Knopf. */
 export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="pb-safe fixed inset-x-0 bottom-0 z-50 border-t border-outline-variant/30 bg-surface/95 shadow-[0_-4px_20px_rgb(var(--nav-shadow))] backdrop-blur-xl">
-      <div className="relative mx-auto flex h-20 w-full max-w-xl items-center justify-between px-1">
-        {LEFT.map((item) => (
-          <NavItem key={item.href} {...item} active={pathname === item.href} />
-        ))}
-        <div className="-mt-6 flex flex-col items-center justify-center px-1">
+    <nav
+      aria-label="Hauptnavigation"
+      className="pb-safe fixed inset-x-0 bottom-0 z-50 border-t border-outline-variant/30 bg-surface-container-high/95 shadow-[0_-4px_24px_rgb(var(--nav-shadow))] backdrop-blur-xl"
+    >
+      <div className="relative mx-auto flex h-[72px] w-full max-w-md items-center justify-between px-2">
+        <div className="flex flex-1 items-center justify-around gap-2">
+          {LEFT.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </div>
+        <div className="flex items-center justify-center px-2">
           <Link
             href="/erfassen"
             aria-label="Veränderung erfassen"
-            className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-container text-on-primary-fixed shadow-[0_6px_24px_rgba(45,212,191,0.3)] transition-all active:scale-95 active:bg-primary"
+            className="relative -top-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-surface-container-high bg-fab text-on-fab shadow-[0_4px_14px_rgb(var(--fab)/0.35)] transition-transform active:scale-95"
           >
-            <Icon name="add" className="text-[28px] font-bold" />
+            <Icon name="bolt" filled className="text-[28px]" />
           </Link>
-          <span className="mt-1 text-label-sm font-semibold text-primary">
-            Erfassen
-          </span>
         </div>
-        {RIGHT.map((item) => (
-          <NavItem key={item.href} {...item} active={pathname === item.href} />
-        ))}
+        <div className="flex flex-1 items-center justify-around gap-2">
+          {RIGHT.map((item) => (
+            <NavItem key={item.href} {...item} active={pathname === item.href} />
+          ))}
+        </div>
       </div>
     </nav>
   );

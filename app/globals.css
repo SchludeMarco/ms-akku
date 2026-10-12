@@ -68,6 +68,25 @@
     /* Schatten der unteren Navigation (mit Deckkraft) */
     --nav-shadow: 0 0 0 / 0.4;
 
+    /* Energie-Zonen (Stitch-Redesign): Füllfarbe, lesbare Textfarbe und
+       Schrift auf der Füllfarbe. Niedrige Energie ist kühles Blau, nie Rot. */
+    --energy-high: 68 226 205; /* #44E2CD */
+    --energy-mid: 255 183 122; /* #FFB77A */
+    --energy-low: 175 224 255; /* #AFE0FF */
+    --energy-high-text: 68 226 205;
+    --energy-mid-text: 255 183 122;
+    --energy-low-text: 175 224 255;
+    --on-energy: 0 32 28; /* #00201C */
+
+    /* Knöpfe: cta = Hauptaktion, action = Aktion in einer Karte */
+    --cta: 45 212 191; /* #2DD4BF */
+    --on-cta: 0 55 49; /* #003731 */
+    --action: 35 43 46; /* #232B2E */
+    --on-action: 98 250 227; /* #62FAE3 */
+    --fab: 87 241 219; /* #57F1DB */
+    --on-fab: 0 55 49; /* #003731 */
+    --nav-active: 87 241 219; /* #57F1DB */
+
     /* Sonne der Begrüßung: im Dunkeln nur ein warmer Schein, nie grell */
     --sun: 254 190 110;
     --sun-core: 0.5;
@@ -145,6 +164,22 @@
     --pacing-soft: 138 82 22; /* #8A5216 */
 
     --nav-shadow: 29 43 41 / 0.12;
+
+    --energy-high: 99 187 173; /* #63BBAD */
+    --energy-mid: 235 167 101; /* #EBA765 */
+    --energy-low: 143 180 227; /* #8FB4E3 */
+    --energy-high-text: 36 95 89; /* #245F59 */
+    --energy-mid-text: 138 82 22; /* #8A5216 */
+    --energy-low-text: 54 85 124; /* #36557C */
+    --on-energy: 29 43 41; /* #1D2B29 */
+
+    --cta: 36 95 89; /* #245F59 */
+    --on-cta: 255 255 255;
+    --action: 36 95 89; /* #245F59 */
+    --on-action: 255 255 255;
+    --fab: 36 95 89; /* #245F59 */
+    --on-fab: 255 255 255;
+    --nav-active: 36 95 89; /* #245F59 */
 
     --sun: 250 196 110;
     --sun-core: 0.95;
@@ -245,6 +280,55 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+@layer components {
+  /* Regler auf dem Screen "Akku einschätzen": breite Spur, 36 px großer
+     Griff – auch mit zitternder Hand gut zu fassen. */
+  .akku-range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 48px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .akku-range::-webkit-slider-runnable-track {
+    height: 12px;
+    border-radius: 9999px;
+    background: rgb(var(--surface-container-highest));
+  }
+
+  .akku-range::-moz-range-track {
+    height: 12px;
+    border-radius: 9999px;
+    background: rgb(var(--surface-container-highest));
+  }
+
+  .akku-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 36px;
+    margin-top: -12px;
+    border-radius: 9999px;
+    border: 3px solid rgb(var(--surface-container-low));
+    background: var(--range-color, rgb(var(--primary-container)));
+  }
+
+  .akku-range::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    border-radius: 9999px;
+    border: 3px solid rgb(var(--surface-container-low));
+    background: var(--range-color, rgb(var(--primary-container)));
+  }
+
+  .akku-range:focus-visible {
+    outline: 2px solid rgb(var(--primary));
+    outline-offset: 4px;
+    border-radius: 9999px;
   }
 }
 

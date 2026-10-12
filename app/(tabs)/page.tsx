@@ -8,6 +8,7 @@ import { AppHeader } from "@/components/app-header";
 import { AkkuCard } from "@/components/heute/akku-card";
 import { DayPlan } from "@/components/heute/day-plan";
 import { SunnyGreeting } from "@/components/heute/sunny-greeting";
+import { TodayHistory } from "@/components/heute/today-history";
 import { Icon } from "@/components/icon";
 import { db, newId } from "@/lib/db";
 import { startOfDay } from "@/lib/dates";
@@ -53,6 +54,8 @@ export default function HeutePage() {
           </div>
 
           <AkkuCard now={now} />
+
+          <TodayHistory now={now} />
 
           <section aria-labelledby="current-state-heading" className="space-y-2">
             <div className="flex items-center justify-between">

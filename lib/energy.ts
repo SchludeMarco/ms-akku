@@ -1,11 +1,12 @@
-// Energie-Zonen der Stitch-Vorlage: Teal (stabil), Amber (Pacing-Zone) und
-// kühles Blau (Erholungsbedarf). Niedrige Energie wird bewusst nie rot
-// dargestellt – Ruhe statt Alarm.
+// Energie-Zonen nach dem Stitch-Redesign: Teal (kraftvoll), Amber
+// (ausgeglichen) und kühles Blau (ruhig). Niedrige Energie wird bewusst nie
+// rot dargestellt – Ruhe statt Alarm. Die Farben stehen als Tokens
+// energy-high/mid/low in app/globals.css.
 
 export type Zone = "high" | "mid" | "low";
 
 export function zoneOf(level: number): Zone {
-  if (level >= 60) return "high";
+  if (level >= 80) return "high";
   if (level >= 40) return "mid";
   return "low";
 }
@@ -15,44 +16,38 @@ export const ZONE_STYLES: Record<
   { text: string; fill: string; bar: string; badge: string; dot: string }
 > = {
   high: {
-    text: "text-primary",
-    fill: "bg-primary-container",
-    bar: "bg-primary-container/80",
-    badge: "border-primary/40 bg-primary/15 text-primary",
-    dot: "bg-primary shadow-[0_0_8px_rgba(87,241,219,0.5)]",
+    text: "text-energy-high-text",
+    fill: "bg-energy-high",
+    bar: "bg-energy-high/80",
+    badge: "border-energy-high/40 bg-energy-high/15 text-energy-high-text",
+    dot: "bg-energy-high",
   },
   mid: {
-    text: "text-pacing-soft",
-    fill: "bg-pacing",
-    bar: "bg-pacing/80",
-    badge: "border-pacing/40 bg-pacing/15 text-pacing-soft",
-    dot: "bg-pacing-soft shadow-[0_0_8px_rgba(255,183,122,0.4)]",
+    text: "text-energy-mid-text",
+    fill: "bg-energy-mid",
+    bar: "bg-energy-mid/80",
+    badge: "border-energy-mid/40 bg-energy-mid/15 text-energy-mid-text",
+    dot: "bg-energy-mid",
   },
   low: {
-    text: "text-tertiary",
-    fill: "bg-tertiary-container",
-    bar: "bg-tertiary-container/70",
-    badge: "border-tertiary/40 bg-tertiary/15 text-tertiary",
-    dot: "bg-tertiary shadow-[0_0_8px_rgba(175,224,255,0.4)]",
+    text: "text-energy-low-text",
+    fill: "bg-energy-low",
+    bar: "bg-energy-low/80",
+    badge: "border-energy-low/40 bg-energy-low/15 text-energy-low-text",
+    dot: "bg-energy-low",
   },
 };
 
 export const ZONE_PILL: Record<Zone, { label: string; icon: string }> = {
-  high: { label: "Im grünen Bereich", icon: "spa" },
-  mid: { label: "Achtsam bleiben", icon: "self_improvement" },
-  low: { label: "Schonmodus", icon: "bedtime" },
+  high: { label: "Kraftvoll", icon: "bolt" },
+  mid: { label: "Ausgeglichen", icon: "battery_horiz_075" },
+  low: { label: "Ruhig", icon: "bedtime" },
 };
 
 export const ZONE_STATUS: Record<Zone, string> = {
   high: "Stabile Kapazität",
   mid: "Achtsamer Bereich",
   low: "Erholungsbedarf",
-};
-
-export const ZONE_MESSAGE: Record<Zone, string> = {
-  high: "Genügend Energie für die geplanten Vorhaben. Gönne dir Pausen nach eigenem Bedarf.",
-  mid: "Deine Reserven sind moderat. Plane eine Zwischenpause am frühen Nachmittag ein.",
-  low: "Dein Körper bittet um Entlastung. Zeit für eine bewusste, ungestörte Pause.",
 };
 
 export function batteryIcon(level: number): string {

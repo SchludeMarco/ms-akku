@@ -15,7 +15,7 @@ const subscribeNever = () => () => {};
 
 const THEMES: { key: Theme; label: string; icon: string }[] = [
   { key: "dark", label: "Dunkel", icon: "dark_mode" },
-  { key: "pastel", label: "Pastell", icon: "wb_twilight" },
+  { key: "pastel", label: "Hell", icon: "light_mode" },
 ];
 
 function LinkRow({
@@ -117,7 +117,7 @@ export default function MehrPage() {
                 <div className="min-w-0">
                   <div className="text-label-lg text-on-surface">Erscheinungsbild</div>
                   <div className="text-body-sm text-on-surface-variant">
-                    Dunkel schont lichtempfindliche Augen
+                    Dunkel schont lichtempfindliche Augen, Hell ist ein ruhiges Pastell
                   </div>
                 </div>
               </div>

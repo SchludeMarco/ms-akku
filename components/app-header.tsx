@@ -5,75 +5,65 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { Icon } from "@/components/icon";
 import { Logo } from "@/components/logo";
-import { cn } from "@/lib/utils";
 
 interface AppHeaderProps {
+  /** Name des Screens; steht klein unter "MS Akku". */
   title: string;
-  /** Zeigt einen Zurück-Pfeil statt der "MS Akku"-Dachzeile (Erfassen, Onboarding). */
+  /** Zeigt einen Zurück-Pfeil (Unterseiten, Erfassen, Einführung). */
   back?: boolean;
 }
 
+/**
+ * Kopfzeile nach dem Stitch-Redesign: Logo, "MS Akku" und darunter der Name
+ * des Screens; rechts das Haus zur Übersicht und das Profil. Alle Knöpfe sind
+ * 48 px groß.
+ */
 export function AppHeader({ title, back = false }: AppHeaderProps) {
   const router = useRouter();
-  // Von jedem Screen aus führt das Haus zurück zur Übersicht (Heute).
-  const pathname = usePathname();
-  // Nicht auf der Übersicht selbst und nicht in der Einführung.
-  const showHome = pathname !== "/" && !pathname.startsWith("/willkommen");
+  // Von überall führt das Haus zur Übersicht (Heute) – nur nicht in der
+  // Einführung, die man erst abschließt.
+  const showHome = !usePathname().startsWith("/willkommen");
 
   return (
-    <header className="pt-safe fixed inset-x-0 top-0 z-50 border-b border-outline-variant/30 bg-surface/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-xl items-center justify-between px-margin">
+    <header className="pt-safe fixed inset-x-0 top-0 z-50 bg-surface-container-low/90 shadow-[0_1px_8px_rgb(var(--nav-shadow))] backdrop-blur-xl">
+      <div className="mx-auto flex h-16 w-full max-w-xl items-center justify-between gap-2 px-margin">
         <div className="flex min-w-0 items-center gap-2">
           {back && (
             <button
               type="button"
               aria-label="Zurück"
               onClick={() => router.back()}
-              className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full text-on-surface transition-colors hover:bg-surface-container-high active:bg-surface-container-highest"
+              className="-ml-2 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-on-surface transition-colors hover:bg-surface-container-high active:bg-surface-container-highest"
             >
               <Icon name="arrow_back" className="text-[24px]" />
             </button>
           )}
-          {/* Neben Zurück-Pfeil und Haus bleibt auf schmalen Handys kein Platz
-              für Logo und ganzen Titel – der Titel geht vor. */}
-          <Logo
-            className={cn(
-              "h-8 w-8 shrink-0",
-              back && showHome && "hidden min-[400px]:block",
-            )}
-          />
-          {back ? (
-            <h1 className="truncate text-headline-sm leading-tight text-on-surface">
+          <Logo className="h-8 w-8 shrink-0" />
+          <div className="flex min-w-0 flex-col">
+            <span className="text-headline-sm leading-tight text-on-surface">MS Akku</span>
+            <h1 className="text-label-sm font-semibold uppercase leading-tight tracking-wider text-on-surface-variant">
               {title}
             </h1>
-          ) : (
-            <div className="flex flex-col">
-              <span className="text-label-md font-semibold leading-tight tracking-tight text-primary">
-                MS Akku
-              </span>
-              <h1 className="text-headline-sm leading-tight text-on-surface">
-                {title}
-              </h1>
-            </div>
-          )}
+          </div>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1">
           {showHome && (
             <Link
               href="/"
               aria-label="Zur Übersicht"
-              className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-full border border-primary/40 bg-surface-container-high px-2 text-label-md min-[400px]:px-3 text-primary transition-colors hover:bg-surface-bright"
+              className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-container text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary"
             >
-              <Icon name="home" className="text-[20px]" />
-              <span className="hidden min-[400px]:inline">Übersicht</span>
+              <Icon name="home" className="text-[24px]" />
             </Link>
           )}
           <Link
             href="/mehr"
             aria-label="Profil und Einstellungen"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-outline-variant/40 bg-surface-container-high text-primary transition-colors hover:bg-surface-bright"
+            className="flex h-12 w-12 items-center justify-center"
           >
-            <Icon name="person" className="text-[20px]" />
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-on-primary">
+              <Icon name="person" className="text-[18px]" />
+            </span>
           </Link>
         </div>
       </div>

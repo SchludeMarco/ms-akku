@@ -21,6 +21,7 @@ const PAGES = [
   "/muster",
   "/mehr",
   "/erfassen",
+  "/akku",
   "/symptome",
   "/symptome/detail",
   "/daten",
