@@ -46,7 +46,10 @@ export default function SymptomkatalogPage() {
   );
   const activeCount = (stored ?? []).filter((symptom) => symptom.active).length;
 
-  function renderRow(symptom: CatalogSymptom, reason?: SearchHit["reason"]) {
+  function renderRow(
+    symptom: Pick<CatalogSymptom, "id" | "name" | "icon" | "short">,
+    reason?: SearchHit["reason"],
+  ) {
     const entry = storedById.get(symptom.id);
     const active = entry?.active ?? false;
     return (
@@ -198,37 +201,14 @@ export default function SymptomkatalogPage() {
                 Eigene Symptome
               </h2>
               <ul className="space-y-2">
-                {customMatches.map((symptom) => (
-                  <li key={symptom.id}>
-                    <button
-                      type="button"
-                      role="checkbox"
-                      aria-checked={symptom.active}
-                      onClick={() => {
-                        playTick();
-                        void setSymptomActive(symptom.id, !symptom.active);
-                      }}
-                      className={cn(
-                        "flex min-h-[64px] w-full items-center gap-3 rounded-xl p-space-sm text-left shadow-sm",
-                        symptom.active ? "bg-surface-container-high" : "bg-surface-container-low",
-                      )}
-                    >
-                      <span
-                        className={cn(
-                          "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg",
-                          symptom.active
-                            ? "bg-primary-container text-on-primary-container"
-                            : "border border-outline-variant bg-surface-container-highest text-transparent",
-                        )}
-                      >
-                        <Icon name="check" className="text-[18px]" />
-                      </span>
-                      <span className="min-w-0 flex-1 truncate text-label-lg text-on-surface">
-                        {symptom.name}
-                      </span>
-                    </button>
-                  </li>
-                ))}
+                {customMatches.map((symptom) =>
+                  renderRow({
+                    id: symptom.id,
+                    name: symptom.name,
+                    icon: symptom.icon ?? CUSTOM_SYMPTOM_ICON,
+                    short: "Eigenes Symptom – tippen zum Bewerten, Umbenennen oder Löschen",
+                  }),
+                )}
               </ul>
             </section>
           )}

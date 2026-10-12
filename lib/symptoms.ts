@@ -59,3 +59,18 @@ export const setSymptomActive = (id: string, active: boolean) =>
 /** Belastung 1–10; `undefined` entfernt die Angabe wieder. */
 export const setSymptomBurden = (id: string, burden: number | undefined) =>
   updateSymptom(id, { burden });
+
+export async function renameCustomSymptom(id: string, name: string): Promise<void> {
+  const stored = await db.symptoms.get(id);
+  if (stored?.isCustom) await db.symptoms.put({ ...stored, name });
+}
+
+/** Löscht ein eigenes Symptom samt seiner Einträge. Katalog-Symptome bleiben unberührt. */
+export async function deleteCustomSymptom(id: string): Promise<void> {
+  await db.transaction("rw", db.symptoms, db.symptomEntries, async () => {
+    const stored = await db.symptoms.get(id);
+    if (!stored?.isCustom) return;
+    await db.symptomEntries.where("symptomId").equals(id).delete();
+    await db.symptoms.delete(id);
+  });
+}

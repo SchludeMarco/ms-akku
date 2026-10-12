@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { AppHeader } from "@/components/app-header";
 import { Icon } from "@/components/icon";
-import { db } from "@/lib/db";
+import { db, type Symptom } from "@/lib/db";
 import { playTick } from "@/lib/sound";
 import {
   CATALOG_REVIEWED,
@@ -21,7 +22,13 @@ import {
   type MeasureKind,
   type Strength,
 } from "@/lib/symptom-catalog";
-import { setSymptomActive, setSymptomBurden } from "@/lib/symptoms";
+import {
+  CUSTOM_SYMPTOM_ICON,
+  deleteCustomSymptom,
+  renameCustomSymptom,
+  setSymptomActive,
+  setSymptomBurden,
+} from "@/lib/symptoms";
 import { cn } from "@/lib/utils";
 
 const KIND_ORDER: MeasureKind[] = ["selbst", "therapie", "arzt"];
@@ -88,6 +95,215 @@ function MeasureItem({ measure }: { measure: Measure }) {
   );
 }
 
+function ActiveToggle({ id, active }: { id: string; active: boolean }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={active}
+      onClick={() => {
+        playTick();
+        void setSymptomActive(id, !active);
+      }}
+      className="flex min-h-[64px] w-full items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container p-4 text-left shadow-sm"
+    >
+      <div className="min-w-0">
+        <div className="text-label-lg text-on-surface">Betrifft mich</div>
+        <div className="text-body-sm text-on-surface-variant">
+          {active ? "Wird beim Erfassen angeboten" : "Nicht in deiner Auswahl"}
+        </div>
+      </div>
+      <span
+        className={cn(
+          "ml-2 flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
+          active ? "bg-primary-container" : "bg-surface-container-highest",
+        )}
+      >
+        <span
+          className={cn(
+            "h-5 w-5 rounded-full transition-transform",
+            active ? "translate-x-5 bg-on-primary" : "bg-outline",
+          )}
+        />
+      </span>
+    </button>
+  );
+}
+
+function BurdenSection({ id, burden }: { id: string; burden: number | undefined }) {
+  return (
+    <section className="space-y-space-sm">
+      <SectionTitle icon="speed">Wie sehr belastet es dich?</SectionTitle>
+      <div className="space-y-space-sm rounded-xl bg-surface-container p-space-md shadow-sm">
+        <div className="flex items-baseline justify-between gap-2">
+          <span className="text-headline-md text-on-surface">
+            {burden === undefined ? "Noch nicht bewertet" : `${burden} von 10`}
+          </span>
+          {burden !== undefined && (
+            <span className="text-label-md text-on-surface-variant">
+              {burdenWord(burden)}
+            </span>
+          )}
+        </div>
+        <div
+          role="radiogroup"
+          aria-label="Belastung von 1 bis 10"
+          className="grid grid-cols-5 gap-2"
+        >
+          {Array.from({ length: 10 }, (_, index) => index + 1).map((value) => (
+            <button
+              key={value}
+              type="button"
+              role="radio"
+              aria-checked={burden === value}
+              aria-label={`${value} – ${burdenWord(value)}`}
+              onClick={() => {
+                playTick();
+                void setSymptomBurden(id, value);
+              }}
+              className={cn(
+                "flex min-h-touch items-center justify-center rounded-xl text-label-lg transition-colors",
+                burden === value
+                  ? "border border-primary/50 bg-primary-container text-on-primary-fixed"
+                  : "border border-outline-variant/40 bg-surface-container-low text-on-surface",
+              )}
+            >
+              {value}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center justify-between text-label-sm text-on-surface-variant">
+          <span>1 = kaum</span>
+          <span>10 = extrem</span>
+        </div>
+        {burden !== undefined && (
+          <button
+            type="button"
+            onClick={() => void setSymptomBurden(id, undefined)}
+            className="min-h-[44px] text-label-md text-on-surface-variant underline-offset-4 hover:underline"
+          >
+            Bewertung entfernen
+          </button>
+        )}
+        <p className="text-body-sm text-on-surface-variant">
+          Deine persönliche Einschätzung, kein medizinischer Messwert.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/** Ansicht für ein eigenes Symptom: bewerten, umbenennen, löschen. */
+function CustomSymptomDetail({ symptom }: { symptom: Symptom }) {
+  const router = useRouter();
+  const [name, setName] = useState(symptom.name);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const entryCount = useLiveQuery(
+    () => db.symptomEntries.where("symptomId").equals(symptom.id).count(),
+    [symptom.id],
+  );
+
+  const trimmed = name.trim();
+  const canRename = trimmed.length > 0 && trimmed !== symptom.name;
+
+  async function handleDelete() {
+    await deleteCustomSymptom(symptom.id);
+    router.replace("/symptome");
+  }
+
+  return (
+    <>
+      <AppHeader title={symptom.name} back />
+      <main className="pb-safe mx-auto flex w-full max-w-xl flex-1 flex-col pt-16">
+        <div className="flex w-full flex-col gap-space-lg px-margin pb-space-xl pt-space-md">
+          <div className="flex items-start gap-space-sm">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary">
+              <Icon name={symptom.icon ?? CUSTOM_SYMPTOM_ICON} className="text-[26px]" />
+            </div>
+            <p className="text-body-lg text-on-surface">
+              Ein eigenes Symptom in deinen Worten. Dazu gibt es keine Beschreibung aus dem
+              Katalog.
+            </p>
+          </div>
+
+          <ActiveToggle id={symptom.id} active={symptom.active} />
+
+          <BurdenSection id={symptom.id} burden={symptom.burden} />
+
+          <section className="space-y-space-sm">
+            <SectionTitle icon="edit">Name</SectionTitle>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                if (canRename) void renameCustomSymptom(symptom.id, trimmed);
+              }}
+              className="flex items-center gap-2"
+            >
+              <label className="min-w-0 flex-1">
+                <span className="sr-only">Name des Symptoms</span>
+                <input
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  maxLength={60}
+                  className="min-h-[52px] w-full rounded-xl border border-outline-variant/40 bg-surface-container px-3 text-body-md text-on-surface focus:border-primary focus:outline-none"
+                />
+              </label>
+              <button
+                type="submit"
+                disabled={!canRename}
+                className="min-h-[52px] shrink-0 rounded-xl bg-primary-container px-4 text-label-lg text-on-primary-container disabled:opacity-40"
+              >
+                Speichern
+              </button>
+            </form>
+          </section>
+
+          <section className="space-y-space-sm">
+            <SectionTitle icon="delete">Löschen</SectionTitle>
+            <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-space-md shadow-sm">
+              <p className="text-body-sm leading-relaxed text-on-surface-variant">
+                {entryCount
+                  ? entryCount === 1
+                    ? "Zu diesem Symptom gibt es 1 Eintrag im Verlauf. Er wird mitgelöscht."
+                    : `Zu diesem Symptom gibt es ${entryCount} Einträge im Verlauf. Sie werden mitgelöscht.`
+                  : "Zu diesem Symptom gibt es noch keine Einträge."}{" "}
+                Das lässt sich nicht rückgängig machen. Wenn du es nur nicht mehr beobachten
+                möchtest, schalte oben „Betrifft mich“ aus.
+              </p>
+              {confirmDelete ? (
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setConfirmDelete(false)}
+                    className="min-h-[52px] flex-1 rounded-xl border border-outline-variant/30 bg-surface-container-high text-label-lg text-on-surface"
+                  >
+                    Abbrechen
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDelete}
+                    className="min-h-[52px] flex-1 rounded-xl bg-error-container text-label-lg font-bold text-on-error-container"
+                  >
+                    Wirklich löschen
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setConfirmDelete(true)}
+                  className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl border border-error/30 bg-surface-container-high text-label-lg text-error"
+                >
+                  Symptom löschen …
+                </button>
+              )}
+            </div>
+          </section>
+        </div>
+      </main>
+    </>
+  );
+}
+
 // Das Symptom steht im Hash (#fatigue), nicht im Pfad: Der Hash wird nie an
 // den Server gesendet. So taucht in keinem Server-Log auf, welches Symptom
 // sich jemand ansieht.
@@ -108,7 +324,14 @@ function readHash(): string {
 export default function SymptomDetailPage() {
   const id = useSyncExternalStore(subscribeToHash, readHash, () => null);
   const symptom = id ? catalogById.get(id) : undefined;
-  const stored = useLiveQuery(() => (id ? db.symptoms.get(id) : undefined), [id]);
+  // `null` heißt "geladen, aber nicht gespeichert" – im Unterschied zu
+  // `undefined`, solange die Abfrage noch läuft.
+  const result = useLiveQuery(
+    async () => (id ? ((await db.symptoms.get(id)) ?? null) : null),
+    [id],
+  );
+  const loaded = result !== undefined;
+  const stored = result ?? undefined;
 
   // Beim Wechsel zu einem verwandten Symptom wieder oben beginnen.
   useEffect(() => {
@@ -119,12 +342,15 @@ export default function SymptomDetailPage() {
   if (id === null) return <AppHeader title="Symptom" back />;
 
   if (!symptom) {
+    if (stored?.isCustom) return <CustomSymptomDetail key={stored.id} symptom={stored} />;
+    // Solange die Datenbank noch lädt, nichts Falsches behaupten.
+    if (!loaded) return <AppHeader title="Symptom" back />;
     return (
       <>
         <AppHeader title="Symptom" back />
         <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-margin pt-24">
           <p className="text-body-md text-on-surface-variant">
-            Dieses Symptom gibt es im Katalog nicht.
+            Dieses Symptom gibt es nicht (mehr).
           </p>
           <Link href="/symptome" className="mt-space-md text-label-lg text-primary">
             Zum Symptomkatalog
@@ -153,95 +379,9 @@ export default function SymptomDetailPage() {
             <p className="text-body-lg text-on-surface">{symptom.short}</p>
           </div>
 
-          <button
-            type="button"
-            role="switch"
-            aria-checked={active}
-            onClick={() => {
-              playTick();
-              void setSymptomActive(symptom.id, !active);
-            }}
-            className="flex min-h-[64px] w-full items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container p-4 text-left shadow-sm"
-          >
-            <div className="min-w-0">
-              <div className="text-label-lg text-on-surface">Betrifft mich</div>
-              <div className="text-body-sm text-on-surface-variant">
-                {active ? "Wird beim Erfassen angeboten" : "Nicht in deiner Auswahl"}
-              </div>
-            </div>
-            <span
-              className={cn(
-                "ml-2 flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
-                active ? "bg-primary-container" : "bg-surface-container-highest",
-              )}
-            >
-              <span
-                className={cn(
-                  "h-5 w-5 rounded-full transition-transform",
-                  active ? "translate-x-5 bg-on-primary" : "bg-outline",
-                )}
-              />
-            </span>
-          </button>
+          <ActiveToggle id={symptom.id} active={active} />
 
-          <section className="space-y-space-sm">
-            <SectionTitle icon="speed">Wie sehr belastet es dich?</SectionTitle>
-            <div className="space-y-space-sm rounded-xl bg-surface-container p-space-md shadow-sm">
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="text-headline-md text-on-surface">
-                  {burden === undefined ? "Noch nicht bewertet" : `${burden} von 10`}
-                </span>
-                {burden !== undefined && (
-                  <span className="text-label-md text-on-surface-variant">
-                    {burdenWord(burden)}
-                  </span>
-                )}
-              </div>
-              <div
-                role="radiogroup"
-                aria-label="Belastung von 1 bis 10"
-                className="grid grid-cols-5 gap-2"
-              >
-                {Array.from({ length: 10 }, (_, index) => index + 1).map((value) => (
-                  <button
-                    key={value}
-                    type="button"
-                    role="radio"
-                    aria-checked={burden === value}
-                    aria-label={`${value} – ${burdenWord(value)}`}
-                    onClick={() => {
-                      playTick();
-                      void setSymptomBurden(symptom.id, value);
-                    }}
-                    className={cn(
-                      "flex min-h-touch items-center justify-center rounded-xl text-label-lg transition-colors",
-                      burden === value
-                        ? "border border-primary/50 bg-primary-container text-on-primary-fixed"
-                        : "border border-outline-variant/40 bg-surface-container-low text-on-surface",
-                    )}
-                  >
-                    {value}
-                  </button>
-                ))}
-              </div>
-              <div className="flex items-center justify-between text-label-sm text-on-surface-variant">
-                <span>1 = kaum</span>
-                <span>10 = extrem</span>
-              </div>
-              {burden !== undefined && (
-                <button
-                  type="button"
-                  onClick={() => void setSymptomBurden(symptom.id, undefined)}
-                  className="min-h-[44px] text-label-md text-on-surface-variant underline-offset-4 hover:underline"
-                >
-                  Bewertung entfernen
-                </button>
-              )}
-              <p className="text-body-sm text-on-surface-variant">
-                Deine persönliche Einschätzung, kein medizinischer Messwert.
-              </p>
-            </div>
-          </section>
+          <BurdenSection id={symptom.id} burden={burden} />
 
           <section className="space-y-space-sm">
             <SectionTitle icon="forum">So kann es sich anfühlen</SectionTitle>
