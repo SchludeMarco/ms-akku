@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { Icon } from "@/components/icon";
 import { Logo } from "@/components/logo";
+import { cn } from "@/lib/utils";
 
 interface AppHeaderProps {
   title: string;
@@ -33,7 +34,14 @@ export function AppHeader({ title, back = false }: AppHeaderProps) {
               <Icon name="arrow_back" className="text-[24px]" />
             </button>
           )}
-          <Logo className="h-8 w-8 shrink-0" />
+          {/* Neben Zurück-Pfeil und Haus bleibt auf schmalen Handys kein Platz
+              für Logo und ganzen Titel – der Titel geht vor. */}
+          <Logo
+            className={cn(
+              "h-8 w-8 shrink-0",
+              back && showHome && "hidden min-[400px]:block",
+            )}
+          />
           {back ? (
             <h1 className="truncate text-headline-sm leading-tight text-on-surface">
               {title}

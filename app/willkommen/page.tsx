@@ -106,7 +106,7 @@ export default function WillkommenPage() {
             </div>
             <p className="text-body-sm leading-relaxed text-on-surface-variant">
               Du kannst MS Akku vollständig ohne Konto und ohne Cloud verwenden. Deine
-              persönlichen Gesundheitsdaten verlassen niemals dein Gerät.
+              persönlichen Gesundheitsdaten verlassen dein Gerät nur, wenn du es selbst auslöst.
             </p>
           </div>
 
