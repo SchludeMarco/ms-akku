@@ -125,7 +125,7 @@ export default function HeutePage() {
               className="group flex min-h-[64px] w-full items-center justify-between rounded-xl border border-primary/40 bg-surface-container-high p-4 shadow-lg transition-all active:bg-surface-variant"
             >
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary shadow-md">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary-fixed shadow-md">
                   <Icon name="add_circle" className="text-[28px] font-semibold" />
                 </div>
                 <div className="flex flex-col text-left">

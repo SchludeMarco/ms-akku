@@ -3,6 +3,12 @@ import { createJSONStorage, persist, type StateStorage } from "zustand/middlewar
 
 export type UsageMode = "self" | "doctor";
 
+/** dark = blendfreier Standard · pastel = helle, entspannte Pastelltöne */
+export type Theme = "dark" | "pastel";
+
+/** Schlüssel der Einstellungen in localStorage (auch vom Start-Skript gelesen). */
+export const SETTINGS_KEY = "ms-akku-settings";
+
 interface SettingsState {
   soundEnabled: boolean;
   toggleSound: () => void;
@@ -11,6 +17,8 @@ interface SettingsState {
   toggleHaptics: () => void;
   onboardingCompleted: boolean;
   completeOnboarding: () => void;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
   usageMode: UsageMode;
   setUsageMode: (mode: UsageMode) => void;
   /** Ausdrückliche Einwilligung in die Sicherung bei Google Drive (widerrufbar). */
@@ -38,13 +46,15 @@ export const useSettingsStore = create<SettingsState>()(
         set((state) => ({ hapticsEnabled: !state.hapticsEnabled })),
       onboardingCompleted: false,
       completeOnboarding: () => set({ onboardingCompleted: true }),
+      theme: "dark",
+      setTheme: (theme) => set({ theme }),
       usageMode: "self",
       setUsageMode: (usageMode) => set({ usageMode }),
       googleConsent: false,
       setGoogleConsent: (googleConsent) => set({ googleConsent }),
     }),
     {
-      name: "ms-akku-settings",
+      name: SETTINGS_KEY,
       storage: createJSONStorage(() =>
         typeof window !== "undefined" ? window.localStorage : noopStorage,
       ),

@@ -218,7 +218,7 @@ export function AkkuCard({ now }: { now: Date }) {
                   className={cn(
                     "min-h-[48px] min-w-0 flex-1 rounded-lg px-0.5 py-2 text-center text-label-md tabular-nums transition-colors",
                     chip === level
-                      ? "bg-primary-container font-bold text-on-primary shadow-md"
+                      ? "bg-primary-container font-bold text-on-primary-fixed shadow-md"
                       : "border border-outline-variant/30 bg-surface-container-low text-on-surface active:bg-surface-bright",
                   )}
                 >

@@ -8,10 +8,15 @@ import { Icon } from "@/components/icon";
 import { clearAllEntries, loadDemoData } from "@/lib/demo";
 import { canVibrate } from "@/lib/haptics";
 import { playSuccess, playToggleFeedback } from "@/lib/sound";
-import { useSettingsStore } from "@/lib/stores/settings-store";
+import { useSettingsStore, type Theme } from "@/lib/stores/settings-store";
 import { cn } from "@/lib/utils";
 
 const subscribeNever = () => () => {};
+
+const THEMES: { key: Theme; label: string; icon: string }[] = [
+  { key: "dark", label: "Dunkel", icon: "dark_mode" },
+  { key: "pastel", label: "Pastell", icon: "wb_twilight" },
+];
 
 function LinkRow({
   href,
@@ -55,6 +60,8 @@ export default function MehrPage() {
     () => false,
   );
   const usageMode = useSettingsStore((state) => state.usageMode);
+  const theme = useSettingsStore((state) => state.theme);
+  const setTheme = useSettingsStore((state) => state.setTheme);
 
   const [demoState, setDemoState] = useState<"idle" | "loading" | "done">("idle");
   const [confirmClear, setConfirmClear] = useState(false);
@@ -100,6 +107,42 @@ export default function MehrPage() {
               title="Symptomkatalog"
               hint="Auswählen, Belastung bewerten, Hilfen lesen"
             />
+            <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-4 shadow-sm">
+              <div className="flex items-center gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
+                  <Icon name="palette" className="text-[22px]" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-label-lg text-on-surface">Erscheinungsbild</div>
+                  <div className="text-body-sm text-on-surface-variant">
+                    Dunkel schont lichtempfindliche Augen
+                  </div>
+                </div>
+              </div>
+              <div role="radiogroup" aria-label="Erscheinungsbild" className="grid grid-cols-2 gap-2">
+                {THEMES.map((option) => {
+                  const on = theme === option.key;
+                  return (
+                    <button
+                      key={option.key}
+                      type="button"
+                      role="radio"
+                      aria-checked={on}
+                      onClick={() => setTheme(option.key)}
+                      className={cn(
+                        "flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-2 text-label-md transition-colors",
+                        on
+                          ? "border border-primary/50 bg-primary-container font-bold text-on-primary-fixed"
+                          : "border border-outline-variant/40 bg-surface-container-low text-on-surface",
+                      )}
+                    >
+                      <Icon name={option.icon} className="text-[20px]" />
+                      {option.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
             <LinkRow
               href="/willkommen/nutzung"
               icon="favorite"

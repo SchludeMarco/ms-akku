@@ -48,7 +48,7 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="pb-safe fixed inset-x-0 bottom-0 z-50 border-t border-outline-variant/30 bg-surface/95 shadow-[0_-4px_20px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+    <nav className="pb-safe fixed inset-x-0 bottom-0 z-50 border-t border-outline-variant/30 bg-surface/95 shadow-[0_-4px_20px_rgb(var(--nav-shadow))] backdrop-blur-xl">
       <div className="relative mx-auto flex h-20 w-full max-w-xl items-center justify-between px-1">
         {LEFT.map((item) => (
           <NavItem key={item.href} {...item} active={pathname === item.href} />
@@ -57,7 +57,7 @@ export function BottomNav() {
           <Link
             href="/erfassen"
             aria-label="Veränderung erfassen"
-            className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-container text-on-primary shadow-[0_6px_24px_rgba(45,212,191,0.3)] transition-all active:scale-95 active:bg-primary"
+            className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-container text-on-primary-fixed shadow-[0_6px_24px_rgba(45,212,191,0.3)] transition-all active:scale-95 active:bg-primary"
           >
             <Icon name="add" className="text-[28px] font-bold" />
           </Link>

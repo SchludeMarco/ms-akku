@@ -7,6 +7,7 @@ import "./globals.css";
 
 import { ServiceWorker } from "@/components/service-worker";
 import { TapFeedback } from "@/components/tap-feedback";
+import { THEME_INIT_SCRIPT, ThemeSync } from "@/components/theme-sync";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -45,12 +46,19 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
+    // suppressHydrationWarning: Das Start-Skript setzt data-theme, bevor React
+    // übernimmt – dieser eine Unterschied zum Server-HTML ist gewollt.
     <html
       lang="de"
       className={`dark ${plusJakarta.variable} ${inter.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
         {children}
+        <ThemeSync />
         <ServiceWorker />
         <TapFeedback />
       </body>

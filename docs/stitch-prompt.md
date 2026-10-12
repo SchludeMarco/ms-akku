@@ -28,6 +28,7 @@ Menschen mit Fatigue, Sehstörungen, Zittern, Taubheit in den Fingern und Konzen
 
 DESIGNSYSTEM (BEIBEHALTEN)
 - Farben: Hintergrund #0D1518; Karten #151D20, #192124, #232B2E, #2E3639 (von tief nach hoch); Text #DBE4E8; Nebentext #BACAC5; Linien #3C4A46; Primär #57F1DB; Primär-Fläche #2DD4BF mit Text #003731; hohe Energie Teal #2DD4BF; mittlere Energie Amber #FEA047; niedrige Energie kühles Blau #AFE0FF; Fehler #FFB4AB.
+- Zweites Erscheinungsbild „Pastell“ (hell, entspannt): salbeifarbener Grund #E9F0EC statt Weiß; Karten #E2EBE6, #DCE7E1, #D3E0D9, #C9D8D0; Text #1D2B29; Nebentext #44534F; Linien #AFC0B8; Primär für Text und Hauptknopf #245F59 mit weißer Schrift; Pastell-Teal #63BBAD für ausgewählte Flächen mit dunkler Schrift #00201C; hohe Energie Pastell-Teal #63BBAD; mittlere Energie Apricot #EBA765; niedrige Energie Pastellblau #8FB4E3; Fehler #9E3A34. Keine reinweißen Flächen, keine gesättigten Farben, weiche Übergänge. Zeige jeden Screen in beiden Erscheinungsbildern.
 - Schrift: Plus Jakarta Sans. Überschriften 600–700, Fließtext 400.
 - Symbole: Material Symbols Outlined.
 - Form: weiche Rundungen (Karten 12–16 px, Hauptknöpfe 16 px, Chips voll rund), dünne Linien statt harter Schatten, dezentes Teal-Leuchten nur an der Hauptaktion.
@@ -126,6 +127,14 @@ Drei Screens der Einführung ohne untere Navigation und ohne Haus-Knopf. „Will
 ```
 
 ---
+
+## Nachtrag 12.10.2026: Pastell-Erscheinungsbild
+
+Die App hat jetzt neben „Dunkel“ ein wählbares Erscheinungsbild „Pastell“
+(Mehr → Erscheinungsbild). Die Werte stehen in `app/globals.css` unter
+`:root[data-theme="pastel"]` und im Hauptprompt oben. Gemessen auf 13 Screens:
+Jeder Text erreicht mindestens 4,5 : 1. Unter 3 : 1 liegen nur Schmuck-Symbole
+(Pfeile in Listenzeilen, leere Auswahlkreise) – wie schon im dunklen Schema.
 
 ## Befunde der Durchsicht (12.10.2026)
 

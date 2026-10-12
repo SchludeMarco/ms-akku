@@ -65,9 +65,78 @@
     --pacing: 254 160 71; /* #FEA047 */
     --pacing-soft: 255 183 122; /* #FFB77A */
 
+    /* Schatten der unteren Navigation (mit Deckkraft) */
+    --nav-shadow: 0 0 0 / 0.4;
+
     --radius: 0.5rem;
 
     color-scheme: dark;
+  }
+
+  /*
+   * Pastell-Erscheinungsbild (wählbar unter "Mehr"). Ruhige, entsättigte Töne
+   * auf salbeifarbenem Grund statt reinem Weiß, damit es hell wirkt, ohne zu
+   * blenden. Gleiche Token-Namen wie oben, nur andere Werte.
+   * Achtung: Flächen in primary-container sind hier hell – Text darauf muss
+   * on-primary-container oder on-primary-fixed sein, nie on-primary.
+   */
+  :root[data-theme="pastel"] {
+    --surface: 233 240 236; /* #E9F0EC */
+    --surface-dim: 218 228 222; /* #DAE4DE */
+    --surface-bright: 243 247 245; /* #F3F7F5 */
+    --surface-container-lowest: 243 247 245; /* #F3F7F5 */
+    --surface-container-low: 226 235 230; /* #E2EBE6 */
+    --surface-container: 220 231 225; /* #DCE7E1 */
+    --surface-container-high: 211 224 217; /* #D3E0D9 */
+    --surface-container-highest: 201 216 208; /* #C9D8D0 */
+    --surface-variant: 201 216 208; /* #C9D8D0 */
+    --surface-tint: 36 95 89; /* #245F59 */
+    --on-surface: 29 43 41; /* #1D2B29 */
+    --on-surface-variant: 68 83 79; /* #44534F */
+    --inverse-surface: 42 56 54; /* #2A3836 */
+    --inverse-on-surface: 234 242 238; /* #EAF2EE */
+    --outline: 90 105 99; /* #5A6963 */
+    --outline-variant: 175 192 184; /* #AFC0B8 */
+
+    --primary: 36 95 89; /* #245F59 */
+    --on-primary: 255 255 255; /* #FFFFFF */
+    --primary-container: 99 187 173; /* #63BBAD */
+    --on-primary-container: 6 48 44; /* #06302C */
+    --inverse-primary: 143 211 200; /* #8FD3C8 */
+    --primary-fixed: 191 233 225; /* #BFE9E1 */
+    --primary-fixed-dim: 168 221 211; /* #A8DDD3 */
+    --on-primary-fixed: 0 32 28; /* #00201C */
+    --on-primary-fixed-variant: 27 78 72; /* #1B4E48 */
+
+    --secondary: 46 106 115; /* #2E6A73 */
+    --on-secondary: 255 255 255; /* #FFFFFF */
+    --secondary-container: 157 208 216; /* #9DD0D8 */
+    --on-secondary-container: 18 63 70; /* #123F46 */
+    --secondary-fixed: 46 106 115; /* #2E6A73 */
+    --secondary-fixed-dim: 46 106 115; /* #2E6A73 */
+    --on-secondary-fixed: 255 255 255; /* #FFFFFF */
+    --on-secondary-fixed-variant: 255 255 255; /* #FFFFFF */
+
+    --tertiary: 54 85 124; /* #36557C */
+    --on-tertiary: 255 255 255; /* #FFFFFF */
+    --tertiary-container: 143 180 227; /* #8FB4E3 */
+    --on-tertiary-container: 20 48 79; /* #14304F */
+    --tertiary-fixed: 197 216 242; /* #C5D8F2 */
+    --tertiary-fixed-dim: 175 199 232; /* #AFC7E8 */
+    --on-tertiary-fixed: 15 36 64; /* #0F2440 */
+    --on-tertiary-fixed-variant: 45 74 112; /* #2D4A70 */
+
+    --error: 158 58 52; /* #9E3A34 */
+    --on-error: 255 255 255; /* #FFFFFF */
+    --error-container: 246 213 208; /* #F6D5D0 */
+    --on-error-container: 107 31 26; /* #6B1F1A */
+
+    --pacing: 235 167 101; /* #EBA765 */
+    --pacing-soft: 138 82 22; /* #8A5216 */
+
+    --nav-shadow: 29 43 41 / 0.12;
+
+    color-scheme: light;
   }
 
   * {
