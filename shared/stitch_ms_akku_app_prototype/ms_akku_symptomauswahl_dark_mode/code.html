@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="h-full dark" lang="de"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-dim": "#0d1518",
+          "on-error-container": "#ffdad6",
+          "secondary-fixed": "#71f8e4",
+          "primary-fixed-dim": "#3cddc7",
+          "primary": "#57f1db",
+          "error": "#ffb4ab",
+          "tertiary": "#afe0ff",
+          "on-primary-container": "#00574d",
+          "on-tertiary-container": "#005371",
+          "on-secondary-fixed": "#00201c",
+          "on-background": "#dbe4e8",
+          "on-surface": "#dbe4e8",
+          "on-primary-fixed": "#00201c",
+          "tertiary-fixed-dim": "#7bd0ff",
+          "surface-bright": "#323a3e",
+          "surface-container-lowest": "#070f12",
+          "error-container": "#93000a",
+          "secondary-container": "#04b4a2",
+          "primary-container": "#2dd4bf",
+          "on-surface-variant": "#bacac5",
+          "surface-variant": "#2e3639",
+          "inverse-on-surface": "#2a3235",
+          "inverse-surface": "#dbe4e8",
+          "secondary-fixed-dim": "#4fdbc8",
+          "on-tertiary-fixed": "#001e2c",
+          "on-secondary": "#003731",
+          "secondary": "#4fdbc8",
+          "outline-variant": "#3c4a46",
+          "background": "#0d1518",
+          "surface-tint": "#3cddc7",
+          "surface-container-highest": "#2e3639",
+          "inverse-primary": "#006b5f",
+          "surface": "#0d1518",
+          "on-tertiary": "#00354a",
+          "on-primary-fixed-variant": "#005047",
+          "tertiary-container": "#5ec9ff",
+          "on-secondary-fixed-variant": "#005048",
+          "surface-container-low": "#151d20",
+          "on-tertiary-fixed-variant": "#004c69",
+          "primary-fixed": "#62fae3",
+          "on-secondary-container": "#003f38",
+          "tertiary-fixed": "#c4e7ff",
+          "on-primary": "#003731",
+          "outline": "#859490",
+          "on-error": "#690005",
+          "surface-container-high": "#232b2e",
+          "surface-container": "#192124"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-mobile": "1.25rem",
+          "margin": "2.5rem",
+          "gutter": "1.5rem",
+          "space-xl": "3rem",
+          "space-xs": "0.375rem",
+          "space-md": "1.25rem",
+          "gutter-mobile": "1rem",
+          "space-sm": "0.75rem",
+          "space-lg": "2rem"
+        },
+        "fontFamily": {
+          "headline-xl-mobile": ["Plus Jakarta Sans"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "body-md": ["Plus Jakarta Sans"],
+          "label-sm": ["Plus Jakarta Sans"],
+          "body-lg": ["Plus Jakarta Sans"],
+          "headline-lg-mobile": ["Plus Jakarta Sans"],
+          "headline-xl": ["Plus Jakarta Sans"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "body-sm": ["Plus Jakarta Sans"],
+          "label-lg": ["Plus Jakarta Sans"],
+          "label-md": ["Plus Jakarta Sans"]
+        },
+        "fontSize": {
+          "headline-xl-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+          "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+          "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+          "label-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+          "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+          "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+          "headline-xl": ["40px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+          "headline-lg": ["32px", { "lineHeight": "42px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+          "headline-md": ["22px", { "lineHeight": "30px", "fontWeight": "600" }],
+          "body-sm": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+          "label-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+          "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }]
+        }
+      },
+    },
+  }
+</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<meta content="mobile_stack" name="shell-type"/><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-container-high/60 pt-safe"><div class="h-16 px-4 sm:px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Zurück" class="w-10 h-10 flex items-center justify-center text-on-surface rounded-full hover:bg-surface-container-high active:bg-surface-container-highest transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="MS Akku Logo" class="h-8 w-auto object-contain brightness-110" src="https://lh3.googleusercontent.com/aida/AEtjO1XylWaRKMe79UgIZdR3IY69-bJzwSR9k_nKvjQ-YpHdYUddm5xvhSuqRcyDLw08A2_rFDdbME2K5uW1PWtCgyiXs8W0MoGDy49rglALKt6k5QcCjIKbHx64QGAH8IuEJFatUw2N1dHoC_I9eUMYkIlI2DVIeJN30qd68gsFbA55tpPSHrbDCgkjJ2AHnGfdOwyIf0Y3gq4X2zzSL4zqFroUnmiEde3K08nX492HwiJ6vDpD5YcWKlGCElyd"/><h1 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Veränderung Erfassen</h1></div><div class="flex items-center gap-space-xs"><div class="w-9 h-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[20px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full px-4 sm:px-margin pb-space-xl">
+<!-- Progress & Gentle Badge -->
+<div class="flex flex-col gap-space-sm pt-space-sm mb-space-md">
+<div class="flex items-center justify-between">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-primary">
+<span class="material-symbols-outlined text-[16px]">eco</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Sanfte Begleitung</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Schritt 2 von 2</span>
+</div>
+<!-- Progress Indicator Bar -->
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full w-full rounded-full bg-primary-container transition-all duration-500 shadow-sm shadow-primary/20"></div>
+</div>
+</div>
+<!-- Editorial Visual Inspiration Tile -->
+<div class="w-full rounded-2xl overflow-hidden bg-surface-container-low mb-space-md shadow-md relative">
+<div class="w-full h-32 bg-cover bg-center" data-alt="A tranquil, soft-focused morning scene with gentle sunlight filtering through sage green eucalyptus leaves, casting warm shadows over a calm dark slate surface with subtle teal ambient reflections, minimal and relaxing atmosphere for multiple sclerosis recovery" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBGCtFrZQWXUERA3B-CJLG7eR6hWjcOqVLetELdoiYmc4I3Fb4v6KrqsLxtCwnFo9yD6_A26_qSpVwFaDZyphN7imXqScd1jDTh9ElRgrPaEXClgxaA27TaR2KXhtGEgS6qIk_puASDg9aAQLoXVT2R5QfkZ9Arna7V3CKyWtovqgQw0uHxUFpgNJW2zZTiGL9YMoJFk4OTaJTIg9NKwsq2tCZM3hYHBoadhP7bD9EtHnweX0QLb-vtqg')">
+<div class="w-full h-full bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent p-space-md flex flex-col justify-end">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Dein persönlicher Akku</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Individuelle Beobachtung</span>
+</div>
+</div>
+</div>
+<!-- Header Text Section -->
+<div class="flex flex-col gap-space-xs mb-space-lg">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-semibold tracking-tight">
+      Was möchtest du beobachten?
+    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+      Wähle aus, was für deinen Alltag relevant ist. Du kannst jederzeit Symptome hinzufügen oder ausblenden.
+    </p>
+</div>
+<!-- Multi-Selection Grid -->
+<div aria-label="Symptomauswahl" class="grid grid-cols-2 gap-space-sm mb-space-md" id="symptom-grid" role="group">
+<!-- 1. Fatigue (Selected) -->
+<button aria-pressed="true" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-high text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-primary">bedtime</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Fatigue</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 2. Energie (Selected) -->
+<button aria-pressed="true" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-high text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-primary">bolt</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Energie</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 3. Kribbeln (Selected) -->
+<button aria-pressed="true" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-high text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-primary">grain</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Kribbeln</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 4. Schmerzen (Unselected) -->
+<button aria-pressed="false" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-low text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">healing</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Schmerzen</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-surface-container-highest text-transparent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 5. Spastik (Unselected) -->
+<button aria-pressed="false" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-low text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">accessibility_new</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Spastik</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-surface-container-highest text-transparent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 6. Gleichgewicht (Unselected) -->
+<button aria-pressed="false" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-low text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">balance</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Gleichgewicht</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-surface-container-highest text-transparent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 7. Gehfähigkeit (Unselected) -->
+<button aria-pressed="false" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-low text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">directions_walk</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Gehfähigkeit</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-surface-container-highest text-transparent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 8. Sehen (Unselected) -->
+<button aria-pressed="false" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-low text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">visibility</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Sehen</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-surface-container-highest text-transparent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 9. Konzentration (Unselected) -->
+<button aria-pressed="false" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-low text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">psychology</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Konzentration</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-surface-container-highest text-transparent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 10. Schlaf (Selected) -->
+<button aria-pressed="true" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-high text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-primary">nights_stay</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Schlaf</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 11. Blase / Darm (Unselected) -->
+<button aria-pressed="false" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-low text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">water_drop</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Blase / Darm</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-surface-container-highest text-transparent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+<!-- 12. Stimmung (Unselected) -->
+<button aria-pressed="false" class="symptom-card min-h-[64px] p-space-sm rounded-xl bg-surface-container-low text-on-surface shadow-sm flex items-center justify-between text-left transition-all active:scale-[0.98]" onclick="toggleSymptom(this)" type="button">
+<div class="flex items-center gap-space-xs min-w-0 pr-1">
+<div class="w-9 h-9 rounded-lg bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">sentiment_satisfied</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Stimmung</span>
+</div>
+<div class="check-box w-7 h-7 rounded-lg bg-surface-container-highest text-transparent flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+</div>
+<!-- Custom Symptom Action Card -->
+<button class="w-full min-h-[64px] p-space-md mb-space-md rounded-2xl bg-surface-container-low hover:bg-surface-container transition-colors shadow-sm flex items-center gap-space-md text-left active:scale-[0.99]" type="button">
+<div class="w-11 h-11 rounded-xl bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">add</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg text-primary font-semibold truncate">+ Eigenes Symptom hinzufügen</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Verwende deine eigenen Worte – z. B. Beine wie Beton</span>
+</div>
+</button>
+<!-- Relieving Emotional Note -->
+<div class="w-full p-space-md mb-space-lg rounded-2xl bg-surface-container-low shadow-sm flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+<strong class="font-label-md text-label-md text-on-surface block mb-0.5">Keine Sorge</strong>
+      Du musst nichts beobachten, was dich stresst. Weniger ist oft mehr.
+    </p>
+</div>
+<!-- Sticky Bottom / Actions -->
+<div class="flex flex-col items-center gap-space-sm">
+<button class="w-full h-14 rounded-2xl bg-primary text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 shadow-lg shadow-primary/10 active:opacity-90 active:scale-[0.99] transition-transform" type="button">
+<span>Weiter zur Tagesübersicht</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<button class="py-space-xs px-space-md text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" type="button">
+      Später auswählen
+    </button>
+</div>
+</div>
+<script>
+  function toggleSymptom(button) {
+    const isPressed = button.getAttribute('aria-pressed') === 'true';
+    const newState = !isPressed;
+    button.setAttribute('aria-pressed', String(newState));
+
+    const checkBox = button.querySelector('.check-box');
+    const iconContainer = button.querySelector('div:first-child > div:first-child');
+    const iconSpan = iconContainer ? iconContainer.querySelector('.material-symbols-outlined') : null;
+
+    if (newState) {
+      button.classList.remove('bg-surface-container-low');
+      button.classList.add('bg-surface-container-high');
+      
+      if (checkBox) {
+        checkBox.classList.remove('bg-surface-container-highest', 'text-transparent');
+        checkBox.classList.add('bg-primary-container', 'text-on-primary-container');
+      }
+      if (iconContainer) {
+        iconContainer.classList.remove('bg-surface-variant');
+        iconContainer.classList.add('bg-primary-container/20');
+      }
+      if (iconSpan) {
+        iconSpan.classList.remove('text-on-surface-variant');
+        iconSpan.classList.add('text-primary');
+      }
+    } else {
+      button.classList.remove('bg-surface-container-high');
+      button.classList.add('bg-surface-container-low');
+      
+      if (checkBox) {
+        checkBox.classList.remove('bg-primary-container', 'text-on-primary-container');
+        checkBox.classList.add('bg-surface-container-highest', 'text-transparent');
+      }
+      if (iconContainer) {
+        iconContainer.classList.remove('bg-primary-container/20');
+        iconContainer.classList.add('bg-surface-variant');
+      }
+      if (iconSpan) {
+        iconSpan.classList.remove('text-primary');
+        iconSpan.classList.add('text-on-surface-variant');
+      }
+    }
+  }
+</script></main></body></html>

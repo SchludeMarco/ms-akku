@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="h-full dark" lang="de"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-dim": "#0d1518",
+          "on-error-container": "#ffdad6",
+          "secondary-fixed": "#71f8e4",
+          "primary-fixed-dim": "#3cddc7",
+          "primary": "#57f1db",
+          "error": "#ffb4ab",
+          "tertiary": "#afe0ff",
+          "on-primary-container": "#00574d",
+          "on-tertiary-container": "#005371",
+          "on-secondary-fixed": "#00201c",
+          "on-background": "#dbe4e8",
+          "on-surface": "#dbe4e8",
+          "on-primary-fixed": "#00201c",
+          "tertiary-fixed-dim": "#7bd0ff",
+          "surface-bright": "#323a3e",
+          "surface-container-lowest": "#070f12",
+          "error-container": "#93000a",
+          "secondary-container": "#04b4a2",
+          "primary-container": "#2dd4bf",
+          "on-surface-variant": "#bacac5",
+          "surface-variant": "#2e3639",
+          "inverse-on-surface": "#2a3235",
+          "inverse-surface": "#dbe4e8",
+          "secondary-fixed-dim": "#4fdbc8",
+          "on-tertiary-fixed": "#001e2c",
+          "on-secondary": "#003731",
+          "secondary": "#4fdbc8",
+          "outline-variant": "#3c4a46",
+          "background": "#0d1518",
+          "surface-tint": "#3cddc7",
+          "surface-container-highest": "#2e3639",
+          "inverse-primary": "#006b5f",
+          "surface": "#0d1518",
+          "on-tertiary": "#00354a",
+          "on-primary-fixed-variant": "#005047",
+          "tertiary-container": "#5ec9ff",
+          "on-secondary-fixed-variant": "#005048",
+          "surface-container-low": "#151d20",
+          "on-tertiary-fixed-variant": "#004c69",
+          "primary-fixed": "#62fae3",
+          "on-secondary-container": "#003f38",
+          "tertiary-fixed": "#c4e7ff",
+          "on-primary": "#003731",
+          "outline": "#859490",
+          "on-error": "#690005",
+          "surface-container-high": "#232b2e",
+          "surface-container": "#192124"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-mobile": "1.25rem",
+          "margin": "2.5rem",
+          "gutter": "1.5rem",
+          "space-xl": "3rem",
+          "space-xs": "0.375rem",
+          "space-md": "1.25rem",
+          "gutter-mobile": "1rem",
+          "space-sm": "0.75rem",
+          "space-lg": "2rem"
+        },
+        "fontFamily": {
+          "headline-xl-mobile": ["Plus Jakarta Sans"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "body-md": ["Plus Jakarta Sans"],
+          "label-sm": ["Plus Jakarta Sans"],
+          "body-lg": ["Plus Jakarta Sans"],
+          "headline-lg-mobile": ["Plus Jakarta Sans"],
+          "headline-xl": ["Plus Jakarta Sans"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "body-sm": ["Plus Jakarta Sans"],
+          "label-lg": ["Plus Jakarta Sans"],
+          "label-md": ["Plus Jakarta Sans"]
+        },
+        "fontSize": {
+          "headline-xl-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+          "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+          "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+          "label-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+          "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+          "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+          "headline-xl": ["40px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+          "headline-lg": ["32px", { "lineHeight": "42px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+          "headline-md": ["22px", { "lineHeight": "30px", "fontWeight": "600" }],
+          "body-sm": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+          "label-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+          "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }]
+        }
+      },
+    },
+  }
+</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<meta content="mobile_stack" name="shell-type"/><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-container-high/60 pt-safe"><div class="h-16 px-4 sm:px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Zurück" class="w-10 h-10 flex items-center justify-center text-on-surface rounded-full hover:bg-surface-container-high active:bg-surface-container-highest transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="MS Akku Logo" class="h-8 w-auto object-contain brightness-110" src="https://lh3.googleusercontent.com/aida/AEtjO1XylWaRKMe79UgIZdR3IY69-bJzwSR9k_nKvjQ-YpHdYUddm5xvhSuqRcyDLw08A2_rFDdbME2K5uW1PWtCgyiXs8W0MoGDy49rglALKt6k5QcCjIKbHx64QGAH8IuEJFatUw2N1dHoC_I9eUMYkIlI2DVIeJN30qd68gsFbA55tpPSHrbDCgkjJ2AHnGfdOwyIf0Y3gq4X2zzSL4zqFroUnmiEde3K08nX492HwiJ6vDpD5YcWKlGCElyd"/><h1 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Veränderung Erfassen</h1></div><div class="flex items-center gap-space-xs"><div class="w-9 h-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[20px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full px-4 sm:px-margin pb-space-xl">
+<!-- Progress Section -->
+<div class="flex flex-col gap-space-xs mt-space-sm mb-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary tracking-wide flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+        Schritt 1 von 2 • Orientierung
+      </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">50%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full w-1/2 transition-all duration-500 ease-out shadow-sm"></div>
+</div>
+</div>
+<!-- Screen Heading -->
+<div class="flex flex-col gap-space-xs mb-space-lg">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">
+      Wie möchtest du MS Akku verwenden?
+    </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+      Wähle den Modus, der sich heute für dich richtig anfühlt. Beide Wege sind vollwertig, achtsam gestaltet und jederzeit anpassbar.
+    </p>
+</div>
+<!-- Option Selection Cards -->
+<div aria-label="Nutzungspräferenz auswählen" class="flex flex-col gap-space-md mb-space-lg" role="radiogroup">
+<!-- Option 1: Personal (Default active) -->
+<div aria-checked="true" class="relative p-space-md rounded-2xl bg-surface-container-high cursor-pointer transition-all duration-300 shadow-xl overflow-hidden" id="card-option-1" onclick="selectOption(1)" role="radio" style="box-shadow: 0 10px 30px -10px rgba(45, 212, 191, 0.2);" tabindex="0">
+<!-- Glow ambient light effect -->
+<div class="absolute -right-12 -top-12 w-36 h-36 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+<!-- Top Row: Icon, Title & Badge -->
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Für mich selbst</h3>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+              Aktiv gewählt
+            </span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/30 text-secondary-fixed text-label-sm font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">arrow_back_ios_new</span>
+            Beliebt
+          </span>
+<div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm" id="radio-1">
+<span class="material-symbols-outlined text-[18px]">done</span>
+</div>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md pl-1">
+        Zur persönlichen Orientierung, um die eigene Energie besser einzuteilen und Muster im Alltag stressfrei zu erkennen.
+      </p>
+<!-- Soft Pills -->
+<div class="flex flex-wrap gap-space-xs pl-1">
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary">eco</span>
+          Kein Fachjargon
+        </span>
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary">self_improvement</span>
+          Rein für dein Wohlbefinden
+        </span>
+</div>
+</div>
+<!-- Option 2: Doctor visits / Clinical -->
+<div aria-checked="false" class="relative p-space-md rounded-2xl bg-surface-container-low cursor-pointer transition-all duration-300 overflow-hidden" id="card-option-2" onclick="selectOption(2)" role="radio" tabindex="0">
+<!-- Top Row: Icon, Title & Selection Indicator -->
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-on-surface-variant flex-shrink-0">
+<span class="material-symbols-outlined text-[26px]">assignment</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Zusätzlich für Arzttermine</h3>
+<span class="font-label-sm text-label-sm text-outline">Erweiterte Berichte</span>
+</div>
+</div>
+<div class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant" id="radio-2">
+<div class="w-2.5 h-2.5 rounded-full bg-transparent"></div>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md pl-1">
+        Enthält strukturierte Zusammenfassungen und unkomplizierte Übersichten, um Gespräche mit deinem Behandlungsteam vorzubereiten.
+      </p>
+<!-- Soft Pills -->
+<div class="flex flex-wrap gap-space-xs pl-1">
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-tertiary">calendar_month</span>
+          Termin-Vorbereitung
+        </span>
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-tertiary">picture_as_pdf</span>
+          PDF-Übersicht auf Wunsch
+        </span>
+</div>
+</div>
+</div>
+<!-- Reassuring Security / Reassurance Card -->
+<div class="p-space-md rounded-2xl bg-surface-container flex items-start gap-space-sm mb-space-lg shadow-sm">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<h4 class="font-label-lg text-label-lg text-on-surface">Keine Festlegung nötig</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+        Du kannst diese Einstellung jederzeit in deinem Profil ändern. Die Option für dich selbst ist uneingeschränkt vollständig und wahrt deine Ruhe.
+      </p>
+</div>
+</div>
+<!-- Action Section -->
+<div class="flex flex-col gap-space-sm">
+<button class="w-full h-14 rounded-2xl bg-primary-container text-on-primary-container font-label-lg text-label-lg font-semibold flex items-center justify-center gap-space-xs shadow-lg shadow-primary-container/10 active:scale-[0.99] transition-transform" type="button">
+<span>Weiter</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<div class="flex items-center justify-center gap-1.5 py-1 text-on-surface-variant text-center">
+<span class="material-symbols-outlined text-[16px] text-primary">lock</span>
+<span class="font-label-sm text-label-sm">Deine Daten verbleiben verschlüsselt auf diesem Gerät.</span>
+</div>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+    function selectOption(idx) {
+      const card1 = document.getElementById('card-option-1');
+      const card2 = document.getElementById('card-option-2');
+      const radio1 = document.getElementById('radio-1');
+      const radio2 = document.getElementById('radio-2');
+
+      if (idx === 1) {
+        card1.className = 'relative p-space-md rounded-2xl bg-surface-container-high cursor-pointer transition-all duration-300 shadow-xl overflow-hidden';
+        card1.style.boxShadow = '0 10px 30px -10px rgba(45, 212, 191, 0.2)';
+        card1.setAttribute('aria-checked', 'true');
+        radio1.className = 'w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm';
+        radio1.innerHTML = '<span class="material-symbols-outlined text-[18px]">done</span>';
+
+        card2.className = 'relative p-space-md rounded-2xl bg-surface-container-low cursor-pointer transition-all duration-300 overflow-hidden';
+        card2.style.boxShadow = 'none';
+        card2.setAttribute('aria-checked', 'false');
+        radio2.className = 'w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant';
+        radio2.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-transparent"></div>';
+      } else {
+        card2.className = 'relative p-space-md rounded-2xl bg-surface-container-high cursor-pointer transition-all duration-300 shadow-xl overflow-hidden';
+        card2.style.boxShadow = '0 10px 30px -10px rgba(45, 212, 191, 0.2)';
+        card2.setAttribute('aria-checked', 'true');
+        radio2.className = 'w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm';
+        radio2.innerHTML = '<span class="material-symbols-outlined text-[18px]">done</span>';
+
+        card1.className = 'relative p-space-md rounded-2xl bg-surface-container-low cursor-pointer transition-all duration-300 overflow-hidden';
+        card1.style.boxShadow = 'none';
+        card1.setAttribute('aria-checked', 'false');
+        radio1.className = 'w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant';
+        radio1.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-transparent"></div>';
+      }
+    }
+  </script>
+</div></main></body></html>

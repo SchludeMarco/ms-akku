@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="h-full dark" lang="de"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-dim": "#0d1518",
+          "on-error-container": "#ffdad6",
+          "secondary-fixed": "#71f8e4",
+          "primary-fixed-dim": "#3cddc7",
+          "primary": "#57f1db",
+          "error": "#ffb4ab",
+          "tertiary": "#afe0ff",
+          "on-primary-container": "#00574d",
+          "on-tertiary-container": "#005371",
+          "on-secondary-fixed": "#00201c",
+          "on-background": "#dbe4e8",
+          "on-surface": "#dbe4e8",
+          "on-primary-fixed": "#00201c",
+          "tertiary-fixed-dim": "#7bd0ff",
+          "surface-bright": "#323a3e",
+          "surface-container-lowest": "#070f12",
+          "error-container": "#93000a",
+          "secondary-container": "#04b4a2",
+          "primary-container": "#2dd4bf",
+          "on-surface-variant": "#bacac5",
+          "surface-variant": "#2e3639",
+          "inverse-on-surface": "#2a3235",
+          "inverse-surface": "#dbe4e8",
+          "secondary-fixed-dim": "#4fdbc8",
+          "on-tertiary-fixed": "#001e2c",
+          "on-secondary": "#003731",
+          "secondary": "#4fdbc8",
+          "outline-variant": "#3c4a46",
+          "background": "#0d1518",
+          "surface-tint": "#3cddc7",
+          "surface-container-highest": "#2e3639",
+          "inverse-primary": "#006b5f",
+          "surface": "#0d1518",
+          "on-tertiary": "#00354a",
+          "on-primary-fixed-variant": "#005047",
+          "tertiary-container": "#5ec9ff",
+          "on-secondary-fixed-variant": "#005048",
+          "surface-container-low": "#151d20",
+          "on-tertiary-fixed-variant": "#004c69",
+          "primary-fixed": "#62fae3",
+          "on-secondary-container": "#003f38",
+          "tertiary-fixed": "#c4e7ff",
+          "on-primary": "#003731",
+          "outline": "#859490",
+          "on-error": "#690005",
+          "surface-container-high": "#232b2e",
+          "surface-container": "#192124"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin-mobile": "1.25rem",
+          "margin": "2.5rem",
+          "gutter": "1.5rem",
+          "space-xl": "3rem",
+          "space-xs": "0.375rem",
+          "space-md": "1.25rem",
+          "gutter-mobile": "1rem",
+          "space-sm": "0.75rem",
+          "space-lg": "2rem"
+        },
+        "fontFamily": {
+          "headline-xl-mobile": ["Plus Jakarta Sans"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "body-md": ["Plus Jakarta Sans"],
+          "label-sm": ["Plus Jakarta Sans"],
+          "body-lg": ["Plus Jakarta Sans"],
+          "headline-lg-mobile": ["Plus Jakarta Sans"],
+          "headline-xl": ["Plus Jakarta Sans"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "body-sm": ["Plus Jakarta Sans"],
+          "label-lg": ["Plus Jakarta Sans"],
+          "label-md": ["Plus Jakarta Sans"]
+        },
+        "fontSize": {
+          "headline-xl-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+          "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+          "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+          "label-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+          "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+          "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+          "headline-xl": ["40px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+          "headline-lg": ["32px", { "lineHeight": "42px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+          "headline-md": ["22px", { "lineHeight": "30px", "fontWeight": "600" }],
+          "body-sm": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+          "label-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+          "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }]
+        }
+      },
+    },
+  }
+</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-container-high/60 pt-safe"><div class="h-16 px-4 sm:px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Zurück" class="w-10 h-10 flex items-center justify-center text-on-surface rounded-full hover:bg-surface-container-high active:bg-surface-container-highest transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="MS Akku Logo" class="h-8 w-auto object-contain brightness-110" src="https://lh3.googleusercontent.com/aida/AEtjO1XylWaRKMe79UgIZdR3IY69-bJzwSR9k_nKvjQ-YpHdYUddm5xvhSuqRcyDLw08A2_rFDdbME2K5uW1PWtCgyiXs8W0MoGDy49rglALKt6k5QcCjIKbHx64QGAH8IuEJFatUw2N1dHoC_I9eUMYkIlI2DVIeJN30qd68gsFbA55tpPSHrbDCgkjJ2AHnGfdOwyIf0Y3gq4X2zzSL4zqFroUnmiEde3K08nX492HwiJ6vDpD5YcWKlGCElyd"/><h1 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Veränderung Erfassen</h1></div><div class="flex items-center gap-space-xs"><div class="w-9 h-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[20px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-8">
+<!-- Calm Context Header & Dismissal -->
+<div class="px-4 sm:px-margin pt-4 pb-2 flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">speed</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold tracking-wider uppercase">Schnell-Protokoll</span>
+</div>
+<button aria-label="Abbrechen" class="min-h-[44px] px-3.5 py-1 rounded-full bg-surface-container-high text-on-surface hover:bg-surface-container-highest border border-outline-variant/40 transition-colors flex items-center gap-1.5 font-label-md text-label-md" onclick="history.back()">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">close</span>
+<span>Abbrechen</span>
+</button>
+</div>
+<!-- Intro Message -->
+<div class="px-4 sm:px-margin mb-5">
+<h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-on-surface leading-tight mb-1">Was hat sich verändert?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">In wenigen Sekunden erfasst – ohne langes Ausfüllen.</p>
+</div>
+<!-- Primary Change Options Matrix -->
+<div class="px-4 sm:px-margin flex flex-col gap-3 mb-6" id="primary-options-group">
+<!-- Option 1: Neues Symptom -->
+<button class="w-full text-left p-4 rounded-xl bg-surface-container-low border border-surface-container-high/80 hover:bg-surface-container hover:border-outline-variant/60 active:bg-surface-container-high transition-all flex items-center justify-between min-h-[64px]" onclick="togglePrimary(this)" type="button">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-11 h-11 rounded-full bg-surface-container-high text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">add_circle</span>
+</div>
+<div class="min-w-0">
+<div class="font-headline-sm text-headline-sm text-on-surface truncate">Neues Symptom</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">z. B. Taubheitsgefühl, Sehstörung</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[22px] shrink-0 ml-2">chevron_right</span>
+</button>
+<!-- Option 2: Etwas ist stärker (ACTIVE / EXPANDED STATE) -->
+<div class="w-full rounded-xl bg-surface-container-low border border-primary/40 shadow-lg overflow-hidden transition-all">
+<button class="w-full text-left p-4 bg-surface-container-high/90 text-on-surface min-h-[64px] flex items-center justify-between" onclick="toggleAccordion('detail-accordion')" type="button">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-11 h-11 rounded-full bg-primary-container text-on-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+<div class="min-w-0">
+<div class="font-headline-sm text-headline-sm text-primary truncate">Etwas ist stärker</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">z. B. Fatigue, Schmerzen, Kribbeln</div>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-primary flex items-center justify-center shrink-0 ml-2">
+<span class="material-symbols-outlined text-[20px]">expand_less</span>
+</div>
+</button>
+<!-- Progressive Flow Container (Pre-selected: Kribbeln) -->
+<div class="p-4 flex flex-col gap-5 bg-surface-container-lowest/80 border-t border-surface-container-high" id="detail-accordion">
+<!-- Symptom Focal Badge -->
+<div class="flex items-center justify-between bg-surface-container-low border border-surface-container-high p-3 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-secondary-fixed/20 text-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">grain</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Ausgewählt</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Kribbeln</span>
+</div>
+</div>
+<button class="px-3 py-1 font-label-md text-label-md text-primary hover:bg-surface-container-high rounded-full min-h-[44px] flex items-center transition-colors">
+            Ändern
+          </button>
+</div>
+<!-- Detail Question 1: Intensitätsverlauf -->
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface flex items-center gap-1.5">
+<span>Wie hat es sich verändert?</span>
+</label>
+<div aria-label="Intensität" class="grid grid-cols-3 gap-2 pt-1" role="radiogroup">
+<button class="min-h-[56px] px-2 rounded-xl bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container-high transition-all flex flex-col items-center justify-center gap-0.5 text-center" onclick="selectPill(this, 'intensity')" type="button">
+<span class="font-label-md text-label-md">Etwas</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">stärker</span>
+</button>
+<button class="min-h-[56px] px-2 rounded-xl bg-primary-container text-on-primary-fixed border border-primary font-semibold shadow-md flex flex-col items-center justify-center gap-0.5 text-center transition-all" onclick="selectPill(this, 'intensity')" type="button">
+<span class="font-label-md text-label-md text-on-primary-fixed font-bold">Deutlich</span>
+<span class="font-label-sm text-label-sm text-on-primary-fixed/80">stärker</span>
+</button>
+<button class="min-h-[56px] px-2 rounded-xl bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container-high transition-all flex flex-col items-center justify-center gap-0.5 text-center" onclick="selectPill(this, 'intensity')" type="button">
+<span class="font-label-md text-label-md">Sehr</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">stark</span>
+</button>
+</div>
+</div>
+<!-- Detail Question 2: Körperbereich (Optional) -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-on-surface">Wo?</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Optional</span>
+</div>
+<div class="flex flex-wrap gap-2 pt-1">
+<button class="min-h-[46px] px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5 font-label-md text-label-md" onclick="toggleChip(this)" type="button">
+<span>Rechter Arm</span>
+</button>
+<button class="min-h-[46px] px-3.5 py-1.5 rounded-full bg-primary-container text-on-primary-fixed border border-primary/50 shadow-sm flex items-center gap-1.5 font-label-md text-label-md font-medium" onclick="toggleChip(this)" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Beine / Füße</span>
+</button>
+<button class="min-h-[46px] px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5 font-label-md text-label-md" onclick="toggleChip(this)" type="button">
+<span>Hände</span>
+</button>
+<button class="min-h-[46px] px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5 font-label-md text-label-md" onclick="toggleChip(this)" type="button">
+<span>Gesicht</span>
+</button>
+<button class="min-h-[46px] px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5 font-label-md text-label-md" onclick="toggleChip(this)" type="button">
+<span>Anderer Bereich</span>
+</button>
+</div>
+</div>
+<!-- Detail Question 3: Zeitliche Dimension (Optional) -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-on-surface">Seit wann?</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Optional</span>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="min-h-[46px] px-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container transition-all flex items-center justify-center gap-1.5 font-label-md text-label-md" onclick="selectTime(this)" type="button">
+<span>Gerade eben</span>
+</button>
+<button class="min-h-[46px] px-3 rounded-lg bg-primary-container text-on-primary-fixed border border-primary/50 shadow-sm flex items-center justify-center gap-1.5 font-label-md text-label-md font-medium" onclick="selectTime(this)" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Heute</span>
+</button>
+<button class="min-h-[46px] px-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container transition-all flex items-center justify-center gap-1.5 font-label-md text-label-md" onclick="selectTime(this)" type="button">
+<span>Seit einigen Tagen</span>
+</button>
+<button class="min-h-[46px] px-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface-variant hover:bg-surface-container transition-all flex items-center justify-center gap-1.5 font-label-md text-label-md" onclick="selectTime(this)" type="button">
+<span>Weiß ich nicht</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Option 3: Etwas ist schwächer -->
+<button class="w-full text-left p-4 rounded-xl bg-surface-container-low border border-surface-container-high/80 hover:bg-surface-container hover:border-outline-variant/60 active:bg-surface-container-high transition-all flex items-center justify-between min-h-[64px]" onclick="togglePrimary(this)" type="button">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-11 h-11 rounded-full bg-surface-container-high text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">trending_down</span>
+</div>
+<div class="min-w-0">
+<div class="font-headline-sm text-headline-sm text-on-surface truncate">Etwas ist schwächer</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Besserung spürbar</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[22px] shrink-0 ml-2">chevron_right</span>
+</button>
+<!-- Option 4: Etwas ist verschwunden -->
+<button class="w-full text-left p-4 rounded-xl bg-surface-container-low border border-surface-container-high/80 hover:bg-surface-container hover:border-outline-variant/60 active:bg-surface-container-high transition-all flex items-center justify-between min-h-[64px]" onclick="togglePrimary(this)" type="button">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-11 h-11 rounded-full bg-surface-container-high text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">check_circle</span>
+</div>
+<div class="min-w-0">
+<div class="font-headline-sm text-headline-sm text-on-surface truncate">Etwas ist verschwunden</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Symptom abgeklungen</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[22px] shrink-0 ml-2">chevron_right</span>
+</button>
+<!-- Option 5: Mein Akku hat sich verändert -->
+<button class="w-full text-left p-4 rounded-xl bg-surface-container-low border border-surface-container-high/80 hover:bg-surface-container hover:border-outline-variant/60 active:bg-surface-container-high transition-all flex items-center justify-between min-h-[64px]" onclick="togglePrimary(this)" type="button">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-11 h-11 rounded-full bg-surface-container-high text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">battery_charging_full</span>
+</div>
+<div class="min-w-0">
+<div class="font-headline-sm text-headline-sm text-on-surface truncate">Mein Akku hat sich verändert</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Spontane Erschöpfung oder neuer Schwung</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[22px] shrink-0 ml-2">chevron_right</span>
+</button>
+<!-- Option 6: Besonders guter Tag -->
+<button class="w-full text-left p-4 rounded-xl bg-surface-container-low border border-surface-container-high/80 hover:bg-surface-container hover:border-outline-variant/60 active:bg-surface-container-high transition-all flex items-center justify-between min-h-[64px]" onclick="togglePrimary(this)" type="button">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-11 h-11 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+</div>
+<div class="min-w-0">
+<div class="font-headline-sm text-headline-sm text-on-surface truncate">Besonders guter Tag</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Erfreulicher Zustand &amp; Energie</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[22px] shrink-0 ml-2">chevron_right</span>
+</button>
+</div>
+<!-- Reassuring Low-Stimulus Framing -->
+<div class="px-4 sm:px-margin mb-6">
+<div class="p-4 rounded-xl bg-surface-container-low border border-surface-container-high flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/15 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant m-0">
+        Keine Pflichtfelder. Dein Eindruck reicht vollkommen aus.
+      </p>
+</div>
+</div>
+<!-- Bottom Sticky Actions -->
+<div class="sticky bottom-0 inset-x-0 bg-surface/95 backdrop-blur-md pt-3 pb-4 px-4 sm:px-margin flex flex-col gap-2.5 border-t border-surface-container-high/60 shadow-2xl">
+<!-- Primary Confirmation Action (Min 56px touch target) -->
+<button class="w-full min-h-[56px] px-6 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-lg shadow-primary-container/20 hover:brightness-105 active:scale-[0.99] transition-all" onclick="handleSave()" type="button">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+<span class="font-bold">Speichern</span>
+</button>
+<!-- Secondary Safe Action (Quick skip) -->
+<button class="w-full min-h-[52px] px-6 rounded-xl bg-surface-container-high text-on-surface hover:bg-surface-container-highest active:bg-surface-variant border border-outline-variant/30 font-label-lg text-label-lg transition-colors flex items-center justify-center" onclick="handleSave()" type="button">
+<span>Überspringen &amp; speichern</span>
+</button>
+</div>
+</div>
+<script>
+  function toggleAccordion(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.toggle('hidden');
+    }
+  }
+
+  function selectPill(button, group) {
+    const parent = button.parentElement;
+    const buttons = parent.querySelectorAll('button');
+    buttons.forEach(btn => {
+      btn.className = 'min-h-[56px] px-2 rounded-xl bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container-high transition-all flex flex-col items-center justify-center gap-0.5 text-center';
+      const spans = btn.querySelectorAll('span');
+      if (spans[0]) spans[0].className = 'font-label-md text-label-md';
+      if (spans[1]) spans[1].className = 'font-label-sm text-label-sm text-on-surface-variant';
+    });
+    button.className = 'min-h-[56px] px-2 rounded-xl bg-primary-container text-on-primary-fixed border border-primary font-semibold shadow-md flex flex-col items-center justify-center gap-0.5 text-center transition-all';
+    const spans = button.querySelectorAll('span');
+    if (spans[0]) spans[0].className = 'font-label-md text-label-md text-on-primary-fixed font-bold';
+    if (spans[1]) spans[1].className = 'font-label-sm text-label-sm text-on-primary-fixed/80';
+  }
+
+  function toggleChip(button) {
+    const isSelected = button.classList.contains('bg-primary-container');
+    if (isSelected) {
+      button.className = 'min-h-[46px] px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5 font-label-md text-label-md';
+      const icon = button.querySelector('.material-symbols-outlined');
+      if (icon) icon.remove();
+    } else {
+      button.className = 'min-h-[46px] px-3.5 py-1.5 rounded-full bg-primary-container text-on-primary-fixed border border-primary/50 shadow-sm flex items-center gap-1.5 font-label-md text-label-md font-medium';
+      const span = document.createElement('span');
+      span.className = 'material-symbols-outlined text-[18px]';
+      span.innerText = 'check';
+      button.prepend(span);
+    }
+  }
+
+  function selectTime(button) {
+    const parent = button.parentElement;
+    const buttons = parent.querySelectorAll('button');
+    buttons.forEach(btn => {
+      btn.className = 'min-h-[46px] px-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface hover:bg-surface-container transition-all flex items-center justify-center gap-1.5 font-label-md text-label-md';
+      const icon = btn.querySelector('.material-symbols-outlined');
+      if (icon) icon.remove();
+    });
+    button.className = 'min-h-[46px] px-3 rounded-lg bg-primary-container text-on-primary-fixed border border-primary/50 shadow-sm flex items-center justify-center gap-1.5 font-label-md text-label-md font-medium';
+    const span = document.createElement('span');
+    span.className = 'material-symbols-outlined text-[18px]';
+    span.innerText = 'check';
+    button.prepend(span);
+  }
+
+  function togglePrimary(button) {
+    button.classList.add('bg-surface-container-high');
+    setTimeout(() => {
+      button.classList.remove('bg-surface-container-high');
+    }, 200);
+  }
+
+  function handleSave() {
+    if (window.history && window.history.length > 1) {
+      history.back();
+    }
+  }
+</script></main></body></html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="h-full dark" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { width: 100%; min-height: 100%; margin: 0; padding: 0; }
+      body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    body { min-height: max(884px, 100dvh); }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-dim": "#0d1518",
+            "on-error-container": "#ffdad6",
+            "secondary-fixed": "#71f8e4",
+            "primary-fixed-dim": "#3cddc7",
+            "primary": "#57f1db",
+            "error": "#ffb4ab",
+            "tertiary": "#afe0ff",
+            "on-primary-container": "#00574d",
+            "on-tertiary-container": "#005371",
+            "on-secondary-fixed": "#00201c",
+            "on-background": "#dbe4e8",
+            "on-surface": "#dbe4e8",
+            "on-primary-fixed": "#00201c",
+            "tertiary-fixed-dim": "#7bd0ff",
+            "surface-bright": "#323a3e",
+            "surface-container-lowest": "#070f12",
+            "error-container": "#93000a",
+            "secondary-container": "#04b4a2",
+            "primary-container": "#2dd4bf",
+            "on-surface-variant": "#bacac5",
+            "surface-variant": "#2e3639",
+            "inverse-on-surface": "#2a3235",
+            "inverse-surface": "#dbe4e8",
+            "secondary-fixed-dim": "#4fdbc8",
+            "on-tertiary-fixed": "#001e2c",
+            "on-secondary": "#003731",
+            "secondary": "#4fdbc8",
+            "outline-variant": "#3c4a46",
+            "background": "#0d1518",
+            "surface-tint": "#3cddc7",
+            "surface-container-highest": "#2e3639",
+            "inverse-primary": "#006b5f",
+            "surface": "#0d1518",
+            "on-tertiary": "#00354a",
+            "on-primary-fixed-variant": "#005047",
+            "tertiary-container": "#5ec9ff",
+            "on-secondary-fixed-variant": "#005048",
+            "surface-container-low": "#151d20",
+            "on-tertiary-fixed-variant": "#004c69",
+            "primary-fixed": "#62fae3",
+            "on-secondary-container": "#003f38",
+            "tertiary-fixed": "#c4e7ff",
+            "on-primary": "#003731",
+            "outline": "#859490",
+            "on-error": "#690005",
+            "surface-container-high": "#232b2e",
+            "surface-container": "#192124"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "margin-mobile": "1.25rem",
+            "margin": "1.25rem",
+            "gutter": "1.5rem",
+            "space-xl": "3rem",
+            "space-xs": "0.375rem",
+            "space-md": "1.25rem",
+            "gutter-mobile": "1rem",
+            "space-sm": "0.75rem",
+            "space-lg": "1.5rem"
+          },
+          fontFamily: {
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"]
+          },
+          fontSize: {
+            "headline-sm": ["18px", { lineHeight: "26px", fontWeight: "600" }],
+            "body-md": ["16px", { lineHeight: "26px", fontWeight: "400" }],
+            "label-sm": ["12px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            "body-sm": ["14px", { lineHeight: "22px", fontWeight: "400" }],
+            "label-lg": ["16px", { lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "600" }],
+            "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "500" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen antialiased selection:bg-primary/20">
+<!-- Fixed Top Header -->
+<header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30 pt-safe">
+<div class="h-16 px-margin flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<img alt="MS Akku Logo" class="h-8 w-auto object-contain brightness-110" src="https://lh3.googleusercontent.com/aida/AEtjO1XylWaRKMe79UgIZdR3IY69-bJzwSR9k_nKvjQ-YpHdYUddm5xvhSuqRcyDLw08A2_rFDdbME2K5uW1PWtCgyiXs8W0MoGDy49rglALKt6k5QcCjIKbHx64QGAH8IuEJFatUw2N1dHoC_I9eUMYkIlI2DVIeJN30qd68gsFbA55tpPSHrbDCgkjJ2AHnGfdOwyIf0Y3gq4X2zzSL4zqFroUnmiEde3K08nX492HwiJ6vDpD5YcWKlGCElyd"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary leading-tight tracking-tight">MS Akku</span>
+<h1 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Muster</h1>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="w-9 h-9 rounded-full bg-surface-container-high border border-outline-variant/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[20px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col relative w-full pt-16 pb-28 bg-surface">
+<div class="flex flex-col w-full">
+<!-- Top Breathing Space & Intro Notice -->
+<section class="px-margin pt-space-md flex flex-col gap-space-md">
+<!-- Calm Ambient Header Card -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low border border-outline-variant/40 p-space-md shadow-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px]">psychology</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<p class="font-headline-sm text-headline-sm text-on-surface">
+                Wiederkehrende Zusammenhänge
+              </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                MS Akku sucht nach wiederkehrenden Zusammenhängen in deinen eigenen Einträgen.
+              </p>
+</div>
+</div>
+<!-- Dignified Non-Alarmist Medical Framing -->
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/30 bg-surface-container/60 rounded-lg p-space-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-outline text-[18px] flex-shrink-0 mt-0.5">verified_user</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+<span class="font-semibold text-on-surface">Beobachtung</span> – keine medizinische Diagnose oder festgestellte Ursache. Du kennst deinen Körper am besten.
+            </p>
+</div>
+</div>
+</section>
+<!-- Pattern Cards Section -->
+<section class="px-margin pt-space-lg flex flex-col gap-space-lg">
+<!-- Card 1: Energie & Schlaf -->
+<article class="bg-surface-container rounded-xl p-space-lg border border-outline-variant/40 shadow-sm flex flex-col gap-space-md transition-all duration-200">
+<!-- Tag & Evidence Meta -->
+<div class="flex items-center justify-between gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/15 text-primary border border-primary/25 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">bedtime</span>
+              Möglicher Zusammenhang
+            </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant/30 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">history</span>
+              21 vergleichbare Tage
+            </span>
+</div>
+<!-- Main Headline -->
+<h2 class="font-headline-sm text-headline-sm text-on-surface leading-snug">
+            Nach unruhigem Schlaf sank deine selbst eingeschätzte Energie häufiger am Nachmittag.
+          </h2>
+<!-- Visual Metric Comparison Indicator -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm border border-outline-variant/30">
+<div class="flex justify-between items-baseline font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Nachmittags-Akku im Schnitt:</span>
+</div>
+<div class="flex flex-col gap-2.5">
+<!-- Good Sleep Bar -->
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant w-24 truncate">Erholsam</span>
+<div class="flex-1 h-3 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 64%;"></div>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold w-12 text-right">64 %</span>
+</div>
+<!-- Restless Sleep Bar -->
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant w-24 truncate">Unruhig</span>
+<div class="flex-1 h-3 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-secondary rounded-full opacity-80" style="width: 38%;"></div>
+</div>
+<span class="font-label-md text-label-md text-secondary font-bold w-12 text-right">38 %</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pt-1">
+              An Tagen mit erholsamem Schlaf lag der Nachmittags-Akku im Schnitt bei 64 %, bei schlechtem Schlaf bei 38 %.
+            </p>
+</div>
+<!-- Action Button -->
+<button class="w-full h-[52px] rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/50 text-primary active:scale-[0.99] transition-all flex items-center justify-center gap-space-xs font-label-lg text-label-lg" type="button">
+<span>Vergleichbare Tage ansehen</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</article>
+<!-- Card 2: Wärme & Raumklima -->
+<article class="bg-surface-container rounded-xl p-space-lg border border-outline-variant/40 shadow-sm flex flex-col gap-space-md transition-all duration-200">
+<!-- Tag & Evidence Meta -->
+<div class="flex items-center justify-between gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/15 text-secondary border border-secondary/25 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">thermostat</span>
+              Beobachtung
+            </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant/30 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+              14 vergleichbare Tage
+            </span>
+</div>
+<!-- Main Headline -->
+<h2 class="font-headline-sm text-headline-sm text-on-surface leading-snug">
+            An wärmeren Tagen hast du häufiger stärkere Fatigue dokumentiert.
+          </h2>
+<!-- Visual Card Frame with Dark Tone-Mapping Overlay -->
+<div class="relative w-full h-36 rounded-lg overflow-hidden bg-surface-container-highest border border-outline-variant/40">
+<img class="w-full h-full object-cover filter brightness-[0.78] contrast-[1.05]" data-alt="Close-up of a gentle cool linen compress and a delicate glass carafe of pure fresh water standing on a sunlit wooden windowsill, soft morning mist, peaceful restorative atmosphere in soft sage teal and warm ochre tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCebK3YDP31N7vtz4dqPJm6LppavhVpMjdRDiTvPtPqWs5V76Ky6wMFtNZkCsrEt159RdrHoPNtfn_Xd89BWtBjvIeOr7sSZir-Q_OVz_UUcrn-9SCfnRf_fbPpOFmK2TihBUTJZI-2E8QYco6GHWkXS8JcRzcaJLEsvTChL_wKi_h4boVekd9hkxVtMNb_iY2BxwJhg6zWWZ9zHVX84bfIkC9B8ghrR19HWvoX9jSwoAlGoNmTWb4Mpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/90 via-surface-dim/30 to-transparent"></div>
+<div class="absolute bottom-2.5 left-3 right-3 flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-primary">ac_unit</span>
+<span class="font-label-sm text-label-sm drop-shadow">Sensibel auf Temperaturanstiege</span>
+</div>
+</div>
+<!-- Restorative Non-Alarmist Guidance -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex items-start gap-space-sm border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary text-[22px] flex-shrink-0 mt-0.5">wb_sunny</span>
+<div class="flex flex-col gap-space-xs">
+<p class="font-label-md text-label-md text-on-surface">Mögliche Uhthoff-Reaktion</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Könnte mit dem Uhthoff-Phänomen zusammenhängen. Kühles Tuch oder Pausen könnten entlasten.
+              </p>
+</div>
+</div>
+<!-- Expandable Insight Trigger -->
+<button class="w-full h-[52px] rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/50 text-primary active:scale-[0.99] transition-all flex items-center justify-center gap-space-xs font-label-lg text-label-lg" type="button">
+<span>Tipps zur Kühlung anzeigen</span>
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</article>
+<!-- Card 3: Tageszeit & Pacing -->
+<article class="bg-surface-container rounded-xl p-space-lg border border-outline-variant/40 shadow-sm flex flex-col gap-space-md transition-all duration-200">
+<!-- Tag & Evidence Meta -->
+<div class="flex items-center justify-between gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-tertiary/15 text-tertiary border border-tertiary/25 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+              Möglicher Zusammenhang
+            </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant border border-outline-variant/30 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">data_usage</span>
+              35 Einträge
+            </span>
+</div>
+<!-- Main Headline -->
+<h2 class="font-headline-sm text-headline-sm text-on-surface leading-snug">
+            Deine niedrigsten Energiewerte treten am häufigsten zwischen 14:00 und 17:00 Uhr auf.
+          </h2>
+<!-- Inline Rhythm Sparkline / Visual Timeline -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm border border-outline-variant/30">
+<div class="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>Typischer Tagesverlauf</span>
+<span class="text-tertiary font-semibold">Tiefpunkt: 14:00 – 17:00 Uhr</span>
+</div>
+<!-- Accessible SVG Curve in Dark Context -->
+<div class="w-full h-16 relative">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 320 64">
+<!-- Shaded Low Energy Window Area -->
+<rect class="fill-tertiary/10" height="56" rx="6" width="90" x="140" y="4"></rect>
+<!-- Soft Trend Curve -->
+<path class="stroke-primary" d="M 0 18 C 40 18, 80 22, 120 30 C 140 36, 170 52, 200 52 C 230 52, 260 38, 290 32 C 305 28, 315 26, 320 25" fill="none" stroke-linecap="round" stroke-opacity="0.8" stroke-width="3"></path>
+<!-- Time Window Highlight Marker -->
+<circle class="fill-secondary" cx="185" cy="52" r="5"></circle>
+</svg>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-outline">
+<span>08:00</span>
+<span class="font-semibold text-tertiary">14:00 – 17:00</span>
+<span>21:00</span>
+</div>
+</div>
+<!-- Practical Supportive Suggestion -->
+<div class="flex items-start gap-space-sm p-space-sm bg-surface-container-high rounded-lg border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">spa</span>
+<p class="font-body-sm text-body-sm text-on-surface">
+              Dieses Zeitfenster eignet sich erfahrungsgemäß gut für geplante Ruhephasen.
+            </p>
+</div>
+<!-- Action Button -->
+<button class="w-full h-[52px] rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant/50 text-primary active:scale-[0.99] transition-all flex items-center justify-center gap-space-xs font-label-lg text-label-lg" type="button">
+<span>Ruhepause vormerken</span>
+<span class="material-symbols-outlined text-[20px]">notifications_none</span>
+</button>
+</article>
+</section>
+<!-- Auto-Update Quiet Footer Notification -->
+<footer class="px-margin pt-space-lg pb-space-lg flex flex-col items-center text-center">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm bg-surface-container-low border border-outline-variant/40 px-4 py-2.5 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">sync</span>
+<span>Muster aktualisieren sich automatisch ab 5 Einträgen zu einem Bereich.</span>
+</div>
+<!-- Small Reassurance Pill -->
+<p class="mt-space-md font-body-sm text-body-sm text-outline max-w-xs leading-relaxed">
+          MS Akku lernt im Hintergrund mit, ohne Druck und jederzeit an deine individuellen Gewohnheiten anpassbar.
+        </p>
+</footer>
+</div>
+</main>
+<!-- Bottom Navigation in Dark Mode -->
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface-container-low/95 backdrop-blur-xl border-t border-outline-variant/30 shadow-[0_-4px_16px_rgba(0,0,0,0.4)]" data-active-classes="text-primary font-bold">
+<div class="relative flex items-center justify-between h-20 px-space-xs">
+<a class="flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="heute" href="#">
+<span class="material-symbols-outlined text-[24px]">battery_charging_full</span>
+<span class="font-label-sm text-label-sm mt-1">Heute</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="verlauf" href="#">
+<span class="material-symbols-outlined text-[24px]">calendar_today</span>
+<span class="font-label-sm text-label-sm mt-1">Verlauf</span>
+</a>
+<div class="flex flex-col items-center justify-center -mt-6 px-space-xs">
+<a aria-label="Veränderung erfassen" class="w-14 h-14 rounded-full bg-primary-container text-on-primary-container font-bold flex items-center justify-center shadow-[0_4px_18px_rgba(45,212,191,0.35)] active:scale-95 transition-all" data-path="veranderung-erfassen" href="#">
+<span class="material-symbols-outlined text-[28px] text-on-primary-container">add</span>
+</a>
+<span class="font-label-sm text-label-sm text-primary mt-1 font-semibold">Erfassen</span>
+</div>
+<a aria-current="page" class="flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 transition-colors text-primary font-bold" data-path="muster" href="#">
+<span class="material-symbols-outlined text-[24px]">insights</span>
+<span class="font-label-sm text-label-sm mt-1">Muster</span>
+</a>
+<a class="flex-1 flex flex-col items-center justify-center min-h-[48px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="mehr" href="#">
+<span class="material-symbols-outlined text-[24px]">more_horiz</span>
+<span class="font-label-sm text-label-sm mt-1">Mehr</span>
+</a>
+</div>
+</nav>
+<script>
+    // Gentle tactile click interactions for buttons without harsh jumps
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        btn.style.opacity = '0.7';
+        setTimeout(() => {
+          btn.style.opacity = '1';
+        }, 150);
+      });
+    });
+  </script>
+</body></html>
