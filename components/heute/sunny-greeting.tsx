@@ -19,7 +19,7 @@ function greeting(date: Date): string {
  */
 export function SunnyGreeting({ now }: { now: Date }) {
   const dark = useSettingsStore((state) => state.theme) === "dark";
-  const setTheme = useSettingsStore((state) => state.setTheme);
+  const toggleTheme = useSettingsStore((state) => state.toggleTheme);
 
   return (
     <section
@@ -38,7 +38,7 @@ export function SunnyGreeting({ now }: { now: Date }) {
           {/* Schnellumschalter Hell/Dunkel. Das Symbol zeigt, wohin man wechselt. */}
           <button
             type="button"
-            onClick={() => setTheme(dark ? "pastel" : "dark")}
+            onClick={toggleTheme}
             aria-label={dark ? "Zum hellen Erscheinungsbild wechseln" : "Zum dunklen Erscheinungsbild wechseln"}
             className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-outline-variant/30 bg-surface-container-high/80 text-primary transition-colors active:bg-surface-container-highest"
           >

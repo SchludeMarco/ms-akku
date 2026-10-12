@@ -8,12 +8,13 @@ import { Icon } from "@/components/icon";
 import { clearAllEntries, loadDemoData } from "@/lib/demo";
 import { canVibrate } from "@/lib/haptics";
 import { playSuccess, playToggleFeedback } from "@/lib/sound";
-import { useSettingsStore, type Theme } from "@/lib/stores/settings-store";
+import { useSettingsStore, type ThemeMode } from "@/lib/stores/settings-store";
 import { cn } from "@/lib/utils";
 
 const subscribeNever = () => () => {};
 
-const THEMES: { key: Theme; label: string; icon: string }[] = [
+const THEMES: { key: ThemeMode; label: string; icon: string }[] = [
+  { key: "auto", label: "Automatisch", icon: "brightness_auto" },
   { key: "dark", label: "Dunkel", icon: "dark_mode" },
   { key: "pastel", label: "Hell", icon: "light_mode" },
 ];
@@ -60,8 +61,10 @@ export default function MehrPage() {
     () => false,
   );
   const usageMode = useSettingsStore((state) => state.usageMode);
-  const theme = useSettingsStore((state) => state.theme);
-  const setTheme = useSettingsStore((state) => state.setTheme);
+  const themeMode = useSettingsStore((state) => state.themeMode);
+  const setThemeMode = useSettingsStore((state) => state.setThemeMode);
+  const lightHours = useSettingsStore((state) => state.lightHours);
+  const setLightHours = useSettingsStore((state) => state.setLightHours);
   const moodColors = useSettingsStore((state) => state.moodColors);
   const toggleMoodColors = useSettingsStore((state) => state.toggleMoodColors);
 
@@ -117,22 +120,22 @@ export default function MehrPage() {
                 <div className="min-w-0">
                   <div className="text-label-lg text-on-surface">Erscheinungsbild</div>
                   <div className="text-body-sm text-on-surface-variant">
-                    Dunkel schont lichtempfindliche Augen, Hell ist ein ruhiges Pastell
+                    Automatisch wechselt nach Uhrzeit zwischen Hell und Dunkel
                   </div>
                 </div>
               </div>
-              <div role="radiogroup" aria-label="Erscheinungsbild" className="grid grid-cols-2 gap-2">
+              <div role="radiogroup" aria-label="Erscheinungsbild" className="grid grid-cols-3 gap-2">
                 {THEMES.map((option) => {
-                  const on = theme === option.key;
+                  const on = themeMode === option.key;
                   return (
                     <button
                       key={option.key}
                       type="button"
                       role="radio"
                       aria-checked={on}
-                      onClick={() => setTheme(option.key)}
+                      onClick={() => setThemeMode(option.key)}
                       className={cn(
-                        "flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-2 text-label-md transition-colors",
+                        "flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-xl px-1 text-label-md transition-colors",
                         on
                           ? "border border-primary/50 bg-primary-container font-bold text-on-primary-fixed"
                           : "border border-outline-variant/40 bg-surface-container-low text-on-surface",
@@ -144,6 +147,39 @@ export default function MehrPage() {
                   );
                 })}
               </div>
+              {themeMode === "auto" && (
+                <div className="space-y-2 rounded-xl border border-outline-variant/30 bg-surface-container-low p-3">
+                  <div className="grid grid-cols-2 gap-2">
+                    <label className="flex flex-col gap-1">
+                      <span className="text-label-md text-on-surface">Hell ab</span>
+                      <input
+                        type="time"
+                        value={lightHours.from}
+                        onChange={(event) =>
+                          event.target.value && setLightHours({ from: event.target.value })
+                        }
+                        className="min-h-[48px] w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 text-body-md tabular-nums text-on-surface focus:border-primary focus:outline-none"
+                      />
+                    </label>
+                    <label className="flex flex-col gap-1">
+                      <span className="text-label-md text-on-surface">Dunkel ab</span>
+                      <input
+                        type="time"
+                        value={lightHours.until}
+                        onChange={(event) =>
+                          event.target.value && setLightHours({ until: event.target.value })
+                        }
+                        className="min-h-[48px] w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 text-body-md tabular-nums text-on-surface focus:border-primary focus:outline-none"
+                      />
+                    </label>
+                  </div>
+                  <p className="text-body-sm text-on-surface-variant">
+                    {lightHours.from === lightHours.until
+                      ? "Beide Zeiten sind gleich: Die App bleibt dunkel."
+                      : `Von ${lightHours.from} bis ${lightHours.until} Uhr hell, sonst dunkel. Der Knopf auf „Heute“ übersteuert das bis zum nächsten Wechsel.`}
+                  </p>
+                </div>
+              )}
               <button
                 type="button"
                 role="switch"
