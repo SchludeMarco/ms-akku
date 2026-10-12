@@ -76,6 +76,10 @@ interface DayEvent {
   icon: string;
   iconClass: string;
   text: string;
+  /** Nur bei Akku-Einschätzungen: Wert, Stichworte und Notiz. */
+  level?: number;
+  tags?: string[];
+  note?: string;
 }
 
 function symptomEvent(entry: SymptomEntry, name: string): DayEvent {
@@ -193,6 +197,16 @@ export default function VerlaufPage() {
 
     for (const entry of data.battery) {
       day(keyOf(entry.timestamp)).levels.push(entry.energyLevel);
+      day(keyOf(entry.timestamp)).events.push({
+        time: formatTime(entry.timestamp),
+        sort: entry.timestamp,
+        icon: batteryIcon(entry.energyLevel),
+        iconClass: ZONE_STYLES[zoneOf(entry.energyLevel)].text,
+        text: `Akku bei ${entry.energyLevel} %`,
+        level: entry.energyLevel,
+        tags: entry.tags,
+        note: entry.note,
+      });
     }
     for (const entry of data.symptomEntries) {
       day(keyOf(entry.timestamp)).events.push(
@@ -241,13 +255,13 @@ export default function VerlaufPage() {
       <AppHeader title="Verlauf" />
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col pb-28 pt-16">
         <div className="flex w-full flex-col space-y-space-md px-margin pb-space-lg pt-space-md">
-          <div className="flex w-full items-center gap-space-sm rounded-xl border border-outline-variant/30 bg-surface-container-low p-space-md shadow-sm">
+          <div className="flex w-full items-center gap-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-surface-container-high">
               <Icon name="spa" filled className="text-[20px] text-primary" />
             </div>
             <div className="flex min-w-0 flex-col">
               <span className="text-headline-sm text-on-surface">Sanfte Chronik</span>
-              <p className="truncate text-body-sm text-on-surface-variant">
+              <p className="text-body-sm text-on-surface-variant">
                 Jeder Tag ist wertvoll – ohne Leistungsdruck.
               </p>
             </div>
@@ -264,7 +278,7 @@ export default function VerlaufPage() {
                   className={cn(
                     "flex min-h-[48px] flex-1 items-center justify-center rounded-lg px-space-xs py-2 text-center text-label-md transition-all",
                     range === option.key
-                      ? "bg-primary font-semibold text-on-primary shadow-sm"
+                      ? "bg-primary-container font-semibold text-on-primary-fixed shadow-sm"
                       : "bg-transparent text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface",
                   )}
                 >
@@ -274,7 +288,7 @@ export default function VerlaufPage() {
             </div>
           </section>
 
-          <section className="w-full space-y-space-md rounded-xl border border-outline-variant/30 bg-surface-container p-space-md shadow-md">
+          <section className="w-full space-y-space-md rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-md">
             <div className="flex items-start justify-between gap-space-sm">
               <div className="flex flex-col">
                 <span className="text-label-sm font-bold uppercase tracking-wide text-primary">
@@ -375,9 +389,9 @@ export default function VerlaufPage() {
           </section>
 
           <div className="flex items-center justify-between pt-space-xs">
-            <h3 className="text-headline-sm text-on-surface">Tageseinträge</h3>
+            <h3 className="text-headline-md text-on-surface">Tagesverlauf</h3>
             <span className="text-label-sm text-on-surface-variant">
-              {days.length} dokumentiert
+              Neueste zuerst
             </span>
           </div>
 
@@ -397,7 +411,7 @@ export default function VerlaufPage() {
               return (
                 <article
                   key={day.key}
-                  className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-space-md shadow-md"
+                  className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-md"
                 >
                   <div className="flex items-center justify-between gap-space-sm">
                     <div className="flex items-center gap-space-xs">
@@ -438,20 +452,68 @@ export default function VerlaufPage() {
                       {day.events.map((event, index) => (
                         <div
                           key={index}
-                          className="flex items-start gap-space-sm rounded-lg border border-outline-variant/20 bg-surface-container-low p-space-sm"
+                          className="flex flex-col gap-2 rounded-xl bg-surface-container-high/60 p-space-sm"
                         >
-                          {event.time && (
-                            <span className="mt-0.5 shrink-0 font-mono text-label-sm text-on-surface-variant">
-                              {event.time}
-                            </span>
-                          )}
-                          <div className="flex items-start gap-space-xs">
-                            <Icon
-                              name={event.icon}
-                              className={cn("mt-0.5 text-[18px]", event.iconClass)}
-                            />
-                            <p className="text-body-md text-on-surface">{event.text}</p>
+                          <div className="flex items-start gap-space-sm">
+                            {event.level !== undefined ? (
+                              <div
+                                className={cn(
+                                  "flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl border",
+                                  ZONE_STYLES[zoneOf(event.level)].badge,
+                                )}
+                              >
+                                <Icon name={event.icon} className="text-[18px]" />
+                                <span className="text-label-sm font-bold tabular-nums">
+                                  {event.level} %
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-surface-container-highest">
+                                <Icon
+                                  name={event.icon}
+                                  className={cn("text-[22px]", event.iconClass)}
+                                />
+                              </div>
+                            )}
+                            <div className="min-w-0 flex-1">
+                              {event.time && (
+                                <span className="block text-label-lg text-on-surface">
+                                  {event.time} Uhr
+                                </span>
+                              )}
+                              <p
+                                className={cn(
+                                  "text-body-md",
+                                  event.level !== undefined ? event.iconClass : "text-on-surface",
+                                )}
+                              >
+                                {event.text}
+                              </p>
+                            </div>
                           </div>
+                          {event.tags && event.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {event.tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="rounded-lg border border-outline-variant/30 bg-surface-container-low px-2.5 py-1 text-label-md text-on-surface-variant"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                          {event.note && (
+                            <div className="flex items-start gap-2 rounded-lg bg-surface-container-low p-3">
+                              <Icon name="sticky_note_2" className="mt-0.5 text-[18px] text-secondary" />
+                              <div>
+                                <span className="block text-label-md text-on-surface">
+                                  Persönliche Notiz
+                                </span>
+                                <p className="text-body-md text-on-surface-variant">{event.note}</p>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -464,7 +526,7 @@ export default function VerlaufPage() {
           <div className="pt-space-sm">
             <Link
               href="/erfassen"
-              className="flex min-h-[56px] w-full items-center justify-center gap-space-sm rounded-xl bg-primary text-label-lg text-on-primary shadow-lg shadow-primary/20 transition-all hover:bg-primary-container active:bg-primary"
+              className="flex min-h-[56px] w-full items-center justify-center gap-space-sm rounded-2xl bg-cta text-label-lg font-semibold text-on-cta shadow-lg transition-transform active:scale-[0.99]"
             >
               <Icon name="edit_calendar" className="text-[22px]" />
               <span>Veränderung erfassen</span>

@@ -75,7 +75,7 @@ function PatternCard({ pattern }: { pattern: Pattern }) {
   const tone = TONE_STYLES[pattern.tone];
 
   return (
-    <article className="flex flex-col gap-space-md rounded-xl border border-outline-variant/40 bg-surface-container p-space-md shadow-sm">
+    <article className="flex flex-col gap-space-md rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-space-sm">
         <span
           className={cn(
@@ -179,7 +179,7 @@ export default function MusterPage() {
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col pb-28 pt-16">
         <div className="flex w-full flex-col">
           <section className="flex flex-col gap-space-md px-margin pt-space-md">
-            <div className="relative overflow-hidden rounded-xl border border-outline-variant/40 bg-surface-container-low p-space-md shadow-sm">
+            <div className="relative overflow-hidden rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
               <div className="flex items-start gap-space-sm">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/15 text-primary">
                   <Icon name="psychology" className="text-[22px]" />
@@ -211,7 +211,7 @@ export default function MusterPage() {
             ))}
 
             {patterns?.length === 0 && (
-              <article className="flex flex-col gap-space-md rounded-xl border border-outline-variant/40 bg-surface-container p-space-md shadow-sm">
+              <article className="flex flex-col gap-space-md rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
                 <span className="inline-flex items-center gap-1.5 self-start rounded-full border border-primary/25 bg-primary/15 px-3 py-1.5 text-label-sm text-primary">
                   <Icon name="hourglass_top" className="text-[14px]" />
                   Noch in Arbeit

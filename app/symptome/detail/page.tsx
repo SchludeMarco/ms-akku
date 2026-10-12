@@ -64,8 +64,8 @@ function formatDate(iso: string) {
 
 function SectionTitle({ icon, children }: { icon: string; children: React.ReactNode }) {
   return (
-    <h2 className="flex items-center gap-1.5 text-label-sm font-semibold uppercase tracking-wider text-primary">
-      <Icon name={icon} className="text-[16px]" />
+    <h2 className="flex items-center gap-2 text-headline-sm text-on-surface">
+      <Icon name={icon} className="text-[22px] text-secondary" />
       {children}
     </h2>
   );
@@ -74,7 +74,7 @@ function SectionTitle({ icon, children }: { icon: string; children: React.ReactN
 function MeasureItem({ measure }: { measure: Measure }) {
   const strength = STRENGTH_LABELS[measure.strength];
   return (
-    <li className="space-y-2 rounded-xl bg-surface-container p-space-sm shadow-sm">
+    <li className="space-y-2 rounded-xl bg-surface-container-high/60 p-space-sm">
       <p className="text-body-md text-on-surface">{measure.text}</p>
       <div className="flex flex-wrap items-center gap-2">
         <span
@@ -132,9 +132,9 @@ function ActiveToggle({ id, active }: { id: string; active: boolean }) {
 
 function BurdenSection({ id, burden }: { id: string; burden: number | undefined }) {
   return (
-    <section className="space-y-space-sm">
+    <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
       <SectionTitle icon="speed">Wie sehr belastet es dich?</SectionTitle>
-      <div className="space-y-space-sm rounded-xl bg-surface-container p-space-md shadow-sm">
+      <div className="space-y-space-sm">
         <div className="flex items-baseline justify-between gap-2">
           <span className="text-headline-md text-on-surface">
             {burden === undefined ? "Noch nicht bewertet" : `${burden} von 10`}
@@ -193,6 +193,52 @@ function BurdenSection({ id, burden }: { id: string; burden: number | undefined 
   );
 }
 
+const SUMMARY_DAYS = 14;
+
+/** "Deine persönliche Bilanz": nur gezählt, was die Person selbst erfasst hat. */
+function PersonalSummary({ id, burden }: { id: string; burden: number | undefined }) {
+  const count = useLiveQuery(async () => {
+    const since = new Date(Date.now() - SUMMARY_DAYS * 24 * 60 * 60 * 1000).toISOString();
+    return db.symptomEntries
+      .where("[symptomId+timestamp]")
+      .between([id, since], [id, "\uffff"])
+      .count();
+  }, [id]);
+
+  return (
+    <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-2">
+        <SectionTitle icon="monitoring">Deine persönliche Bilanz</SectionTitle>
+        <span className="shrink-0 text-label-md text-secondary">Letzte {SUMMARY_DAYS} Tage</span>
+      </div>
+      <dl className="space-y-2">
+        <div className="flex items-center justify-between gap-3 rounded-xl bg-surface-container-high/60 p-space-sm">
+          <dt className="text-body-md text-on-surface">Von dir erfasst</dt>
+          <dd className="text-headline-sm tabular-nums text-on-surface">
+            {count === undefined ? "–" : `${count}×`}
+          </dd>
+        </div>
+        <div className="flex items-center justify-between gap-3 rounded-xl bg-surface-container-high/60 p-space-sm">
+          <dt className="text-body-md text-on-surface">Deine Belastung</dt>
+          <dd className="text-headline-sm tabular-nums text-on-surface">
+            {burden === undefined ? "nicht bewertet" : `${burden} von 10`}
+          </dd>
+        </div>
+      </dl>
+      <p className="text-body-sm text-on-surface-variant">
+        Eine Zählung deiner eigenen Einträge, keine Bewertung.
+      </p>
+      <Link
+        href="/erfassen"
+        className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-2xl bg-cta px-4 text-label-lg font-semibold text-on-cta shadow-lg transition-transform active:scale-[0.99]"
+      >
+        <Icon name="add_circle" className="text-[22px]" />
+        Veränderung jetzt erfassen
+      </Link>
+    </section>
+  );
+}
+
 /** Ansicht für ein eigenes Symptom: bewerten, umbenennen, löschen. */
 function CustomSymptomDetail({ symptom }: { symptom: Symptom }) {
   const router = useRouter();
@@ -220,17 +266,24 @@ function CustomSymptomDetail({ symptom }: { symptom: Symptom }) {
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary">
               <Icon name={symptom.icon ?? CUSTOM_SYMPTOM_ICON} className="text-[26px]" />
             </div>
-            <p className="text-body-lg text-on-surface">
-              Ein eigenes Symptom in deinen Worten. Dazu gibt es keine Beschreibung aus dem
-              Katalog.
-            </p>
+            <div className="min-w-0">
+              <h2 className="hyphens-auto break-words text-headline-lg-mobile text-on-surface">
+                {symptom.name}
+              </h2>
+              <p className="text-body-md text-on-surface-variant">
+                Ein eigenes Symptom in deinen Worten. Dazu gibt es keine Beschreibung aus der
+                Bibliothek.
+              </p>
+            </div>
           </div>
 
           <ActiveToggle id={symptom.id} active={symptom.active} />
 
           <BurdenSection id={symptom.id} burden={symptom.burden} />
 
-          <section className="space-y-space-sm">
+          <PersonalSummary id={symptom.id} burden={symptom.burden} />
+
+          <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
             <SectionTitle icon="edit">Name</SectionTitle>
             <form
               onSubmit={(event) => {
@@ -258,9 +311,9 @@ function CustomSymptomDetail({ symptom }: { symptom: Symptom }) {
             </form>
           </section>
 
-          <section className="space-y-space-sm">
+          <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
             <SectionTitle icon="delete">Löschen</SectionTitle>
-            <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-space-md shadow-sm">
+            <div className="space-y-space-sm">
               <p className="text-body-sm leading-relaxed text-on-surface-variant">
                 {entryCount
                   ? entryCount === 1
@@ -372,24 +425,33 @@ export default function SymptomDetailPage() {
       <AppHeader title={symptom.name} back />
       <main className="pb-safe mx-auto flex w-full max-w-xl flex-1 flex-col pt-16">
         <div className="flex w-full flex-col gap-space-lg px-margin pb-space-xl pt-space-md">
-          <div className="flex items-start gap-space-sm">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary">
-              <Icon name={symptom.icon} className="text-[26px]" />
+          <div className="flex flex-col gap-space-sm">
+            <span className="inline-flex items-center gap-1.5 self-start rounded-full border border-outline-variant/40 bg-surface-container-high px-3 py-1 text-label-md text-on-surface-variant">
+              <Icon name={category?.icon ?? "category"} className="text-[18px] text-secondary" />
+              {category?.name}
+            </span>
+            <div className="flex items-start gap-space-sm">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary">
+                <Icon name={symptom.icon} className="text-[26px]" />
+              </div>
+              <h2 className="hyphens-auto break-words text-headline-lg-mobile text-on-surface">
+                {symptom.name}
+              </h2>
             </div>
-            <p className="text-body-lg text-on-surface">{symptom.short}</p>
+            <p className="text-body-lg text-on-surface-variant">{symptom.short}</p>
           </div>
 
           <ActiveToggle id={symptom.id} active={active} />
 
           <BurdenSection id={symptom.id} burden={burden} />
 
-          <section className="space-y-space-sm">
+          <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
             <SectionTitle icon="forum">So kann es sich anfühlen</SectionTitle>
             <ul className="space-y-2">
               {symptom.examples.map((example) => (
                 <li
                   key={example}
-                  className="rounded-xl bg-surface-container-low p-space-sm text-body-md text-on-surface"
+                  className="rounded-xl bg-surface-container-high/60 p-space-sm text-body-md text-on-surface"
                 >
                   {example}
                 </li>
@@ -398,13 +460,13 @@ export default function SymptomDetailPage() {
           </section>
 
           {symptom.amplifiers && (
-            <section className="space-y-space-sm">
+            <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
               <SectionTitle icon="trending_up">Was es verstärken kann</SectionTitle>
-              <ul className="flex flex-wrap gap-2">
+              <ul className="flex flex-col items-start gap-2">
                 {symptom.amplifiers.map((item) => (
                   <li
                     key={item}
-                    className="rounded-full border border-outline-variant/40 bg-surface-container-low px-3 py-1.5 text-label-md text-on-surface"
+                    className="flex min-h-[44px] items-center rounded-full border border-outline-variant/40 bg-surface-container-high/60 px-4 text-label-md text-on-surface"
                   >
                     {item}
                   </li>
@@ -417,7 +479,7 @@ export default function SymptomDetailPage() {
             </section>
           )}
 
-          <section className="space-y-space-md">
+          <section className="space-y-space-md rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
             <SectionTitle icon="volunteer_activism">Was helfen kann</SectionTitle>
             {KIND_ORDER.map((kind) => {
               const items = symptom.measures.filter((measure) => measure.kind === kind);
@@ -444,9 +506,11 @@ export default function SymptomDetailPage() {
             </p>
           </section>
 
-          <section className="space-y-space-sm">
+          <PersonalSummary id={symptom.id} burden={burden} />
+
+          <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
             <SectionTitle icon="stethoscope">Wann ärztlich abklären</SectionTitle>
-            <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container-low p-space-md">
+            <div className="space-y-space-sm">
               {symptom.doctor && (
                 <p className="text-body-md text-on-surface">{symptom.doctor}</p>
               )}
@@ -455,7 +519,7 @@ export default function SymptomDetailPage() {
           </section>
 
           {related.length > 0 && (
-            <section className="space-y-space-sm">
+            <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
               <SectionTitle icon="hub">Verwandte Symptome</SectionTitle>
               <p className="text-body-sm text-on-surface-variant">
                 Aus dem Bereich „{category?.name}“. Vielleicht erkennst du dort etwas wieder.
@@ -466,7 +530,7 @@ export default function SymptomDetailPage() {
                     {/* Normaler Anker statt Link: Nur so meldet der Browser den Hash-Wechsel. */}
                     <a
                       href={`#${item.id}`}
-                      className="flex min-h-touch-lg items-center gap-3 rounded-xl bg-surface-container-low p-space-sm transition-colors active:bg-surface-container-high"
+                      className="flex min-h-touch-lg items-center gap-3 rounded-xl bg-surface-container-high/60 p-space-sm transition-colors active:bg-surface-container-highest"
                     >
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-variant text-on-surface-variant">
                         <Icon name={item.icon} className="text-[22px]" />
@@ -485,7 +549,7 @@ export default function SymptomDetailPage() {
             </section>
           )}
 
-          <section className="space-y-space-sm">
+          <section className="space-y-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
             <SectionTitle icon="menu_book">Quellen</SectionTitle>
             <ul className="space-y-2">
               {symptom.sources.map((sourceId) => {
@@ -496,7 +560,7 @@ export default function SymptomDetailPage() {
                       href={source.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex min-h-touch items-center gap-3 rounded-xl bg-surface-container-low p-space-sm"
+                      className="flex min-h-touch items-center gap-3 rounded-xl bg-surface-container-high/60 p-space-sm"
                     >
                       <div className="min-w-0 flex-1">
                         <div className="text-label-md text-on-surface">{source.title}</div>
