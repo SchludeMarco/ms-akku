@@ -57,6 +57,20 @@ const stitchColors = [
   "on-error-container",
   "pacing",
   "pacing-soft",
+  "energy-high",
+  "energy-mid",
+  "energy-low",
+  "energy-high-text",
+  "energy-mid-text",
+  "energy-low-text",
+  "on-energy",
+  "cta",
+  "on-cta",
+  "action",
+  "on-action",
+  "fab",
+  "on-fab",
+  "nav-active",
 ] as const;
 
 const config: Config = {

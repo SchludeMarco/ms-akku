@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="de"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><title>Erfassen - MS Akku</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;overflow-x:hidden;background-color:#0d1518;color:#dbe4e8;font-family:'Plus Jakarta Sans',sans-serif;-webkit-tap-highlight-color:transparent;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}*{-ms-overflow-style:none;scrollbar-width:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-low":"#151d20","primary-fixed":"#62fae3","tertiary-fixed-dim":"#ffb77a","tertiary-fixed":"#ffdcc2","on-primary-container":"#006b60","tertiary":"#fff4ee","surface-dim":"#0d1518","on-primary":"#003731","on-tertiary-container":"#904e00","on-secondary-container":"#004d44","inverse-primary":"#006b5f","primary-fixed-dim":"#3bddc7","primary":"#d6fff6","secondary-container":"#03c6b2","secondary-fixed-dim":"#3cddc7","surface-container-lowest":"#070f12","error-container":"#93000a","inverse-surface":"#dbe4e8","outline-variant":"#3c4a46","on-surface-variant":"#bacac5","on-secondary-fixed-variant":"#005047","surface-bright":"#323a3e","on-error-container":"#ffdad6","on-surface":"#dbe4e8","error":"#ffb4ab","surface-container-high":"#232b2e","surface-container-highest":"#2e3639","surface-tint":"#3bddc7","primary-container":"#57f1db","inverse-on-surface":"#2a3235","on-tertiary-fixed-variant":"#6d3a00","on-error":"#690005","tertiary-container":"#ffd1ad","on-secondary":"#003731","on-primary-fixed":"#00201c","background":"#0d1518","surface-container":"#192124","on-primary-fixed-variant":"#005047","on-secondary-fixed":"#00201c","secondary-fixed":"#62fae3","outline":"#859490","surface":"#0d1518","on-tertiary":"#4c2700","surface-variant":"#2e3639","secondary":"#44e2cd","on-background":"#dbe4e8","on-tertiary-fixed":"#2e1500"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.75rem","margin-mobile":"1rem","space-xs":"0.5rem","space-md":"1rem","gutter":"1rem","margin":"1.25rem","space-xl":"2rem","space-lg":"1.5rem","gutter-mobile":"0.75rem"},"fontFamily":{"headline-xl-mobile":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"caption":["Plus Jakarta Sans"],"body-md-bold":["Plus Jakarta Sans"]},"fontSize":{"headline-xl-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["16px",{"lineHeight":"24px","fontWeight":"600"}],"label-sm":["14px",{"lineHeight":"20px","fontWeight":"500"}],"caption":["14px",{"lineHeight":"20px","fontWeight":"400"}],"body-md-bold":["16px",{"lineHeight":"26px","fontWeight":"600"}]}}}}</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface text-on-surface min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-low/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)]"><div class="h-16 px-margin flex items-center justify-between gap-space-xs"><div class="flex items-center gap-space-xs min-w-0"><button aria-label="Zurück" class="w-12 h-12 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container shrink-0" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="MS Akku Logo" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1V07146Z2g2ZKg6tIO7QtZC4btIcyi_6FdsPw2Mhe8Auzzkp9y_jTt3_6h1CDqiVWOdo2wFri1dZiqxfQa5nY8r_BONczZMaOCAsOFpl7m9imv-ouReDdpgWY9VhFvyPFFgjuOavR7SEn0_FIjn0txqJ65U2YOySZ9OOzbLQLfyLsdiCV4hIzSpMVCC8oJmeYB51TgWMj4cHId-1OdkEOmlNTXlJeRVilKEp95pPXXWiKypzzL94QKUcHo"/><div class="flex flex-col truncate"><span class="font-headline-md text-headline-md text-on-surface truncate">MS Akku</span><span class="text-[11px] leading-tight text-on-surface-variant uppercase tracking-wider font-semibold truncate">Erfassen</span></div></div><div class="flex items-center gap-space-xs shrink-0"><a aria-label="Übersicht" class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all text-on-surface-variant hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary-container" data-path="heute" href="#"><span class="material-symbols-outlined text-[24px]">home</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 px-margin bg-surface"><div class="flex flex-col w-full pb-24 gap-space-lg">
+<!-- 1. Hero-Kopfbereich des Symptoms -->
+<section class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<!-- Kategorie Badges -->
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-highest text-secondary text-caption font-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">battery_alert</span>
+        Häufigster Akku-Einfluss
+      </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-caption font-caption">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+        Kategorie: Energie &amp; Fatigue
+      </span>
+</div>
+<!-- Symptomname & Leitgedanke -->
+<div class="flex flex-col gap-space-xs">
+<h1 class="text-headline-xl-mobile font-headline-xl-mobile text-on-surface leading-tight">
+        Fatigue (Chronische Erschöpfung)
+      </h1>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+        Lähmende körperliche, kognitive oder emotionale Mattigkeit, die nicht im Verhältnis zur vorangegangenen Anstrengung steht und sich durch gewöhnlichen Schlaf oft kaum bessert.
+      </p>
+</div>
+<!-- Akku-Einfluss & Vorlese-Audio-CTA -->
+<div class="flex flex-col sm:flex-row gap-space-sm items-stretch sm:items-center justify-between pt-space-xs">
+<!-- Milde Akku-Impakt Pill (Kein Alarm-Rot, ruhiges Kaltblau/Teal) -->
+<div class="flex items-center gap-space-xs bg-surface-container px-3.5 py-2.5 rounded-xl text-secondary">
+<span class="material-symbols-outlined text-[24px]">battery_low</span>
+<div class="flex flex-col">
+<span class="text-caption font-caption text-on-surface-variant">Typischer Akku-Effekt</span>
+<span class="text-label-md font-label-md text-secondary">−20 % bis −35 %</span>
+</div>
+</div>
+<!-- Vorlese- / Audio-Button für Brain-Fog & Sehnerv-Fatigue -->
+<button aria-label="Diesen Artikel als sanfte Sprachaufnahme anhören" class="min-h-[48px] px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all flex items-center justify-center gap-2 text-primary focus:outline-none" id="audio-reader-btn" type="button">
+<span class="material-symbols-outlined text-[22px]" id="audio-icon">headphones</span>
+<span class="text-label-sm font-label-sm" id="audio-label">Tipp anhören</span>
+<span class="text-caption font-caption text-on-surface-variant">(3 Min.)</span>
+</button>
+</div>
+<!-- Visuelles Audio-Feedback (Standardmäßig verborgen) -->
+<div class="hidden bg-surface-container-high rounded-xl p-3 items-center justify-between gap-3" id="audio-playback-bar">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined animate-pulse text-[20px]">graphic_eq</span>
+<span class="text-caption font-caption text-on-surface">Spielt sanfte Vorlesung ab...</span>
+</div>
+<button class="min-w-[48px] min-h-[48px] flex items-center justify-center rounded-lg bg-surface-container text-on-surface hover:text-primary" id="audio-stop-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">pause</span>
+</button>
+</div>
+</section>
+<!-- 2. Was passiert im Körper & Nervensystem? -->
+<section class="bg-surface-container rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">biotech</span>
+</div>
+<div>
+<h2 class="text-headline-md font-headline-md text-on-surface">Was passiert im Körper?</h2>
+<span class="text-caption font-caption text-on-surface-variant">Neurologischer Hintergrund – einfach erklärt</span>
+</div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+      Durch entzündungsbedingte Veränderungen an den Markscheiden (Myelin) können elektrische Signale im zentralen Nervensystem nicht mehr ungehindert gleiten. Das Gehirn muss Umleitungen schalten – das verbraucht ein Vielfaches an körpereigener biochemischer Energie pro Handlung.
+    </p>
+<!-- Entlastender Kernsatz (Hervorgehoben gegen Schuldgefühle) -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px] shrink-0 mt-0.5">verified</span>
+<p class="text-body-md-bold font-body-md-bold text-primary leading-snug">
+        Fatigue ist kein Mangel an Willenskraft, sondern ein realer, messbarer Energiemehrbedarf deiner Nervenbahnen.
+      </p>
+</div>
+<!-- Verknüpfung zu Uhthoff & Temperatur -->
+<div class="bg-surface-container-high/60 rounded-xl p-space-md flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-tertiary-fixed-dim flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">thermostat</span>
+          Verwandtes Phänomen: Uhthoff-Effekt
+        </span>
+<span class="text-caption font-caption text-on-surface-variant">Hitzeempfindlichkeit</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">
+        Schon ein minimaler Anstieg der Körperkerntemperatur (durch Sommerwetter, heißes Duschen oder Fieber) kann die Nervenleitung temporär blockieren und Fatigue drastisch erhöhen.
+      </p>
+</div>
+</section>
+<!-- 3. Konkrete Pacing-Strategien -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">energy_savings_leaf</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Pacing-Strategien für heute</h2>
+</div>
+<span class="text-caption font-caption text-on-surface-variant">3 Praxis-Tipps</span>
+</div>
+<!-- Strategie 1: 4-P-Regel -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-md flex flex-col gap-space-xs">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[20px]">checklist</span>
+</div>
+<h3 class="text-label-md font-label-md text-on-surface">Die 4-P-Regel im Alltag</h3>
+</div>
+<button aria-label="Details zur 4-P-Regel einblenden" class="w-12 h-12 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-xl bg-surface-container-high text-on-surface-variant hover:text-primary active:scale-95" onclick="const d = document.getElementById('strategy-1-details'); d.classList.toggle('hidden'); this.querySelector('.chevron-icon').classList.toggle('rotate-180');" type="button">
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200 chevron-icon">expand_more</span>
+</button>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+<strong>Prioritizing, Planning, Pacing, Positioning:</strong> Aufgaben nach Wichtigkeit sortieren, Kräfte über den Tag verteilen und Belastungen körperlich erleichtern.
+      </p>
+<!-- Ausklappbarer Inhalt -->
+<div class="hidden flex flex-col gap-2 pt-2 text-caption font-caption text-on-surface-variant bg-surface-container-lowest p-3 rounded-lg" id="strategy-1-details">
+<div class="flex items-start gap-2">
+<span class="text-primary font-bold">•</span>
+<span><strong>Positioning:</strong> Zähneputzen, Kochen oder Bügeln im Sitzen entlastet bis zu 25 % der Muskelenergie.</span>
+</div>
+<div class="flex items-start gap-2">
+<span class="text-primary font-bold">•</span>
+<span><strong>Planning:</strong> Den anstrengendsten Termin in das persönliche Energiehoch (meist vormittags) legen.</span>
+</div>
+</div>
+</div>
+<!-- Strategie 2: Vor der Erschöpfung stoppen -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-md flex flex-col gap-space-xs">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-label-md font-label-md text-on-surface">„Vor der Erschöpfung stoppen“</h3>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+            Geplante 15–20 Minuten Ruhepause mit geschlossenen Augen einlegen, <em>bevor</em> das Gefühl völliger Leere einsetzt. Wer erst pausiert, wenn der Akku auf 0 % fällt, benötigt oft Tage zur Regeneration.
+          </p>
+</div>
+</div>
+</div>
+<!-- Strategie 3: Reiz- und Temperaturabschirmung -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-md flex flex-col gap-space-xs">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[20px]">volume_off</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-label-md font-label-md text-on-surface">Reiz- &amp; Temperaturabschirmung</h3>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+            Kühle Räume, kühlende Armbänder, Noise-Cancelling-Kopfhörer und striktes Ein-Aufgaben-Prinzip reduzieren stumme Hintergrund-Energielecks um bis zu 40 %.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Auslöser & Einflussfaktoren (Typische Verstärker) -->
+<section class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">tune</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Typische Verstärker &amp; Trigger</h2>
+</div>
+<p class="text-caption font-caption text-on-surface-variant">
+      Tippe auf Faktoren, die bei dir heute eine Rolle gespielt haben könnten:
+    </p>
+<!-- Interaktive Filter-/Trigger-Chips mit Tast-Feedback -->
+<div class="flex flex-wrap gap-2" id="trigger-chips-group">
+<button class="trigger-chip min-h-[48px] px-4 py-2.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface active:scale-95 transition-all flex items-center gap-2 text-label-sm font-label-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">wb_sunny</span>
+<span>Hitze &amp; Wetter (Uhthoff)</span>
+</button>
+<button class="trigger-chip min-h-[48px] px-4 py-2.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface active:scale-95 transition-all flex items-center gap-2 text-label-sm font-label-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">devices</span>
+<span>Lange Bildschirmzeiten</span>
+</button>
+<button class="trigger-chip min-h-[48px] px-4 py-2.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface active:scale-95 transition-all flex items-center gap-2 text-label-sm font-label-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">sentiment_dissatisfied</span>
+<span>Emotionale Anspannung</span>
+</button>
+<button class="trigger-chip min-h-[48px] px-4 py-2.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface active:scale-95 transition-all flex items-center gap-2 text-label-sm font-label-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">sick</span>
+<span>Infekte &amp; Temperatur</span>
+</button>
+<button class="trigger-chip min-h-[48px] px-4 py-2.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface active:scale-95 transition-all flex items-center gap-2 text-label-sm font-label-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">bedtime</span>
+<span>Schlechte Schlafqualität</span>
+</button>
+</div>
+</section>
+<!-- 5. Persönliche Beobachtungen & Verknüpfung mit deinem Akku -->
+<section class="bg-surface-container rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">insights</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Deine persönliche Bilanz</h2>
+</div>
+<span class="text-caption font-caption text-secondary">Letzte 14 Tage</span>
+</div>
+<!-- Data Insights Card -->
+<div class="bg-surface-container-high rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="text-body-md font-body-md text-on-surface">Fatigue als Auslöser erfasst:</span>
+<span class="text-headline-md font-headline-md text-primary">6×</span>
+</div>
+<!-- Beruhigende visuelle Mini-Statistik via SVG Bar -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex justify-between text-caption font-caption text-on-surface-variant">
+<span>Erholung nach 20 Min. Hinlegen</span>
+<span class="text-secondary font-semibold">+15 % Akku</span>
+</div>
+<div class="w-full h-2.5 rounded-full bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<p class="text-caption font-caption text-on-surface-variant pt-1 leading-relaxed">
+        Erkenntnis: Bei dir stabilisiert horizontales Ausruhen vor 14:00 Uhr den Nachmittags-Akku am zuverlässigsten.
+      </p>
+</div>
+<!-- Primary Call-to-Action: Treffsicher & beruhigend hoch (min 56px) -->
+<button class="w-full min-h-[56px] py-3.5 px-6 rounded-full bg-secondary-container hover:bg-primary-container active:scale-95 transition-all shadow-[0_4px_20px_rgba(45,212,191,0.25)] flex items-center justify-center gap-3 text-on-secondary font-label-md text-label-md focus:outline-none" id="log-symptom-now-btn" type="button">
+<span class="material-symbols-outlined text-[24px]">battery_charging_full</span>
+<span>Dieses Symptom jetzt im Akku erfassen</span>
+</button>
+</section>
+<!-- 6. Ärztlicher Hinweis & Pacing-Begleiter -->
+<section class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div class="flex items-start gap-space-xs">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined text-[20px]">shield_with_heart</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-label-md font-label-md text-on-surface">Ärztlicher Pacing-Begleiter</h3>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+          Diese Informationen dienen der individuellen Entlastung und ersetzen keine ärztliche Beratung. Deine Einträge können gebündelt für das nächste Gespräch mit deiner Neurologin oder deinem Neurologen exportiert werden.
+        </p>
+</div>
+</div>
+<!-- Sekundäre Aktion: Merken für Praxistermin -->
+<div class="pt-1 flex items-center gap-space-xs">
+<button class="w-full min-h-[48px] py-3 px-4 rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all flex items-center justify-center gap-2.5 text-on-surface text-label-sm font-label-sm focus:outline-none" id="bookmark-appointment-btn" type="button">
+<span class="material-symbols-outlined text-[20px] text-secondary" id="bookmark-icon">bookmark_border</span>
+<span id="bookmark-text">Für Praxistermin merken</span>
+</button>
+</div>
+</section>
+</div>
+<script>
+  // Trigger-Chip Umschalt-Logik mit visuellem Feedback
+  document.querySelectorAll('.trigger-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const isSelected = chip.classList.contains('bg-secondary/20');
+      if (isSelected) {
+        chip.classList.remove('bg-secondary/20', 'text-primary');
+        chip.classList.add('bg-surface-container', 'text-on-surface-variant');
+      } else {
+        chip.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        chip.classList.add('bg-secondary/20', 'text-primary');
+      }
+    });
+  });
+
+  // Vorlese-Funktion Simulierung
+  const audioBtn = document.getElementById('audio-reader-btn');
+  const playbackBar = document.getElementById('audio-playback-bar');
+  const stopBtn = document.getElementById('audio-stop-btn');
+  const audioIcon = document.getElementById('audio-icon');
+
+  if (audioBtn && playbackBar && stopBtn) {
+    audioBtn.addEventListener('click', () => {
+      playbackBar.classList.remove('hidden');
+      playbackBar.classList.add('flex');
+      audioIcon.textContent = 'volume_up';
+    });
+
+    stopBtn.addEventListener('click', () => {
+      playbackBar.classList.add('hidden');
+      playbackBar.classList.remove('flex');
+      audioIcon.textContent = 'headphones';
+    });
+  }
+
+  // Für Praxistermin merken Button
+  const bookmarkBtn = document.getElementById('bookmark-appointment-btn');
+  const bookmarkIcon = document.getElementById('bookmark-icon');
+  const bookmarkText = document.getElementById('bookmark-text');
+
+  if (bookmarkBtn) {
+    bookmarkBtn.addEventListener('click', () => {
+      const isBookmarked = bookmarkIcon.textContent === 'bookmark';
+      if (isBookmarked) {
+        bookmarkIcon.textContent = 'bookmark_border';
+        bookmarkText.textContent = 'Für Praxistermin merken';
+        bookmarkBtn.classList.remove('bg-surface-container-highest');
+      } else {
+        bookmarkIcon.textContent = 'bookmark';
+        bookmarkText.textContent = 'Für Praxistermin vorgemerkt ✓';
+        bookmarkBtn.classList.add('bg-surface-container-highest');
+      }
+    });
+  }
+
+  // CTA Button Rückmeldung
+  const logBtn = document.getElementById('log-symptom-now-btn');
+  if (logBtn) {
+    logBtn.addEventListener('click', () => {
+      const originalText = logBtn.innerHTML;
+      logBtn.innerHTML = '<span class="material-symbols-outlined text-[24px]">check</span><span>Im Tagebuch übernommen!</span>';
+      setTimeout(() => {
+        logBtn.innerHTML = originalText;
+      }, 2000);
+    });
+  }
+</script></main></body></html>

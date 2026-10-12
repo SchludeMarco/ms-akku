@@ -65,9 +65,165 @@
     --pacing: 254 160 71; /* #FEA047 */
     --pacing-soft: 255 183 122; /* #FFB77A */
 
+    /* Schatten der unteren Navigation (mit Deckkraft) */
+    --nav-shadow: 0 0 0 / 0.4;
+
+    /* Energie-Zonen (Stitch-Redesign): Füllfarbe, lesbare Textfarbe und
+       Schrift auf der Füllfarbe. Niedrige Energie ist kühles Blau, nie Rot. */
+    --energy-high: 68 226 205; /* #44E2CD */
+    --energy-mid: 255 183 122; /* #FFB77A */
+    --energy-low: 175 224 255; /* #AFE0FF */
+    --energy-high-text: 68 226 205;
+    --energy-mid-text: 255 183 122;
+    --energy-low-text: 175 224 255;
+    --on-energy: 0 32 28; /* #00201C */
+
+    /* Knöpfe: cta = Hauptaktion, action = Aktion in einer Karte */
+    --cta: 45 212 191; /* #2DD4BF */
+    --on-cta: 0 55 49; /* #003731 */
+    --action: 35 43 46; /* #232B2E */
+    --on-action: 98 250 227; /* #62FAE3 */
+    --fab: 87 241 219; /* #57F1DB */
+    --on-fab: 0 55 49; /* #003731 */
+    --nav-active: 87 241 219; /* #57F1DB */
+
+    /* Sonne der Begrüßung: im Dunkeln nur ein warmer Schein, nie grell */
+    --sun: 254 190 110;
+    --sun-core: 0.5;
+    --sun-halo: 0.16;
+    --sun-wash: 0.05;
+
+    /* Lichtstimmung hinter dem Inhalt (Farbe und Deckkraft) */
+    --ambient: 45 212 191;
+    --ambient-alpha: 0.05;
+
     --radius: 0.5rem;
 
     color-scheme: dark;
+  }
+
+  /*
+   * Pastell-Erscheinungsbild (wählbar unter "Mehr"). Ruhige, entsättigte Töne
+   * auf salbeifarbenem Grund statt reinem Weiß, damit es hell wirkt, ohne zu
+   * blenden. Gleiche Token-Namen wie oben, nur andere Werte.
+   * Achtung: Flächen in primary-container sind hier hell – Text darauf muss
+   * on-primary-container oder on-primary-fixed sein, nie on-primary.
+   */
+  :root[data-theme="pastel"] {
+    --surface: 233 240 236; /* #E9F0EC */
+    --surface-dim: 218 228 222; /* #DAE4DE */
+    --surface-bright: 243 247 245; /* #F3F7F5 */
+    --surface-container-lowest: 243 247 245; /* #F3F7F5 */
+    --surface-container-low: 226 235 230; /* #E2EBE6 */
+    --surface-container: 220 231 225; /* #DCE7E1 */
+    --surface-container-high: 211 224 217; /* #D3E0D9 */
+    --surface-container-highest: 201 216 208; /* #C9D8D0 */
+    --surface-variant: 201 216 208; /* #C9D8D0 */
+    --surface-tint: 36 95 89; /* #245F59 */
+    --on-surface: 29 43 41; /* #1D2B29 */
+    --on-surface-variant: 68 83 79; /* #44534F */
+    --inverse-surface: 42 56 54; /* #2A3836 */
+    --inverse-on-surface: 234 242 238; /* #EAF2EE */
+    --outline: 90 105 99; /* #5A6963 */
+    --outline-variant: 175 192 184; /* #AFC0B8 */
+
+    --primary: 36 95 89; /* #245F59 */
+    --on-primary: 255 255 255; /* #FFFFFF */
+    --primary-container: 99 187 173; /* #63BBAD */
+    --on-primary-container: 6 48 44; /* #06302C */
+    --inverse-primary: 143 211 200; /* #8FD3C8 */
+    --primary-fixed: 191 233 225; /* #BFE9E1 */
+    --primary-fixed-dim: 168 221 211; /* #A8DDD3 */
+    --on-primary-fixed: 0 32 28; /* #00201C */
+    --on-primary-fixed-variant: 27 78 72; /* #1B4E48 */
+
+    --secondary: 38 92 100; /* #265C64 */
+    --on-secondary: 255 255 255; /* #FFFFFF */
+    --secondary-container: 157 208 216; /* #9DD0D8 */
+    --on-secondary-container: 18 63 70; /* #123F46 */
+    --secondary-fixed: 46 106 115; /* #2E6A73 */
+    --secondary-fixed-dim: 46 106 115; /* #2E6A73 */
+    --on-secondary-fixed: 255 255 255; /* #FFFFFF */
+    --on-secondary-fixed-variant: 255 255 255; /* #FFFFFF */
+
+    --tertiary: 54 85 124; /* #36557C */
+    --on-tertiary: 255 255 255; /* #FFFFFF */
+    --tertiary-container: 143 180 227; /* #8FB4E3 */
+    --on-tertiary-container: 20 48 79; /* #14304F */
+    --tertiary-fixed: 197 216 242; /* #C5D8F2 */
+    --tertiary-fixed-dim: 175 199 232; /* #AFC7E8 */
+    --on-tertiary-fixed: 15 36 64; /* #0F2440 */
+    --on-tertiary-fixed-variant: 45 74 112; /* #2D4A70 */
+
+    --error: 158 58 52; /* #9E3A34 */
+    --on-error: 255 255 255; /* #FFFFFF */
+    --error-container: 246 213 208; /* #F6D5D0 */
+    --on-error-container: 107 31 26; /* #6B1F1A */
+
+    --pacing: 235 167 101; /* #EBA765 */
+    --pacing-soft: 138 82 22; /* #8A5216 */
+
+    --nav-shadow: 29 43 41 / 0.12;
+
+    --energy-high: 99 187 173; /* #63BBAD */
+    --energy-mid: 235 167 101; /* #EBA765 */
+    --energy-low: 143 180 227; /* #8FB4E3 */
+    --energy-high-text: 36 95 89; /* #245F59 */
+    --energy-mid-text: 138 82 22; /* #8A5216 */
+    --energy-low-text: 54 85 124; /* #36557C */
+    --on-energy: 29 43 41; /* #1D2B29 */
+
+    --cta: 36 95 89; /* #245F59 */
+    --on-cta: 255 255 255;
+    --action: 36 95 89; /* #245F59 */
+    --on-action: 255 255 255;
+    --fab: 36 95 89; /* #245F59 */
+    --on-fab: 255 255 255;
+    --nav-active: 36 95 89; /* #245F59 */
+
+    --sun: 250 196 110;
+    --sun-core: 0.95;
+    --sun-halo: 0.42;
+    --sun-wash: 0.2;
+
+    --ambient: 99 187 173;
+    --ambient-alpha: 0.16;
+
+    color-scheme: light;
+  }
+
+  /*
+   * Farben folgen der Stimmung (<html data-mood>, siehe lib/mood.ts). Es
+   * ändern sich nur der Seitengrund und die Lichtstimmung dahinter – Karten,
+   * Schrift und Akzente bleiben, damit die Lesbarkeit garantiert ist.
+   * sunny = warm, rest = kühl und gedämpft (beruhigend, nie alarmierend).
+   */
+  :root[data-mood="sunny"] {
+    --surface: 23 21 15; /* #17150F */
+    --ambient: 254 170 90;
+    --ambient-alpha: 0.12;
+  }
+
+  :root[data-mood="rest"] {
+    --surface: 11 18 30; /* #0B121E */
+    --ambient: 110 170 235;
+    --ambient-alpha: 0.1;
+    --sun-core: 0.3;
+    --sun-halo: 0.1;
+  }
+
+  :root[data-theme="pastel"][data-mood="sunny"] {
+    --surface: 244 238 223; /* #F4EEDF */
+    --ambient: 240 176 104;
+    --ambient-alpha: 0.3;
+  }
+
+  :root[data-theme="pastel"][data-mood="rest"] {
+    --surface: 228 236 244; /* #E4ECF4 */
+    --ambient: 143 180 227;
+    --ambient-alpha: 0.32;
+    --sun-core: 0.6;
+    --sun-halo: 0.25;
   }
 
   * {
@@ -82,6 +238,33 @@
     @apply flex min-h-full flex-col bg-surface font-sans text-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container;
     overscroll-behavior-y: none;
     -webkit-tap-highlight-color: transparent;
+    /* Stimmungswechsel gleiten langsam, nichts springt oder blinkt. */
+    transition: background-color 900ms ease;
+  }
+
+  /* Weiche Lichtstimmung am oberen Rand, hinter allem Inhalt. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      130% 55% at 50% 0%,
+      rgb(var(--ambient) / var(--ambient-alpha)),
+      transparent 70%
+    );
+  }
+
+  /* Sofortige Antwort beim Berühren: Die Fläche gibt leicht nach, noch bevor
+     etwas passiert. `scale` statt `transform`, damit Verschiebungen einzelner
+     Elemente erhalten bleiben. */
+  :where(button, a, [role="radio"], [role="checkbox"], [role="switch"]) {
+    transition: scale 90ms ease-out;
+  }
+
+  :where(button, a, [role="radio"], [role="checkbox"], [role="switch"]):active:not(:disabled) {
+    scale: 0.97;
   }
 
   ::-webkit-scrollbar {
@@ -97,6 +280,55 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+@layer components {
+  /* Regler auf dem Screen "Akku einschätzen": breite Spur, 36 px großer
+     Griff – auch mit zitternder Hand gut zu fassen. */
+  .akku-range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 48px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .akku-range::-webkit-slider-runnable-track {
+    height: 12px;
+    border-radius: 9999px;
+    background: rgb(var(--surface-container-highest));
+  }
+
+  .akku-range::-moz-range-track {
+    height: 12px;
+    border-radius: 9999px;
+    background: rgb(var(--surface-container-highest));
+  }
+
+  .akku-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 36px;
+    margin-top: -12px;
+    border-radius: 9999px;
+    border: 3px solid rgb(var(--surface-container-low));
+    background: var(--range-color, rgb(var(--primary-container)));
+  }
+
+  .akku-range::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    border-radius: 9999px;
+    border: 3px solid rgb(var(--surface-container-low));
+    background: var(--range-color, rgb(var(--primary-container)));
+  }
+
+  .akku-range:focus-visible {
+    outline: 2px solid rgb(var(--primary));
+    outline-offset: 4px;
+    border-radius: 9999px;
   }
 }
 

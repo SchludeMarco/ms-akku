@@ -66,6 +66,8 @@ const STARTED_AT: { key: StartedAt; label: string }[] = [
 
 const BATTERY_CHIPS = [20, 40, 60, 80, 100];
 
+const STEP_LABELS = ["Auswählen", "Ergänzen", "Speichern"];
+
 const CHIP_BASE =
   "flex min-h-[46px] items-center gap-1.5 text-label-md transition-all";
 const CHIP_ON =
@@ -173,36 +175,51 @@ export default function ErfassenPage() {
   }
 
   const intensityConfig = selected ? INTENSITY_LABELS[selected] : undefined;
+  // Fortschritt wie in der Stitch-Vorlage: wählen, ergänzen, speichern.
+  const step = !selected ? 1 : canSave ? 3 : 2;
 
   return (
     <>
       <AppHeader title="Veränderung erfassen" back />
       <main className="pb-safe mx-auto flex w-full max-w-xl flex-1 flex-col pt-16">
         <div className="flex w-full flex-1 flex-col">
-          <div className="flex items-center justify-between px-margin pb-2 pt-4">
-            <div className="flex items-center gap-1.5">
-              <Icon name="speed" filled className="text-[20px] text-primary" />
-              <span className="text-label-sm font-semibold uppercase tracking-wider text-primary">
-                Schnell-Protokoll
+          <div className="px-margin pb-space-sm pt-space-sm">
+            <div className="mb-1.5 flex items-center justify-between gap-2">
+              <span className="text-label-md font-semibold text-nav-active">
+                Schritt {step} von 3
               </span>
+              <span className="text-body-sm text-on-surface-variant">{STEP_LABELS[step - 1]}</span>
             </div>
-            <button
-              type="button"
-              onClick={leave}
-              className="flex min-h-[44px] items-center gap-1.5 rounded-full border border-outline-variant/40 bg-surface-container-high px-3.5 py-1 text-label-md text-on-surface transition-colors hover:bg-surface-container-highest"
+            <div
+              role="progressbar"
+              aria-valuemin={1}
+              aria-valuemax={3}
+              aria-valuenow={step}
+              aria-label="Fortschritt"
+              className="grid grid-cols-3 gap-2"
             >
-              <Icon name="close" className="text-[18px] text-on-surface-variant" />
-              <span>Abbrechen</span>
-            </button>
+              {[1, 2, 3].map((index) => (
+                <span
+                  key={index}
+                  className={cn(
+                    "h-1.5 rounded-full transition-colors",
+                    index <= step ? "bg-nav-active" : "bg-surface-container-highest",
+                  )}
+                />
+              ))}
+            </div>
           </div>
 
-          <div className="mb-5 px-margin">
-            <h2 className="mb-1 text-headline-lg-mobile leading-tight text-on-surface">
-              Was hat sich verändert?
-            </h2>
-            <p className="text-body-md text-on-surface-variant">
-              In wenigen Sekunden erfasst – ohne langes Ausfüllen.
-            </p>
+          <div className="mb-space-md px-margin">
+            <div className="flex items-start gap-3 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4">
+              <Icon name="battery_charging_full" className="mt-0.5 text-[26px] text-secondary" />
+              <div>
+                <h2 className="text-headline-sm text-on-surface">Was hat sich verändert?</h2>
+                <p className="text-body-sm text-on-surface-variant">
+                  Kein Stress. Wähle einfach, was du gerade spürst.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="mb-6 flex flex-col gap-3 px-margin">
@@ -216,22 +233,22 @@ export default function ErfassenPage() {
                     type="button"
                     aria-expanded={false}
                     onClick={() => toggleOption(option.key)}
-                    className="flex min-h-[64px] w-full items-center justify-between rounded-xl border border-surface-container-high/80 bg-surface-container-low p-4 text-left transition-all hover:border-outline-variant/60 hover:bg-surface-container active:bg-surface-container-high"
+                    className="flex min-h-[64px] w-full items-center justify-between rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 text-left transition-all hover:bg-surface-container active:bg-surface-container-high"
                   >
                     <div className="flex min-w-0 items-center gap-3.5">
                       <div
                         className={cn(
-                          "flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high",
+                          "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-surface-container-high",
                           option.iconClass,
                         )}
                       >
                         <Icon name={option.icon} filled={option.filled} className="text-[22px]" />
                       </div>
                       <div className="min-w-0">
-                        <div className="truncate text-headline-sm text-on-surface">
+                        <div className="text-headline-sm text-on-surface">
                           {option.title}
                         </div>
-                        <div className="truncate text-body-sm text-on-surface-variant">
+                        <div className="text-body-sm text-on-surface-variant">
                           {option.hint}
                         </div>
                       </div>
@@ -244,7 +261,7 @@ export default function ErfassenPage() {
               return (
                 <div
                   key={option.key}
-                  className="w-full overflow-hidden rounded-xl border border-primary/40 bg-surface-container-low shadow-lg transition-all"
+                  className="w-full overflow-hidden rounded-2xl border border-primary/40 bg-surface-container-low shadow-lg transition-all"
                 >
                   <button
                     type="button"
@@ -253,19 +270,17 @@ export default function ErfassenPage() {
                     className="flex min-h-[64px] w-full items-center justify-between bg-surface-container-high/90 p-4 text-left text-on-surface"
                   >
                     <div className="flex min-w-0 items-center gap-3.5">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary-fixed">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-container text-on-primary-fixed">
                         <Icon name={option.icon} filled className="text-[22px]" />
                       </div>
                       <div className="min-w-0">
-                        <div className="truncate text-headline-sm text-primary">{option.title}</div>
-                        <div className="truncate text-body-sm text-on-surface-variant">
+                        <div className="text-headline-sm text-primary">{option.title}</div>
+                        <div className="text-body-sm text-on-surface-variant">
                           {option.hint}
                         </div>
                       </div>
                     </div>
-                    <div className="ml-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-container-highest text-primary">
-                      <Icon name="expand_less" className="text-[20px]" />
-                    </div>
+                    <Icon name="check_circle" className="ml-2 text-[26px] text-nav-active" />
                   </button>
 
                   <div className="flex flex-col gap-5 border-t border-surface-container-high bg-surface-container-lowest/80 p-4">
@@ -533,15 +548,15 @@ export default function ErfassenPage() {
             </div>
           </div>
 
-          <div className="sticky inset-x-0 bottom-0 mt-auto flex flex-col gap-2.5 border-t border-surface-container-high/60 bg-surface/95 px-margin pb-4 pt-3 shadow-2xl backdrop-blur-md">
+          <div className="sticky inset-x-0 bottom-0 mt-auto flex flex-col gap-2 border-t border-outline-variant/30 bg-surface-container-high/95 px-margin pb-3 pt-3 backdrop-blur-xl">
             <button
               type="button"
               disabled={!canSave}
               onClick={() => save(true)}
-              className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-xl bg-primary-container px-6 text-label-lg text-on-primary-container shadow-lg shadow-primary-container/20 transition-all hover:brightness-105 active:scale-[0.99] disabled:opacity-40 disabled:shadow-none"
+              className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-cta px-6 text-label-lg font-semibold text-on-cta shadow-lg transition-transform active:scale-[0.99] disabled:opacity-40 disabled:shadow-none"
             >
-              <Icon name="check" className="text-[20px] font-bold" />
-              <span className="font-bold">Speichern</span>
+              <Icon name="check_circle" className="text-[22px]" />
+              Veränderung speichern
             </button>
             {isSymptomOption && selected !== "disappeared" && (
               <button
@@ -553,6 +568,10 @@ export default function ErfassenPage() {
                 Überspringen &amp; speichern
               </button>
             )}
+            <p className="flex items-center justify-center gap-1.5 text-body-sm text-on-surface-variant">
+              <Icon name="lock" className="text-[16px]" />
+              Bleibt vertraulich und geschützt auf deinem Gerät.
+            </p>
           </div>
         </div>
       </main>

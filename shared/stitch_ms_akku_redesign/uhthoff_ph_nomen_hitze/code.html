@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="de"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><title>Erfassen - MS Akku</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;overflow-x:hidden;background-color:#0d1518;color:#dbe4e8;font-family:'Plus Jakarta Sans',sans-serif;-webkit-tap-highlight-color:transparent;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}*{-ms-overflow-style:none;scrollbar-width:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-low":"#151d20","primary-fixed":"#62fae3","tertiary-fixed-dim":"#ffb77a","tertiary-fixed":"#ffdcc2","on-primary-container":"#006b60","tertiary":"#fff4ee","surface-dim":"#0d1518","on-primary":"#003731","on-tertiary-container":"#904e00","on-secondary-container":"#004d44","inverse-primary":"#006b5f","primary-fixed-dim":"#3bddc7","primary":"#d6fff6","secondary-container":"#03c6b2","secondary-fixed-dim":"#3cddc7","surface-container-lowest":"#070f12","error-container":"#93000a","inverse-surface":"#dbe4e8","outline-variant":"#3c4a46","on-surface-variant":"#bacac5","on-secondary-fixed-variant":"#005047","surface-bright":"#323a3e","on-error-container":"#ffdad6","on-surface":"#dbe4e8","error":"#ffb4ab","surface-container-high":"#232b2e","surface-container-highest":"#2e3639","surface-tint":"#3bddc7","primary-container":"#57f1db","inverse-on-surface":"#2a3235","on-tertiary-fixed-variant":"#6d3a00","on-error":"#690005","tertiary-container":"#ffd1ad","on-secondary":"#003731","on-primary-fixed":"#00201c","background":"#0d1518","surface-container":"#192124","on-primary-fixed-variant":"#005047","on-secondary-fixed":"#00201c","secondary-fixed":"#62fae3","outline":"#859490","surface":"#0d1518","on-tertiary":"#4c2700","surface-variant":"#2e3639","secondary":"#44e2cd","on-background":"#dbe4e8","on-tertiary-fixed":"#2e1500"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.75rem","margin-mobile":"1rem","space-xs":"0.5rem","space-md":"1rem","gutter":"1rem","margin":"1.25rem","space-xl":"2rem","space-lg":"1.5rem","gutter-mobile":"0.75rem"},"fontFamily":{"headline-xl-mobile":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"caption":["Plus Jakarta Sans"],"body-md-bold":["Plus Jakarta Sans"]},"fontSize":{"headline-xl-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"28px","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["16px",{"lineHeight":"24px","fontWeight":"600"}],"label-sm":["14px",{"lineHeight":"20px","fontWeight":"500"}],"caption":["14px",{"lineHeight":"20px","fontWeight":"400"}],"body-md-bold":["16px",{"lineHeight":"26px","fontWeight":"600"}]}}}}</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface text-on-surface min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-low/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)]"><div class="h-16 px-margin flex items-center justify-between gap-space-xs"><div class="flex items-center gap-space-xs min-w-0"><button aria-label="Zurück" class="w-12 h-12 min-w-[48px] min-h-[48px] flex items-center justify-center rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container shrink-0" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="MS Akku Logo" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1V07146Z2g2ZKg6tIO7QtZC4btIcyi_6FdsPw2Mhe8Auzzkp9y_jTt3_6h1CDqiVWOdo2wFri1dZiqxfQa5nY8r_BONczZMaOCAsOFpl7m9imv-ouReDdpgWY9VhFvyPFFgjuOavR7SEn0_FIjn0txqJ65U2YOySZ9OOzbLQLfyLsdiCV4hIzSpMVCC8oJmeYB51TgWMj4cHId-1OdkEOmlNTXlJeRVilKEp95pPXXWiKypzzL94QKUcHo"/><div class="flex flex-col truncate"><span class="font-headline-md text-headline-md text-on-surface truncate">MS Akku</span><span class="text-[11px] leading-tight text-on-surface-variant uppercase tracking-wider font-semibold truncate">Erfassen</span></div></div><div class="flex items-center gap-space-xs shrink-0"><a aria-label="Übersicht" class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all text-on-surface-variant hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary-container" data-path="heute" href="#"><span class="material-symbols-outlined text-[24px]">home</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 px-margin bg-surface"><div class="flex flex-col w-full pb-10 space-y-5">
+<!-- 1. Header & Hero-Bereich -->
+<section class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative overflow-hidden">
+<!-- Atmospheric subtle ambient glow -->
+<div class="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-tertiary-container/10 blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-10 -left-10 w-32 h-32 rounded-full bg-secondary-container/10 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col space-y-3">
+<!-- Badges -->
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[18px]">thermostat</span>
+          Wetter &amp; Temperatur
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[18px]">wb_sunny</span>
+          Häufiger Sommer-Trigger
+        </span>
+</div>
+<!-- Titel -->
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface leading-snug">
+        Uhthoff-Phänomen (Hitzeempfindlichkeit)
+      </h1>
+<!-- Kurzerklärung -->
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Temporäre Zunahme neurologischer Symptome (wie Sehstörungen, Muskelschwäche oder Gangunsicherheit) bei minimalem Anstieg der Körperkerntemperatur – häufig ausgelöst durch sommerliche Hitze, warmes Duschen, körperliche Anstrengung oder Infekte mit erhöhter Temperatur.
+      </p>
+<!-- Pille: Akku-Effekt (Amber/Ockerton, kein Alarm-Rot) -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs pt-1">
+<div class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-surface-container text-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-[22px] text-tertiary-fixed-dim">battery_low</span>
+<div class="flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant">Typischer Akku-Effekt</span>
+<span class="font-label-md text-label-md text-tertiary-fixed-dim">Temporär erhöht (−25 % bis −40 %)</span>
+</div>
+</div>
+<!-- Audio-Barrierefreiheit Button -->
+<button aria-label="Tipp anhören, Dauer drei Minuten" class="h-12 min-h-[48px] px-4 rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-primary focus:outline-none focus:ring-2 focus:ring-primary-container" id="audio-toggle-btn" type="button">
+<span class="material-symbols-outlined text-[22px]" id="audio-icon">headphones</span>
+<span class="font-label-md text-label-md text-on-surface" id="audio-text">Tipp anhören (3 Min.)</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 2. Kognitiv verständliche Erklärung: Was passiert im Nervensystem? -->
+<section class="bg-surface-container-low rounded-xl p-space-md shadow-sm space-y-3.5">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-xl bg-secondary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[24px]">neurology</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">
+        Was passiert im Nervensystem?
+      </h2>
+</div>
+<!-- Biochemische / physiologische Erklärung -->
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+      Bei vorbestehenden Läsionen sind die schützenden Myelinscheiden der Nervenfasern ausgedünnt. Schon eine geringfügige Erwärmung (oft genügen 0,3 bis 0,5 Grad Celsius) verlangsamt oder unterbricht vorübergehend die elektrische Reizleitung.
+    </p>
+<!-- Visuelle Micro-Grafik: Reizleitungs-Metapher -->
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-2">
+<div class="flex justify-between items-center text-caption font-caption text-on-surface-variant">
+<span>Signalfluss bei Wärme</span>
+<span class="text-tertiary-fixed-dim font-medium">Reversible Leitungsbremse</span>
+</div>
+<div class="w-full bg-surface-container-high h-3 rounded-full overflow-hidden flex">
+<div class="bg-secondary-container h-full w-2/5 transition-all"></div>
+<div class="bg-tertiary-container/60 h-full w-1/5 animate-pulse"></div>
+<div class="bg-surface-container-highest h-full w-2/5"></div>
+</div>
+<div class="flex justify-between text-[12px] text-on-surface-variant pt-0.5">
+<span>Intakte Reizleitung</span>
+<span>Temporäre Blockade</span>
+<span>Rasche Rückbildung</span>
+</div>
+</div>
+<!-- Beruhigende Entlastungsbox (Pseudoschub) -->
+<div class="bg-surface-container rounded-xl p-space-md flex items-start gap-3">
+<div class="w-9 h-9 rounded-full bg-primary-container/20 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[20px]">verified</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary-fixed-dim pb-0.5">
+          Wichtig zu wissen: Pseudoschub
+        </span>
+<p class="font-body-md text-body-md text-on-surface leading-normal">
+          Der Uhthoff-Effekt ist <strong>kein neuer Schub</strong> und verursacht keine bleibenden Schäden. Die Symptome verschwinden vollständig, sobald deine Körperkerntemperatur wieder das persönliche Normalniveau erreicht.
+        </p>
+</div>
+</div>
+</section>
+<!-- 3. Konkrete Pacing- & Kühl-Strategien (Praxisnah) -->
+<section class="space-y-3">
+<div class="flex items-center gap-space-xs px-1">
+<span class="material-symbols-outlined text-secondary text-[24px]">ac_unit</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">
+        Konkrete Pacing- &amp; Kühl-Strategien
+      </h2>
+</div>
+<!-- Strategie 1: Pre-Cooling -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center font-label-md text-label-md text-primary">1</span>
+<h3 class="font-label-md text-label-md text-on-surface">Präventives Kühlen (Pre-Cooling)</h3>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-surface-container font-caption text-caption text-on-surface-variant">Prävention</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Trinke kühle Flüssigkeiten und lege ca. 20 Minuten vor Verlassen des Hauses Kältepacks oder Kühlmanschetten an Unterarme und Handgelenke. Dies puffert den Temperaturanstieg des Blutes effektiv ab.
+      </p>
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-caption text-caption flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">local_drink</span> Kühles Wasser
+        </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-caption text-caption flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">wrist</span> Handgelenk-Kompression
+        </span>
+</div>
+</div>
+<!-- Strategie 2: 21-Grad-Regel & Schatten-Timing -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center font-label-md text-label-md text-primary">2</span>
+<h3 class="font-label-md text-label-md text-on-surface">Die 21°C-Regel &amp; Schatten-Timing</h3>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-surface-container font-caption text-caption text-on-surface-variant">Alltag</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Lege Wege im Freien konsequent vor 11:00 Uhr oder nach 18:00 Uhr. Wohnräume bereits ab Sonnenaufgang abdunkeln und nur nachts stoßlüften, um die Raumtemperatur stabil unter 21–22°C zu halten.
+      </p>
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-caption text-caption flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> Vor 11:00 / Nach 18:00
+        </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-caption text-caption flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">roller_shades</span> Räume abdunkeln
+        </span>
+</div>
+</div>
+<!-- Strategie 3: Akut-Intervention -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center font-label-md text-label-md text-primary">3</span>
+<h3 class="font-label-md text-label-md text-on-surface">Akut-Intervention bei Hitze-Einbruch</h3>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-tertiary-container/30 text-tertiary-fixed-dim font-caption text-caption">Akut-Hilfe</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Treten Sehunschärfe oder Schwäche plötzlich auf: Beine hochlagern, feuchtkühles Tuch in den Nacken legen, Ventilator aufstellen und eine 20-minütige Reizpause im abgedunkelten Raum einlegen.
+      </p>
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-caption text-caption flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">airline_seat_legroom_extra</span> Beine hoch
+        </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-caption text-caption flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">mode_fan</span> Umluft
+        </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-caption text-caption flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">timer</span> 20 Min. Ruhe
+        </span>
+</div>
+</div>
+</section>
+<!-- 4. Deine persönlichen Beobachtungen (14-Tage-Bilanz) -->
+<section class="bg-surface-container-low rounded-xl p-space-md shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-xl bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[24px]">insights</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Persönliche Bilanz</h2>
+<span class="font-caption text-caption text-on-surface-variant">Letzte 14 Tage im Überblick</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-secondary">
+        4× erfasst
+      </span>
+</div>
+<!-- Beobachtungspunkte -->
+<div class="space-y-2.5">
+<div class="bg-surface-container rounded-xl p-3 flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[20px] mt-0.5 shrink-0">warning</span>
+<p class="font-body-md text-body-md text-on-surface">
+          In den letzten 14 Tagen: <strong>4× als Auslöser</strong> für kurzzeitige Fatigue oder Gangunsicherheit identifiziert.
+        </p>
+</div>
+<div class="bg-surface-container rounded-xl p-3 flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5 shrink-0">trending_up</span>
+<p class="font-body-md text-body-md text-on-surface">
+          Erfreulicher Kühleffekt: Nach 15 Min. Kühlen der Unterarme stabilisierte sich dein Akku um <strong>+20 %</strong>.
+        </p>
+</div>
+</div>
+<!-- Visueller Pacing-Erfolgsbalken -->
+<div class="bg-surface-container rounded-xl p-space-md space-y-2">
+<div class="flex justify-between items-center text-label-sm font-label-sm">
+<span class="text-on-surface">Kühl-Interventions-Erfolg</span>
+<span class="text-secondary font-semibold">80 % Stabilisierung</span>
+</div>
+<div class="w-full bg-surface-container-high h-3.5 rounded-full overflow-hidden flex">
+<div class="bg-secondary h-full rounded-full transition-all duration-500" style="width: 80%;"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant block">
+        Bei 4 von 5 Hitzephasen konnte ein Akku-Tiefstand innerhalb von 30 Minuten abgewendet werden.
+      </span>
+</div>
+<!-- Primärer Erfassungs-Button (Mindestens 56px Höhe, großzügig, barrierefrei) -->
+<div class="pt-1">
+<button class="w-full min-h-[56px] h-14 px-6 rounded-xl bg-secondary hover:bg-secondary-fixed active:scale-[0.98] transition-all flex items-center justify-center gap-3 text-on-secondary shadow-[0_4px_20px_rgba(45,212,191,0.25)] focus:outline-none focus:ring-2 focus:ring-primary-container" id="log-symptom-btn" type="button">
+<span class="material-symbols-outlined text-[26px]">add_circle</span>
+<span class="font-label-md text-label-md text-on-secondary font-bold">Dieses Symptom jetzt im Akku erfassen</span>
+</button>
+</div>
+</section>
+<!-- 5. Ärztlicher Pacing-Begleiter / Sommer-Notfallplan -->
+<section class="bg-surface-container-low rounded-xl p-space-md shadow-sm space-y-4">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">medical_services</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">
+        Ärztlicher Sommer-Begleiter
+      </h2>
+</div>
+<!-- Hinweiskarte: Verordnungsmöglichkeit -->
+<div class="bg-surface-container rounded-xl p-space-md space-y-1.5">
+<div class="flex items-center gap-2 text-primary-fixed-dim">
+<span class="material-symbols-outlined text-[20px]">medical_information</span>
+<span class="font-label-md text-label-md">Für deinen Sommer-Therapieplan</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Kühlempfehlungen und zertifizierte <strong>Kühlwesten können ärztlich verordnet</strong> und über die Krankenkasse beantragt werden. Sprich deine Neurologin oder deinen Neurologen gezielt darauf an.
+      </p>
+</div>
+<!-- Barrierefreie Sekundäraktionen (Mindestens 48px Touch-Fläche, 8px Abstand) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-xs pt-1">
+<button class="min-h-[52px] h-[52px] px-4 rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="bookmark-doctor-btn" type="button">
+<span class="material-symbols-outlined text-[22px] text-secondary">bookmark_add</span>
+<span class="font-label-md text-label-md">Für Praxistermin merken</span>
+</button>
+<button class="min-h-[52px] h-[52px] px-4 rounded-xl bg-surface-container hover:bg-surface-container-high active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" id="share-checklist-btn" type="button">
+<span class="material-symbols-outlined text-[22px] text-secondary">share</span>
+<span class="font-label-md text-label-md">Kühl-Checkliste teilen</span>
+</button>
+</div>
+</section>
+<!-- Bestätigungs-Toast (Barrierefreies visuelles Feedback) -->
+<div class="fixed bottom-24 left-4 right-4 max-w-md mx-auto bg-surface-bright text-on-surface px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 transition-opacity duration-300 opacity-0 pointer-events-none z-50" id="toast-notification">
+<span class="material-symbols-outlined text-secondary text-[22px]" id="toast-icon">check_circle</span>
+<span class="font-body-md text-body-md" id="toast-msg">Erfolgreich gespeichert</span>
+</div>
+</div>
+<script>
+  (function() {
+    // Barrierefreie Toast-Rückmeldung
+    function showToast(message, iconName) {
+      const toast = document.getElementById('toast-notification');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastIcon = document.getElementById('toast-icon');
+      if (!toast || !toastMsg) return;
+
+      toastMsg.textContent = message;
+      if (toastIcon && iconName) toastIcon.textContent = iconName;
+
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // Audio-Button Umschaltung
+    const audioBtn = document.getElementById('audio-toggle-btn');
+    const audioText = document.getElementById('audio-text');
+    const audioIcon = document.getElementById('audio-icon');
+    let isPlaying = false;
+
+    if (audioBtn) {
+      audioBtn.addEventListener('click', function() {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+          audioIcon.textContent = 'pause_circle';
+          audioText.textContent = 'Pause (Wiedergabe...)';
+          showToast('Audio-Erklärung gestartet', 'headphones');
+        } else {
+          audioIcon.textContent = 'headphones';
+          audioText.textContent = 'Tipp anhören (3 Min.)';
+          showToast('Audio pausiert', 'pause');
+        }
+      });
+    }
+
+    // Symptom erfassen
+    const logBtn = document.getElementById('log-symptom-btn');
+    if (logBtn) {
+      logBtn.addEventListener('click', function() {
+        showToast('Uhthoff-Ereignis im Akku erfasst (-30 %)', 'battery_charging_20');
+      });
+    }
+
+    // Praxistermin merken
+    const bookmarkBtn = document.getElementById('bookmark-doctor-btn');
+    let isBookmarked = false;
+    if (bookmarkBtn) {
+      bookmarkBtn.addEventListener('click', function() {
+        isBookmarked = !isBookmarked;
+        const icon = bookmarkBtn.querySelector('.material-symbols-outlined');
+        if (isBookmarked) {
+          if (icon) icon.textContent = 'bookmark_added';
+          showToast('Notiz für nächsten Praxistermin hinterlegt', 'bookmark_added');
+        } else {
+          if (icon) icon.textContent = 'bookmark_add';
+          showToast('Notiz entfernt', 'bookmark_remove');
+        }
+      });
+    }
+
+    // Checkliste teilen
+    const shareBtn = document.getElementById('share-checklist-btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', function() {
+        if (navigator.share) {
+          navigator.share({
+            title: 'MS Akku: Kühl-Strategien bei Uhthoff',
+            text: 'Präventives Kühlen, 21-Grad-Regel und Akut-Pacing bei Hitze.'
+          }).catch(() => {});
+        } else {
+          showToast('Kühl-Checkliste in Zwischenablage kopiert', 'content_copy');
+        }
+      });
+    }
+  })();
+</script></main></body></html>

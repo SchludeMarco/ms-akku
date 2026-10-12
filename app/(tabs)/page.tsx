@@ -7,9 +7,11 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { AppHeader } from "@/components/app-header";
 import { AkkuCard } from "@/components/heute/akku-card";
 import { DayPlan } from "@/components/heute/day-plan";
+import { SunnyGreeting } from "@/components/heute/sunny-greeting";
+import { TodayHistory } from "@/components/heute/today-history";
 import { Icon } from "@/components/icon";
 import { db, newId } from "@/lib/db";
-import { formatLongDate, startOfDay } from "@/lib/dates";
+import { startOfDay } from "@/lib/dates";
 import { FEELINGS, type FeelingKey } from "@/lib/feelings";
 import { MIN_ENTRIES_FOR_PATTERN } from "@/lib/patterns";
 import { playTick } from "@/lib/sound";
@@ -47,22 +49,13 @@ export default function HeutePage() {
       <AppHeader title="Heute" />
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col pb-28 pt-16">
         <div className="flex w-full flex-col space-y-6 px-margin pb-10">
-          <div className="flex flex-col space-y-1 pt-4">
-            <span className="text-label-sm font-semibold uppercase tracking-wider text-primary">
-              Aktueller Tag
-            </span>
-            <div className="flex items-center justify-between gap-3">
-              <h2 className="text-[26px] font-bold leading-[34px] tracking-[-0.015em] text-on-surface">
-                {formatLongDate(now)}
-              </h2>
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-outline-variant/30 bg-surface-container-high px-2 py-1 text-label-sm text-on-surface-variant">
-                <Icon name="verified_user" className="text-[16px] text-primary" />
-                Lokal geschützt
-              </span>
-            </div>
+          <div className="pt-4">
+            <SunnyGreeting now={now} />
           </div>
 
           <AkkuCard now={now} />
+
+          <TodayHistory now={now} />
 
           <section aria-labelledby="current-state-heading" className="space-y-2">
             <div className="flex items-center justify-between">
@@ -125,7 +118,7 @@ export default function HeutePage() {
               className="group flex min-h-[64px] w-full items-center justify-between rounded-xl border border-primary/40 bg-surface-container-high p-4 shadow-lg transition-all active:bg-surface-variant"
             >
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary shadow-md">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary-fixed shadow-md">
                   <Icon name="add_circle" className="text-[28px] font-semibold" />
                 </div>
                 <div className="flex flex-col text-left">
@@ -140,6 +133,24 @@ export default function HeutePage() {
               <Icon name="chevron_right" className="text-[24px] text-primary" />
             </Link>
           </section>
+
+          <Link
+            href="/symptome"
+            className="flex min-h-[64px] w-full items-center justify-between gap-3 rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm transition-colors active:bg-surface-container-high"
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-secondary-container/20 text-secondary">
+                <Icon name="menu_book" className="text-[24px]" />
+              </div>
+              <div className="min-w-0">
+                <span className="block text-label-lg text-on-surface">Symptombibliothek</span>
+                <span className="block text-body-sm text-on-surface-variant">
+                  Symptome nachschlagen, auswählen und aufklappen
+                </span>
+              </div>
+            </div>
+            <Icon name="arrow_forward" className="text-[22px] text-secondary" />
+          </Link>
 
           <DayPlan now={now} />
 

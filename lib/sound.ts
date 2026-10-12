@@ -1,3 +1,4 @@
+import { hapticSuccess } from "@/lib/haptics";
 import { useSettingsStore } from "@/lib/stores/settings-store";
 
 // Kurze UI-Töne werden per Web Audio API synthetisiert statt als Audiodateien
@@ -61,8 +62,12 @@ export function playTick(): void {
   playTone(ctx, 720, 0, 0.05, 0.05);
 }
 
-/** Aufsteigender Zweiklang zur Bestätigung einer gespeicherten Aktion. */
+/**
+ * Bestätigung einer gespeicherten Aktion: aufsteigender Zweiklang und, wo das
+ * Gerät es kann, ein spürbarer Doppelimpuls. Beides ist einzeln abschaltbar.
+ */
 export function playSuccess(): void {
+  hapticSuccess();
   if (!isSoundEnabled()) return;
   const ctx = getContext();
   if (!ctx) return;

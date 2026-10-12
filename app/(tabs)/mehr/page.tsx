@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 
 import { AppHeader } from "@/components/app-header";
 import { Icon } from "@/components/icon";
 import { clearAllEntries, loadDemoData } from "@/lib/demo";
+import { canVibrate } from "@/lib/haptics";
 import { playSuccess, playToggleFeedback } from "@/lib/sound";
-import { useSettingsStore } from "@/lib/stores/settings-store";
+import { useSettingsStore, type Theme } from "@/lib/stores/settings-store";
 import { cn } from "@/lib/utils";
+
+const subscribeNever = () => () => {};
+
+const THEMES: { key: Theme; label: string; icon: string }[] = [
+  { key: "dark", label: "Dunkel", icon: "dark_mode" },
+  { key: "pastel", label: "Hell", icon: "light_mode" },
+];
 
 function LinkRow({
   href,
@@ -43,7 +51,19 @@ function LinkRow({
 export default function MehrPage() {
   const soundEnabled = useSettingsStore((state) => state.soundEnabled);
   const toggleSound = useSettingsStore((state) => state.toggleSound);
+  const hapticsEnabled = useSettingsStore((state) => state.hapticsEnabled);
+  const toggleHaptics = useSettingsStore((state) => state.toggleHaptics);
+  // Ob das Gerät vibrieren kann, weiß erst der Browser.
+  const vibrationAvailable = useSyncExternalStore(
+    subscribeNever,
+    canVibrate,
+    () => false,
+  );
   const usageMode = useSettingsStore((state) => state.usageMode);
+  const theme = useSettingsStore((state) => state.theme);
+  const setTheme = useSettingsStore((state) => state.setTheme);
+  const moodColors = useSettingsStore((state) => state.moodColors);
+  const toggleMoodColors = useSettingsStore((state) => state.toggleMoodColors);
 
   const [demoState, setDemoState] = useState<"idle" | "loading" | "done">("idle");
   const [confirmClear, setConfirmClear] = useState(false);
@@ -73,7 +93,8 @@ export default function MehrPage() {
             <div className="flex min-w-0 flex-col">
               <span className="text-headline-sm text-on-surface">Lokal auf deinem Gerät</span>
               <p className="text-body-sm text-on-surface-variant">
-                Ohne Konto, ohne Cloud. Deine Einträge verlassen dieses Gerät nicht.
+                Ohne Konto. Deine Einträge verlassen dieses Gerät nur, wenn du sie selbst
+                exportierst oder sicherst.
               </p>
             </div>
           </div>
@@ -83,11 +104,76 @@ export default function MehrPage() {
               Persönliche Einstellungen
             </h2>
             <LinkRow
-              href="/willkommen/symptome"
+              href="/symptome"
               icon="checklist"
-              title="Beobachtete Symptome"
-              hint="Symptome hinzufügen oder ausblenden"
+              title="Symptombibliothek"
+              hint="Auswählen, Belastung bewerten, Hilfen lesen"
             />
+            <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-4 shadow-sm">
+              <div className="flex items-center gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
+                  <Icon name="palette" className="text-[22px]" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-label-lg text-on-surface">Erscheinungsbild</div>
+                  <div className="text-body-sm text-on-surface-variant">
+                    Dunkel schont lichtempfindliche Augen, Hell ist ein ruhiges Pastell
+                  </div>
+                </div>
+              </div>
+              <div role="radiogroup" aria-label="Erscheinungsbild" className="grid grid-cols-2 gap-2">
+                {THEMES.map((option) => {
+                  const on = theme === option.key;
+                  return (
+                    <button
+                      key={option.key}
+                      type="button"
+                      role="radio"
+                      aria-checked={on}
+                      onClick={() => setTheme(option.key)}
+                      className={cn(
+                        "flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-2 text-label-md transition-colors",
+                        on
+                          ? "border border-primary/50 bg-primary-container font-bold text-on-primary-fixed"
+                          : "border border-outline-variant/40 bg-surface-container-low text-on-surface",
+                      )}
+                    >
+                      <Icon name={option.icon} className="text-[20px]" />
+                      {option.label}
+                    </button>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={moodColors}
+                onClick={toggleMoodColors}
+                className="flex min-h-[56px] w-full items-center justify-between gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-low px-3 text-left"
+              >
+                <span className="min-w-0">
+                  <span className="block text-label-md text-on-surface">
+                    Farben folgen der Stimmung
+                  </span>
+                  <span className="block text-body-sm text-on-surface-variant">
+                    Wärmer an guten Tagen, kühler und ruhiger an müden
+                  </span>
+                </span>
+                <span
+                  className={cn(
+                    "flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
+                    moodColors ? "bg-primary-container" : "bg-surface-container-highest",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "h-5 w-5 rounded-full transition-transform",
+                      moodColors ? "translate-x-5 bg-on-primary" : "bg-outline",
+                    )}
+                  />
+                </span>
+              </button>
+            </div>
             <LinkRow
               href="/willkommen/nutzung"
               icon="favorite"
@@ -129,6 +215,42 @@ export default function MehrPage() {
                 />
               </span>
             </button>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={hapticsEnabled}
+              onClick={() => {
+                toggleHaptics();
+              }}
+              className="flex min-h-[64px] w-full items-center justify-between rounded-xl border border-outline-variant/30 bg-surface-container p-4 text-left shadow-sm transition-colors active:bg-surface-container-high"
+            >
+              <div className="flex min-w-0 items-center gap-3.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-primary">
+                  <Icon name={hapticsEnabled ? "vibration" : "do_not_touch"} className="text-[22px]" />
+                </div>
+                <div className="min-w-0">
+                  <div className="truncate text-label-lg text-on-surface">Tipp-Rückmeldung</div>
+                  <div className="truncate text-body-sm text-on-surface-variant">
+                    {vibrationAvailable
+                      ? "Vibrieren und Nachfedern"
+                      : "Nachfedern beim Antippen"}
+                  </div>
+                </div>
+              </div>
+              <span
+                className={cn(
+                  "ml-2 flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors",
+                  hapticsEnabled ? "bg-primary-container" : "bg-surface-container-highest",
+                )}
+              >
+                <span
+                  className={cn(
+                    "h-5 w-5 rounded-full transition-transform",
+                    hapticsEnabled ? "translate-x-5 bg-on-primary" : "bg-outline",
+                  )}
+                />
+              </span>
+            </button>
             <LinkRow
               href="/willkommen"
               icon="waving_hand"
@@ -141,6 +263,12 @@ export default function MehrPage() {
             <h2 className="text-label-sm font-semibold uppercase tracking-wider text-primary">
               Daten
             </h2>
+            <LinkRow
+              href="/daten"
+              icon="save"
+              title="Sicherung & Export"
+              hint="Daten als Datei mitnehmen oder sichern"
+            />
             <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-space-md shadow-sm">
               <div className="flex items-start gap-space-sm">
                 <Icon name="science" className="mt-0.5 text-[22px] text-secondary" />
@@ -201,10 +329,34 @@ export default function MehrPage() {
             </div>
           </section>
 
+          <section className="space-y-2">
+            <h2 className="text-label-sm font-semibold uppercase tracking-wider text-primary">
+              Über MS Akku
+            </h2>
+            <LinkRow
+              href="/feedback"
+              icon="rate_review"
+              title="Feedback geben"
+              hint="Lob, Tadel, Vorschläge und Wünsche"
+            />
+            <LinkRow
+              href="/datenschutz"
+              icon="shield"
+              title="Datenschutz"
+              hint="Was gespeichert wird und was nicht"
+            />
+            <LinkRow
+              href="/impressum"
+              icon="badge"
+              title="Impressum"
+              hint="Wer hinter MS Akku steht"
+            />
+          </section>
+
           <div className="flex items-center justify-center gap-1.5 pt-space-xs text-on-surface-variant">
             <Icon name="verified_user" className="text-[16px] text-primary" />
             <span className="text-label-sm">
-              Keine Registrierung erforderlich • 100% offline nutzbar
+              Keine Registrierung erforderlich • offline nutzbar
             </span>
           </div>
         </div>
