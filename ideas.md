@@ -13,7 +13,7 @@ standardmäßig auf dem Gerät.
 
 ## 10.10.2026 – DSGVO-Prüfung in drei Durchgängen
 
-**Status:** Idee · **Quelle:** Marco (ausgearbeitet im ChatGPT-Chat)
+**Status:** Umgesetzt am 12.10.2026 (Ergebnis: `docs/dsgvo-pruefung.md`), rechtliche Punkte offen · **Quelle:** Marco (ausgearbeitet im ChatGPT-Chat)
 
 Gesundheitsdaten sind heikel (besondere Kategorie nach Art. 9 DSGVO). Der
 Datenschutz soll deshalb nicht einmal abgehakt, sondern mehrfach und getrennt
@@ -32,19 +32,23 @@ geprüft werden – am tatsächlichen Code, nicht nur auf dem Papier.
 Zusätzlich: Privacy by Design und Privacy by Default. Cloud-Synchronisierung
 erst nach bewusster Entscheidung des Nutzers.
 
+**Umgesetzt**
+
+- Drei Durchgänge am Code, vier Funde behoben (u. a. stand das geöffnete
+  Symptom in der Adresse und wäre im Server-Log gelandet).
+- Neu: Datenschutzerklärung (`/datenschutz`) und Impressum (`/impressum`).
+
 **Offen**
 
-- Mehrere KI-Prüfungen sind keine rechtsverbindliche Freigabe. Offene
-  Rechtsfragen dokumentieren und klären, ob eine fachkundige
-  Datenschutzberatung nötig ist.
-- Die Prüfung wird fällig, sobald Daten das Gerät verlassen können
-  (Cloud-Sync, Feedback-Funktion).
+- Mehrere KI-Prüfungen sind keine rechtsverbindliche Freigabe. Die acht
+  offenen Punkte stehen in `docs/dsgvo-pruefung.md` unter „Offen“.
+- Bei jedem neuen Datenfluss Erklärung und Prüfdokument mitpflegen.
 
 ---
 
 ## 10.10.2026 – Feedback-Funktion wie in RetroMind
 
-**Status:** Idee · **Quelle:** Marco (ausgearbeitet im ChatGPT-Chat)
+**Status:** Umgesetzt am 12.10.2026, Versand noch nicht eingerichtet · **Quelle:** Marco (ausgearbeitet im ChatGPT-Chat)
 
 Nutzer sollen direkt in der App mitteilen können, was sie denken. Vier
 Kategorien:
@@ -63,20 +67,29 @@ Weitere Anforderungen
 - Ohne Registrierung nutzbar.
 - Später: Rückmeldungen zentral sammeln, auswerten, nach Themen sortieren.
 
+**Umgesetzt**
+
+- Formular unter „Mehr → Feedback geben“ mit den vier Kategorien, Freitext,
+  optionalem App-Bereich und optionaler E-Mail, ohne Registrierung.
+- Empfang wie in RetroMind: Mail über Resend und Eintrag in `feedback.md` im
+  Repository (`app/api/feedback/route.ts`). Beide Wege nutzen kostenlose
+  Kontingente.
+- Vor dem Senden steht, was übertragen wird und was nicht; gesendet wird erst
+  nach Einwilligung. Einträge aus der App werden nie mitgeschickt.
+
 **Offen**
 
-- Feedback muss das Gerät verlassen. Das ist der erste Datenfluss nach außen
-  und braucht einen Empfänger (bisher gibt es kein Backend). Lösung aus
-  RetroMind prüfen und übernehmen.
-- Kein Feedback darf unbemerkt Gesundheitsdaten mitschicken. Was übertragen
-  wird, muss vor dem Absenden sichtbar sein.
-- Der Empfangsweg darf keine laufenden Kosten auslösen.
+- Versand einrichten: Variablen aus `.env.example` in Vercel setzen. Bis dahin
+  zeigt die App „noch nicht eingerichtet“.
+- Der Bezug zu einem Symptom wurde bewusst weggelassen (nur App-Bereiche),
+  damit Feedback keine Gesundheitsangabe erzwingt.
+- Auswertung nach Themen: noch nicht gebaut, `feedback.md` ist die Sammlung.
 
 ---
 
 ## 10.10.2026 – Persönlicher Symptomkatalog mit Hilfestellungen
 
-**Status:** Idee · **Quelle:** Marco (ausgearbeitet im ChatGPT-Chat)
+**Status:** Umgesetzt am 12.10.2026, Google-Sicherung noch nicht eingerichtet · **Quelle:** Marco (ausgearbeitet im ChatGPT-Chat)
 
 Aus der heutigen kurzen Symptomauswahl wird ein umfassender, durchsuchbarer
 Katalog mit Erklärungen und Hilfen. Vier Bausteine:
@@ -119,26 +132,38 @@ Katalog mit Erklärungen und Hilfen. Vier Bausteine:
 - Optional später: Anmeldung mit Google und Ablage in der Cloud – nur nach
   ausdrücklicher Zustimmung.
 
-**Stand im Code heute**
+**Umgesetzt**
 
-- `lib/symptoms.ts` enthält 12 feste Symptome plus eigene Einträge, ohne
-  Beschreibung.
-- Die Tabelle `symptoms` kennt `name`, `icon`, `isCustom`, `active`. Für
-  Beschreibung, Kategorie und Belastungsscore braucht es neue Felder und eine
-  neue Datenbankversion.
-- `SymptomEntry.intensity` (leicht / deutlich / sehr stark) beschreibt einen
-  einzelnen Moment. Der Belastungsscore ist etwas anderes: die generelle
-  Belastung durch ein Symptom.
+- Katalog mit 23 Symptomen in 7 Gruppen unter „Mehr → Symptomkatalog“
+  (`lib/symptom-catalog.ts`), durchsuchbar auch über Alltagsbegriffe wie
+  „müde“ oder „Krämpfe“, Abhaken direkt in der Liste.
+- Belastung 1 bis 10 pro Symptom (`Symptom.burden`), in der Liste sichtbar.
+- Detailansicht mit Beschreibung, Alltagsbeispielen, möglichen Verstärkern,
+  Hilfen mit Empfehlungsstärke und Fundstelle, Hinweis zur ärztlichen
+  Abklärung und Quellen.
+- Quellen: deutsche S2k-Leitlinie der DGN (Version 7.1, November 2023, im
+  Volltext gelesen) und die DMSG. Jede Hilfe nennt ihre Fundstelle.
+- Export und Wiederherstellung als Datei; Sicherung im eigenen Google Drive
+  als Opt-in mit ausdrücklicher Einwilligung („Mehr → Sicherung & Export“).
+
+**Abweichungen von der Idee**
+
+- Die Hilfen sind „von Fachleuten empfohlen“, nicht „wissenschaftlich
+  bewiesen“: Die Leitlinie ist konsensbasiert. Die App zeigt deshalb die
+  Empfehlungsstärke und sagt dazu, was sie bedeutet.
+- Foren wurden nicht ausgewertet. Die Alltagsbeispiele sind aus den
+  Symptombeschreibungen der Quellen abgeleitet.
+- NICE-Leitlinie und MS Society waren nicht abrufbar und sind nicht
+  eingeflossen.
+- Medikamente werden nur als „ärztlich besprechen“ erwähnt, ohne Namen und
+  Dosierung.
+- Kein Verlauf der Belastung über die Zeit, nur der aktuelle Wert.
 
 **Offen**
 
-- Es gibt keine einzelne Methode, die für alle Symptome bewiesen ist. Jede
-  Maßnahme muss pro Symptom einzeln belegt werden. Die im Chat genannten
-  Quellen (NICE-Leitlinie zu MS, MS Society) sind noch nicht geprüft.
-- Formulierung der Hilfen: als Information mit Quelle, nicht als persönliche
-  Behandlungsempfehlung. Passt das zur Regel „MS Akku diagnostiziert nicht“?
-  Vor der Umsetzung entscheiden, wie weit die Texte gehen dürfen.
-- Wer pflegt die Inhalte, und wie werden sie aktuell gehalten (Datum der
-  letzten Prüfung pro Symptom)?
-- Google-Cloud-Sync steht im Spannungsfeld zu „kein Login, kein Cloud-Sync als
-  Standard“. Nur als Opt-in und erst nach der DSGVO-Prüfung.
+- Inhalte fachlich gegenlesen lassen (Neurologin, Neurologe oder DMSG), bevor
+  die App breit beworben wird.
+- Die Leitlinie ist inzwischen neuer als Version 7.1. Texte gegen die aktuelle
+  Fassung prüfen und `CATALOG_REVIEWED` anpassen.
+- Google-Sicherung einrichten: `NEXT_PUBLIC_GOOGLE_CLIENT_ID` setzen. Bis
+  dahin ist der Abschnitt unsichtbar.

@@ -73,7 +73,8 @@ export default function MehrPage() {
             <div className="flex min-w-0 flex-col">
               <span className="text-headline-sm text-on-surface">Lokal auf deinem Gerät</span>
               <p className="text-body-sm text-on-surface-variant">
-                Ohne Konto, ohne Cloud. Deine Einträge verlassen dieses Gerät nicht.
+                Ohne Konto. Deine Einträge verlassen dieses Gerät nur, wenn du sie selbst
+                exportierst oder sicherst.
               </p>
             </div>
           </div>
@@ -83,10 +84,10 @@ export default function MehrPage() {
               Persönliche Einstellungen
             </h2>
             <LinkRow
-              href="/willkommen/symptome"
+              href="/symptome"
               icon="checklist"
-              title="Beobachtete Symptome"
-              hint="Symptome hinzufügen oder ausblenden"
+              title="Symptomkatalog"
+              hint="Auswählen, Belastung bewerten, Hilfen lesen"
             />
             <LinkRow
               href="/willkommen/nutzung"
@@ -141,6 +142,12 @@ export default function MehrPage() {
             <h2 className="text-label-sm font-semibold uppercase tracking-wider text-primary">
               Daten
             </h2>
+            <LinkRow
+              href="/daten"
+              icon="save"
+              title="Sicherung & Export"
+              hint="Daten als Datei mitnehmen oder sichern"
+            />
             <div className="space-y-space-sm rounded-xl border border-outline-variant/30 bg-surface-container p-space-md shadow-sm">
               <div className="flex items-start gap-space-sm">
                 <Icon name="science" className="mt-0.5 text-[22px] text-secondary" />
@@ -199,6 +206,30 @@ export default function MehrPage() {
                 </button>
               )}
             </div>
+          </section>
+
+          <section className="space-y-2">
+            <h2 className="text-label-sm font-semibold uppercase tracking-wider text-primary">
+              Über MS Akku
+            </h2>
+            <LinkRow
+              href="/feedback"
+              icon="rate_review"
+              title="Feedback geben"
+              hint="Lob, Tadel, Vorschläge und Wünsche"
+            />
+            <LinkRow
+              href="/datenschutz"
+              icon="shield"
+              title="Datenschutz"
+              hint="Was gespeichert wird und was nicht"
+            />
+            <LinkRow
+              href="/impressum"
+              icon="badge"
+              title="Impressum"
+              hint="Wer hinter MS Akku steht"
+            />
           </section>
 
           <div className="flex items-center justify-center gap-1.5 pt-space-xs text-on-surface-variant">

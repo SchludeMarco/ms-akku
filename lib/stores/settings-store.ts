@@ -10,6 +10,9 @@ interface SettingsState {
   completeOnboarding: () => void;
   usageMode: UsageMode;
   setUsageMode: (mode: UsageMode) => void;
+  /** Ausdrückliche Einwilligung in die Sicherung bei Google Drive (widerrufbar). */
+  googleConsent: boolean;
+  setGoogleConsent: (consent: boolean) => void;
 }
 
 // Während des serverseitigen Renderns (auch für Client-Components) existiert
@@ -31,6 +34,8 @@ export const useSettingsStore = create<SettingsState>()(
       completeOnboarding: () => set({ onboardingCompleted: true }),
       usageMode: "self",
       setUsageMode: (usageMode) => set({ usageMode }),
+      googleConsent: false,
+      setGoogleConsent: (googleConsent) => set({ googleConsent }),
     }),
     {
       name: "ms-akku-settings",

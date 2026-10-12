@@ -1,6 +1,10 @@
 import { db, type Symptom } from "@/lib/db";
+import { catalogById } from "@/lib/symptom-catalog";
 
-/** Symptomkatalog aus dem Stitch-Screen "Symptomauswahl". */
+/**
+ * Vorauswahl aus dem Stitch-Screen "Symptomauswahl" (Onboarding). Der
+ * vollständige Katalog mit Beschreibungen liegt in lib/symptom-catalog.ts.
+ */
 export const DEFAULT_SYMPTOMS: (Symptom & { icon: string })[] = [
   { id: "fatigue", name: "Fatigue", icon: "bedtime", isCustom: false, active: true },
   { id: "energie", name: "Energie", icon: "bolt", isCustom: false, active: true },
@@ -24,3 +28,34 @@ export async function ensureSymptomsSeeded(): Promise<void> {
     await db.symptoms.bulkPut(DEFAULT_SYMPTOMS);
   }
 }
+
+/**
+ * Ändert ein gespeichertes Symptom. Katalog-Symptome, die noch nie gewählt
+ * wurden, liegen nicht in der Datenbank und werden dabei angelegt.
+ */
+async function updateSymptom(id: string, changes: Partial<Symptom>): Promise<void> {
+  await db.transaction("rw", db.symptoms, async () => {
+    const stored = await db.symptoms.get(id);
+    if (stored) {
+      await db.symptoms.put({ ...stored, ...changes });
+      return;
+    }
+    const entry = catalogById.get(id);
+    if (!entry) return;
+    await db.symptoms.put({
+      id,
+      name: entry.name,
+      icon: entry.icon,
+      isCustom: false,
+      active: false,
+      ...changes,
+    });
+  });
+}
+
+export const setSymptomActive = (id: string, active: boolean) =>
+  updateSymptom(id, { active });
+
+/** Belastung 1–10; `undefined` entfernt die Angabe wieder. */
+export const setSymptomBurden = (id: string, burden: number | undefined) =>
+  updateSymptom(id, { burden });

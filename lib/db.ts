@@ -19,6 +19,8 @@ export interface Symptom {
   icon?: string;
   isCustom: boolean; // Nutzer-eigenes Wording
   active: boolean;
+  /** Persönliche Belastung durch das Symptom, 1 (kaum) bis 10 (extrem). Kein Messwert. */
+  burden?: number;
 }
 
 export interface SymptomEntry {
