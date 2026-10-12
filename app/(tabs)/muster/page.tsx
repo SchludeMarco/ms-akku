@@ -233,8 +233,7 @@ export default function MusterPage() {
                     />
                   </div>
                   <p className="pt-1 text-body-sm text-on-surface-variant">
-                    Kein Druck: Trag ein, wann es für dich passt. Zum Ausprobieren kannst du
-                    unter „Mehr“ Beispieldaten laden.
+                    Kein Druck: Trag ein, wann es für dich passt.
                   </p>
                 </div>
                 <Link

@@ -23,9 +23,8 @@ export default function DatenschutzPage() {
             Gerät. Der Betreiber kann sie nicht sehen.
           </li>
           <li>
-            Daten verlassen dein Gerät nur, wenn du es selbst auslöst: beim Export, bei
-            der freiwilligen Sicherung in deinem Google Drive oder wenn du Feedback
-            sendest.
+            Die App überträgt deine Einträge nirgendwohin. Du kannst sie selbst als
+            Datei auf deinem Gerät speichern.
           </li>
         </ul>
       </LegalSection>
@@ -88,74 +87,23 @@ export default function DatenschutzPage() {
 
       <LegalSection title="5. Export als Datei">
         <p>
-          Unter „Sicherung &amp; Export“ kannst du alle Daten als Datei auf deinem Gerät
+          Unter „Sichern und mitnehmen“ kannst du alle Daten als Datei auf deinem Gerät
           speichern und wieder einlesen. Die Datei wird in deinem Browser erzeugt und
           nicht übertragen. Sie enthält Gesundheitsangaben; was du mit ihr machst,
           entscheidest du.
         </p>
       </LegalSection>
 
-      <LegalSection title="6. Sicherung in deinem Google Drive (freiwillig)">
+      <LegalSection title="6. Links zu anderen Seiten">
         <p>
-          Wenn der Betreiber diese Funktion aktiviert hat, kannst du eine Sicherung in
-          deinem eigenen Google Drive ablegen. Erst nachdem du in der App ausdrücklich
-          eingewilligt hast, lädt dein Browser ein Skript von Google (Google Ireland
-          Limited, Gordon House, Barrow Street, Dublin 4, Irland) und öffnet auf dein
-          Tippen hin das Anmeldefenster von Google. Dabei erfährt Google unter anderem
-          deine IP-Adresse und dass du MS Akku nutzt.
-        </p>
-        <p>
-          MS Akku fordert nur Zugriff auf einen verborgenen, app-eigenen Ordner in deinem
-          Drive an – nicht auf deinen Namen, deine E-Mail-Adresse oder andere Dateien. In
-          diesem Ordner wird eine Datei mit deinen Einträgen gespeichert, also mit
-          Gesundheitsdaten. Die Übertragung läuft direkt zwischen deinem Browser und
-          Google; der Betreiber von MS Akku erhält die Daten nicht. Google kann Daten
-          auch in den USA verarbeiten (Google LLC ist unter dem EU-US Data Privacy
-          Framework zertifiziert). Für die Speicherung in deinem Drive gelten die
-          Bedingungen deines Google-Kontos.
-        </p>
-        <p>
-          Rechtsgrundlage ist deine ausdrückliche Einwilligung (Art. 6 Abs. 1 lit. a und
-          Art. 9 Abs. 2 lit. a DSGVO). Du kannst sie jederzeit widerrufen, indem du den
-          Haken unter „Sicherung &amp; Export“ entfernst. Die Sicherung kannst du dort
-          auch aus deinem Drive löschen. Gesichert wird nur, wenn du es auslöst; eine
-          automatische Synchronisierung gibt es nicht.
-        </p>
-      </LegalSection>
-
-      <LegalSection title="7. Feedback (freiwillig)">
-        <p>
-          Wenn du Feedback sendest, werden die gewählte Kategorie, dein Text, der
-          gewählte Bereich der App und – falls du sie angibst – deine E-Mail-Adresse an
-          den Server von MS Akku übertragen. Einträge aus der App werden nicht
-          mitgesendet. Der Server speichert weder deine IP-Adresse noch Angaben zu deinem
-          Browser zusammen mit dem Feedback.
-        </p>
-        <p>
-          Das Feedback wird dem Betreiber per E-Mail zugestellt (Versand über den Dienst
-          Resend, USA) und ohne E-Mail-Adresse in einem nicht öffentlichen Bereich bei
-          GitHub (GitHub, Inc., USA) abgelegt. Dein Feedback wird dabei also in die USA
-          übertragen.
-        </p>
-        <p>
-          Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO; soweit du
-          im Text Angaben zu deiner Gesundheit machst, Art. 9 Abs. 2 lit. a DSGVO). Du
-          kannst sie jederzeit mit Wirkung für die Zukunft widerrufen und die Löschung
-          deines Feedbacks verlangen – eine E-Mail an die oben genannte Adresse genügt.
-          Feedback wird gelöscht, sobald es bearbeitet ist und nicht mehr gebraucht
-          wird, spätestens nach zwei Jahren.
-        </p>
-      </LegalSection>
-
-      <LegalSection title="8. Links zu anderen Seiten">
-        <p>
-          Der Symptomkatalog verlinkt auf Quellen bei Fachgesellschaften. Erst wenn du
+          Die Symptombibliothek (einschaltbar unter „Mehr“) verlinkt auf Quellen bei
+          Fachgesellschaften. Erst wenn du
           einen solchen Link antippst, verbindet sich dein Browser mit der jeweiligen
           Seite. Dann gilt deren Datenschutzerklärung.
         </p>
       </LegalSection>
 
-      <LegalSection title="9. Deine Rechte">
+      <LegalSection title="7. Deine Rechte">
         <p>
           Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der
           Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO) sowie

@@ -1,11 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 
 import { AppHeader } from "@/components/app-header";
-import { activityIcon } from "@/components/heute/day-plan";
 import { Icon } from "@/components/icon";
 import { db, type SleepEntry, type SymptomEntry } from "@/lib/db";
 import {
@@ -18,13 +16,11 @@ import {
 import { ZONE_STYLES, average, batteryIcon, zoneOf } from "@/lib/energy";
 import { cn } from "@/lib/utils";
 
-type Range = "week" | "month" | "quarter" | "year";
+type Range = "week" | "month";
 
 const RANGES: { key: Range; label: string; title: string }[] = [
   { key: "week", label: "Woche", title: "Akku-Verlauf dieser Woche" },
   { key: "month", label: "Monat", title: "Akku-Verlauf der letzten 5 Wochen" },
-  { key: "quarter", label: "3 Monate", title: "Akku-Verlauf der letzten 3 Monate" },
-  { key: "year", label: "Jahr", title: "Akku-Verlauf der letzten 12 Monate" },
 ];
 
 interface Bucket {
@@ -51,22 +47,10 @@ function bucketsFor(range: Range, now: Date): Bucket[] {
       to: addDays(monday, index + 1),
     }));
   }
-  if (range === "month") {
-    const monday = startOfWeek(now);
-    return [4, 3, 2, 1, 0].map((weeksAgo) => {
-      const from = addDays(monday, -7 * weeksAgo);
-      return { label: `KW ${isoWeek(from)}`, from, to: addDays(from, 7) };
-    });
-  }
-  const months = range === "quarter" ? 3 : 12;
-  return Array.from({ length: months }, (_, index) => {
-    const from = new Date(now.getFullYear(), now.getMonth() - (months - 1 - index), 1);
-    const to = new Date(from.getFullYear(), from.getMonth() + 1, 1);
-    return {
-      label: from.toLocaleDateString("de-DE", { month: "short" }).replace(".", ""),
-      from,
-      to,
-    };
+  const monday = startOfWeek(now);
+  return [4, 3, 2, 1, 0].map((weeksAgo) => {
+    const from = addDays(monday, -7 * weeksAgo);
+    return { label: `KW ${isoWeek(from)}`, from, to: addDays(from, 7) };
   });
 }
 
@@ -217,7 +201,7 @@ export default function VerlaufPage() {
       day(keyOf(activity.timestamp)).events.push({
         time: formatTime(activity.timestamp),
         sort: activity.timestamp,
-        icon: activity.completed ? "task_alt" : activityIcon(activity.title),
+        icon: activity.completed ? "task_alt" : "event",
         iconClass: "text-primary",
         text: activity.completed ? `${activity.title} – erledigt` : activity.title,
       });
@@ -255,18 +239,6 @@ export default function VerlaufPage() {
       <AppHeader title="Verlauf" />
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col pb-28 pt-16">
         <div className="flex w-full flex-col space-y-space-md px-margin pb-space-lg pt-space-md">
-          <div className="flex w-full items-center gap-space-sm rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-sm">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-surface-container-high">
-              <Icon name="spa" filled className="text-[20px] text-primary" />
-            </div>
-            <div className="flex min-w-0 flex-col">
-              <span className="text-headline-sm text-on-surface">Sanfte Chronik</span>
-              <p className="text-body-sm text-on-surface-variant">
-                Jeder Tag ist wertvoll – ohne Leistungsdruck.
-              </p>
-            </div>
-          </div>
-
           <section aria-label="Zeitraum auswählen" className="w-full">
             <div className="flex items-center gap-space-xs rounded-xl border border-outline-variant/30 bg-surface-container-low p-1.5 shadow-sm">
               {RANGES.map((option) => (
@@ -291,9 +263,6 @@ export default function VerlaufPage() {
           <section className="w-full space-y-space-md rounded-2xl border border-outline-variant/30 bg-surface-container-low p-4 shadow-md">
             <div className="flex items-start justify-between gap-space-sm">
               <div className="flex flex-col">
-                <span className="text-label-sm font-bold uppercase tracking-wide text-primary">
-                  Rhythmus &amp; Reserven
-                </span>
                 <h2 className="text-headline-md text-on-surface">
                   {RANGES.find((option) => option.key === range)!.title}
                 </h2>
@@ -378,18 +347,13 @@ export default function VerlaufPage() {
               </div>
             </div>
 
-            <div className="flex items-start gap-space-sm rounded-lg border border-outline-variant/20 bg-surface-container-low p-space-sm text-on-surface-variant">
-              <Icon name="info" className="mt-0.5 text-[20px] text-primary" />
-              <p className="text-body-sm leading-relaxed">
-                <strong className="font-semibold text-on-surface">Nur zur Orientierung:</strong>{" "}
-                Dein Akku zeigt Schwankungen, keine Schulnoten. Phasen mit weniger Energie
-                sind Raum für Erholung.
-              </p>
-            </div>
+            <p className="text-body-sm text-on-surface-variant">
+              Dein Akku zeigt Schwankungen, keine Schulnoten.
+            </p>
           </section>
 
           <div className="flex items-center justify-between pt-space-xs">
-            <h3 className="text-headline-md text-on-surface">Tagesverlauf</h3>
+            <h3 className="text-headline-md text-on-surface">Deine Einträge</h3>
             <span className="text-label-sm text-on-surface-variant">
               Neueste zuerst
             </span>
@@ -401,7 +365,7 @@ export default function VerlaufPage() {
                 <Icon name="edit_calendar" className="text-[24px] text-primary" />
                 <p className="text-body-sm text-on-surface-variant">
                   In diesem Zeitraum gibt es noch keine Einträge. Schätze auf „Heute“
-                  deinen Akku ein, dann beginnt deine Chronik.
+                  deinen Akku ein, dann beginnt dein Verlauf.
                 </p>
               </div>
             )}
@@ -521,20 +485,6 @@ export default function VerlaufPage() {
                 </article>
               );
             })}
-          </div>
-
-          <div className="pt-space-sm">
-            <Link
-              href="/erfassen"
-              className="flex min-h-[56px] w-full items-center justify-center gap-space-sm rounded-2xl bg-cta text-label-lg font-semibold text-on-cta shadow-lg transition-transform active:scale-[0.99]"
-            >
-              <Icon name="edit_calendar" className="text-[22px]" />
-              <span>Veränderung erfassen</span>
-            </Link>
-            <div className="mt-space-sm flex items-center justify-center gap-1.5 text-on-surface-variant">
-              <Icon name="lock" className="text-[16px]" />
-              <span className="text-label-sm">Gespeichert auf diesem Gerät</span>
-            </div>
           </div>
         </div>
       </main>

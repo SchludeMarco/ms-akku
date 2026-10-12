@@ -14,15 +14,17 @@ interface AppHeaderProps {
 }
 
 /**
- * Kopfzeile nach dem Stitch-Redesign: Logo, "MS Akku" und darunter der Name
- * des Screens; rechts das Haus zur Übersicht und das Profil. Alle Knöpfe sind
- * 48 px groß.
+ * Kopfzeile: Logo, "MS Akku" und darunter der Name des Screens; rechts das
+ * Haus zurück zu "Heute" (auf Unterseiten) und das Zahnrad zu "Mehr". Alle
+ * Knöpfe sind 48 px groß.
  */
 export function AppHeader({ title, back = false }: AppHeaderProps) {
   const router = useRouter();
-  // Von überall führt das Haus zur Übersicht (Heute) – nur nicht in der
-  // Einführung, die man erst abschließt.
-  const showHome = !usePathname().startsWith("/willkommen");
+  const pathname = usePathname();
+  const onboarding = pathname.startsWith("/willkommen");
+  // Das Haus führt von Unterseiten zurück zu "Heute". Auf den Hauptscreens
+  // übernimmt das die untere Navigation.
+  const showHome = back && !onboarding;
 
   return (
     <header className="pt-safe fixed inset-x-0 top-0 z-50 bg-surface-container-low/90 shadow-[0_1px_8px_rgb(var(--nav-shadow))] backdrop-blur-xl">
@@ -56,15 +58,15 @@ export function AppHeader({ title, back = false }: AppHeaderProps) {
               <Icon name="home" className="text-[24px]" />
             </Link>
           )}
-          <Link
-            href="/mehr"
-            aria-label="Profil und Einstellungen"
-            className="flex h-12 w-12 items-center justify-center"
-          >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-on-primary">
-              <Icon name="person" className="text-[18px]" />
-            </span>
-          </Link>
+          {pathname !== "/mehr" && !onboarding && (
+            <Link
+              href="/mehr"
+              aria-label="Mehr: Einstellungen und Daten"
+              className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-container text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary"
+            >
+              <Icon name="settings" className="text-[24px]" />
+            </Link>
+          )}
         </div>
       </div>
     </header>

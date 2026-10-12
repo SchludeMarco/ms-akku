@@ -11,7 +11,8 @@ import {
   type ThemeOverride,
 } from "@/lib/theme";
 
-export type UsageMode = "self" | "doctor";
+/** Zusätzliche Funktionen, die ab Werk ausgeblendet sind ("Mehr → Erweitert"). */
+export type ExtraKey = "library" | "capture" | "patterns";
 
 export type { Theme, ThemeMode } from "@/lib/theme";
 
@@ -20,10 +21,12 @@ export const SETTINGS_KEY = "ms-akku-settings";
 
 interface SettingsState {
   soundEnabled: boolean;
-  toggleSound: () => void;
   /** Vibration und sichtbares Nachfedern beim Antippen. */
   hapticsEnabled: boolean;
-  toggleHaptics: () => void;
+  /** Schaltet Ton und Vibration gemeinsam – in der App ist es ein Schalter. */
+  setTapFeedback: (enabled: boolean) => void;
+  extras: Record<ExtraKey, boolean>;
+  setExtra: (key: ExtraKey, enabled: boolean) => void;
   onboardingCompleted: boolean;
   completeOnboarding: () => void;
   /** Gewählte Einstellung: Automatik nach Uhrzeit, immer hell oder immer dunkel. */
@@ -40,14 +43,6 @@ interface SettingsState {
   syncTheme: () => void;
   /** Wechselt zwischen Hell und Dunkel (Knopf auf „Heute“). */
   toggleTheme: () => void;
-  /** Hintergrund und Lichtstimmung folgen Befinden und Akku des Tages. */
-  moodColors: boolean;
-  toggleMoodColors: () => void;
-  usageMode: UsageMode;
-  setUsageMode: (mode: UsageMode) => void;
-  /** Ausdrückliche Einwilligung in die Sicherung bei Google Drive (widerrufbar). */
-  googleConsent: boolean;
-  setGoogleConsent: (consent: boolean) => void;
 }
 
 // Während des serverseitigen Renderns (auch für Client-Components) existiert
@@ -63,11 +58,11 @@ export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
       soundEnabled: true,
-      toggleSound: () =>
-        set((state) => ({ soundEnabled: !state.soundEnabled })),
       hapticsEnabled: true,
-      toggleHaptics: () =>
-        set((state) => ({ hapticsEnabled: !state.hapticsEnabled })),
+      setTapFeedback: (enabled) => set({ soundEnabled: enabled, hapticsEnabled: enabled }),
+      extras: { library: false, capture: false, patterns: false },
+      setExtra: (key, enabled) =>
+        set((state) => ({ extras: { ...state.extras, [key]: enabled } })),
       onboardingCompleted: false,
       completeOnboarding: () => set({ onboardingCompleted: true }),
       themeMode: "auto",
@@ -126,13 +121,6 @@ export const useSettingsStore = create<SettingsState>()(
               }
             : { theme, themeMode: theme, themeOverride: null };
         }),
-      moodColors: true,
-      toggleMoodColors: () =>
-        set((state) => ({ moodColors: !state.moodColors })),
-      usageMode: "self",
-      setUsageMode: (usageMode) => set({ usageMode }),
-      googleConsent: false,
-      setGoogleConsent: (googleConsent) => set({ googleConsent }),
     }),
     {
       name: SETTINGS_KEY,

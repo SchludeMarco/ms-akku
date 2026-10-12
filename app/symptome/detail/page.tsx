@@ -9,6 +9,7 @@ import { AppHeader } from "@/components/app-header";
 import { Icon } from "@/components/icon";
 import { db, type Symptom } from "@/lib/db";
 import { playTick } from "@/lib/sound";
+import { useSettingsStore } from "@/lib/stores/settings-store";
 import {
   CATALOG_REVIEWED,
   CATEGORIES,
@@ -197,6 +198,7 @@ const SUMMARY_DAYS = 14;
 
 /** "Deine persönliche Bilanz": nur gezählt, was die Person selbst erfasst hat. */
 function PersonalSummary({ id, burden }: { id: string; burden: number | undefined }) {
+  const captureEnabled = useSettingsStore((state) => state.extras.capture);
   const count = useLiveQuery(async () => {
     const since = new Date(Date.now() - SUMMARY_DAYS * 24 * 60 * 60 * 1000).toISOString();
     return db.symptomEntries
@@ -228,13 +230,15 @@ function PersonalSummary({ id, burden }: { id: string; burden: number | undefine
       <p className="text-body-sm text-on-surface-variant">
         Eine Zählung deiner eigenen Einträge, keine Bewertung.
       </p>
-      <Link
-        href="/erfassen"
-        className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-2xl bg-cta px-4 text-label-lg font-semibold text-on-cta shadow-lg transition-transform active:scale-[0.99]"
-      >
-        <Icon name="add_circle" className="text-[22px]" />
-        Veränderung jetzt erfassen
-      </Link>
+      {captureEnabled && (
+        <Link
+          href="/erfassen"
+          className="flex min-h-[56px] w-full items-center justify-center gap-2 rounded-2xl bg-cta px-4 text-label-lg font-semibold text-on-cta shadow-lg transition-transform active:scale-[0.99]"
+        >
+          <Icon name="add_circle" className="text-[22px]" />
+          Veränderung jetzt erfassen
+        </Link>
+      )}
     </section>
   );
 }

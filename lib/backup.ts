@@ -3,8 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 
 // Vollständige Sicherung aller lokalen Daten als JSON – für den Export in eine
-// Datei (Datenübertragbarkeit) und für die optionale Sicherung im eigenen
-// Google Drive. Beim Einlesen wird alles mit Zod geprüft.
+// Datei (Datenübertragbarkeit). Beim Einlesen wird alles mit Zod geprüft.
 
 const iso = z.string().min(1);
 const level = z.number().min(0).max(100);
