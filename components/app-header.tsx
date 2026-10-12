@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Icon } from "@/components/icon";
 import { Logo } from "@/components/logo";
@@ -14,6 +14,10 @@ interface AppHeaderProps {
 
 export function AppHeader({ title, back = false }: AppHeaderProps) {
   const router = useRouter();
+  // Von jedem Screen aus führt das Haus zurück zur Übersicht (Heute).
+  const pathname = usePathname();
+  // Nicht auf der Übersicht selbst und nicht in der Einführung.
+  const showHome = pathname !== "/" && !pathname.startsWith("/willkommen");
 
   return (
     <header className="pt-safe fixed inset-x-0 top-0 z-50 border-b border-outline-variant/30 bg-surface/90 backdrop-blur-xl">
@@ -45,13 +49,25 @@ export function AppHeader({ title, back = false }: AppHeaderProps) {
             </div>
           )}
         </div>
-        <Link
-          href="/mehr"
-          aria-label="Profil und Einstellungen"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-outline-variant/40 bg-surface-container-high text-primary transition-colors hover:bg-surface-bright"
-        >
-          <Icon name="person" className="text-[20px]" />
-        </Link>
+        <div className="flex shrink-0 items-center gap-2">
+          {showHome && (
+            <Link
+              href="/"
+              aria-label="Zur Übersicht"
+              className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-full border border-primary/40 bg-surface-container-high px-2 text-label-md min-[400px]:px-3 text-primary transition-colors hover:bg-surface-bright"
+            >
+              <Icon name="home" className="text-[20px]" />
+              <span className="hidden min-[400px]:inline">Übersicht</span>
+            </Link>
+          )}
+          <Link
+            href="/mehr"
+            aria-label="Profil und Einstellungen"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-outline-variant/40 bg-surface-container-high text-primary transition-colors hover:bg-surface-bright"
+          >
+            <Icon name="person" className="text-[20px]" />
+          </Link>
+        </div>
       </div>
     </header>
   );

@@ -46,6 +46,9 @@ export function AkkuCard({ now }: { now: Date }) {
 
   const [draft, setDraft] = useState<number | null>(null);
   const [customStatus, setCustomStatus] = useState<string | null>(null);
+  // Die Einstellknöpfe sind nur offen, solange man einschätzt. Mit „OK“ klappt
+  // die Karte zu und gibt den Blick auf die Tagesübersicht frei.
+  const [editing, setEditing] = useState(false);
   const pending = useRef<{ level: number; timer: number } | null>(null);
 
   async function save(level: number) {
@@ -83,7 +86,20 @@ export function AkkuCard({ now }: { now: Date }) {
     pending.current = { level, timer };
   }
 
+  /** Speichert eine noch ausstehende Änderung sofort und schließt die Eingabe. */
+  function confirm() {
+    if (pending.current) {
+      window.clearTimeout(pending.current.timer);
+      void save(pending.current.level);
+      pending.current = null;
+    }
+    setEditing(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   const level = draft ?? latest?.energyLevel ?? 50;
+  // Ohne bisherige Einschätzung ist die Eingabe von Anfang an offen.
+  const open = editing || latest === null;
   const hasEstimate = draft !== null || Boolean(latest);
   const zone = zoneOf(level);
   const styles = ZONE_STYLES[zone];
@@ -121,7 +137,9 @@ export function AkkuCard({ now }: { now: Date }) {
         </span>
       </div>
 
-      <div className="flex items-center gap-6 pt-1">
+      {/* Auf schmalen Handys steht die Skala unter der Zahl, damit ihre
+          Beschriftung Platz hat. */}
+      <div className="flex flex-col gap-3 pt-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:gap-6">
         <div className="flex flex-col">
           <div className="flex items-baseline gap-1">
             <span
@@ -143,7 +161,7 @@ export function AkkuCard({ now }: { now: Date }) {
           </span>
         </div>
 
-        <div className="flex flex-1 flex-col space-y-2">
+        <div className="flex w-full flex-1 flex-col space-y-2">
           <div className="flex h-6 w-full items-center gap-1.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest p-1">
             {[1, 2, 3, 4, 5].map((segment) => (
               <div
@@ -158,70 +176,95 @@ export function AkkuCard({ now }: { now: Date }) {
               />
             ))}
           </div>
-          <div className="flex justify-between px-1 text-label-sm text-on-surface-variant">
+          <div className="grid grid-cols-3 gap-2 px-1 text-label-sm leading-tight text-on-surface-variant">
             <span>Rückzug nötig</span>
-            <span>Achtsam</span>
-            <span>Volle Kraft</span>
+            <span className="text-center">Achtsam</span>
+            <span className="text-right">Volle Kraft</span>
           </div>
         </div>
       </div>
 
-      <div className="space-y-2 pt-1">
-        <div className="flex items-center justify-between gap-2">
-          <button
-            type="button"
-            aria-label="Akku um 5 Prozent senken"
-            onClick={() => change(level - 5)}
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-outline-variant/30 bg-surface-container-high text-primary transition-colors hover:bg-surface-bright active:bg-surface-bright"
-          >
-            <Icon name="remove" className="text-[26px]" />
-          </button>
-          <div className="flex flex-1 items-center justify-between gap-1 overflow-x-auto py-1">
-            {chips.map((chip) => (
+      {!open && (
+        <button
+          type="button"
+          onClick={() => setEditing(true)}
+          className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl border border-outline-variant/30 bg-surface-container-high text-label-lg text-primary transition-colors active:bg-surface-bright"
+        >
+          <Icon name="tune" className="text-[20px]" />
+          Akku neu einschätzen
+        </button>
+      )}
+
+      {open && (
+        <div className="space-y-2 pt-1">
+          {/* Schmale Handys: − und + nebeneinander, die Prozent-Chips in voller
+              Breite darunter. Sonst passen sechs Chips nicht in die Zeile. */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <button
+              type="button"
+              aria-label="Akku um 5 Prozent senken"
+              onClick={() => change(level - 5)}
+              className="flex h-14 flex-1 items-center justify-center rounded-xl border border-outline-variant/30 bg-surface-container-high text-primary transition-colors hover:bg-surface-bright active:bg-surface-bright min-[480px]:w-14 min-[480px]:flex-none"
+            >
+              <Icon name="remove" className="text-[26px]" />
+            </button>
+            <div className="order-last flex w-full min-w-0 items-center justify-between gap-1 py-1 min-[480px]:order-none min-[480px]:w-auto min-[480px]:flex-1">
+              {chips.map((chip) => (
+                <button
+                  key={chip}
+                  type="button"
+                  aria-pressed={chip === level}
+                  onClick={() => change(chip)}
+                  className={cn(
+                    "min-h-[48px] min-w-0 flex-1 rounded-lg px-0.5 py-2 text-center text-label-md tabular-nums transition-colors",
+                    chip === level
+                      ? "bg-primary-container font-bold text-on-primary shadow-md"
+                      : "border border-outline-variant/30 bg-surface-container-low text-on-surface active:bg-surface-bright",
+                  )}
+                >
+                  {chip}%
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-label="Akku um 5 Prozent erhöhen"
+              onClick={() => change(level + 5)}
+              className="flex h-14 flex-1 items-center justify-center rounded-xl border border-outline-variant/30 bg-surface-container-high text-primary transition-colors hover:bg-surface-bright active:bg-surface-bright min-[480px]:w-14 min-[480px]:flex-none"
+            >
+              <Icon name="add" className="text-[26px]" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-3 gap-1 pt-1">
+            {QUICK_STATES.map((state) => (
               <button
-                key={chip}
+                key={state.label}
                 type="button"
-                aria-pressed={chip === level}
-                onClick={() => change(chip)}
-                className={cn(
-                  "min-h-[48px] flex-1 rounded-lg px-3 py-2 text-center text-label-md transition-colors",
-                  chip === level
-                    ? "bg-primary-container font-bold text-on-primary shadow-md"
-                    : "border border-outline-variant/30 bg-surface-container-low text-on-surface active:bg-surface-bright",
-                )}
+                onClick={() => change(state.level, state.status)}
+                className="flex min-h-[50px] flex-col justify-center rounded-lg border border-outline-variant/30 bg-surface-container-low p-2 text-left transition-colors active:bg-surface-container-high"
               >
-                {chip}%
+                <span className="text-label-md font-semibold text-on-surface">
+                  {state.label}
+                </span>
+                <span className="text-label-sm text-on-surface-variant">
+                  {state.hint}
+                </span>
               </button>
             ))}
           </div>
+
           <button
             type="button"
-            aria-label="Akku um 5 Prozent erhöhen"
-            onClick={() => change(level + 5)}
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-outline-variant/30 bg-surface-container-high text-primary transition-colors hover:bg-surface-bright active:bg-surface-bright"
+            onClick={confirm}
+            disabled={!hasEstimate}
+            className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-label-lg font-semibold text-on-primary shadow-lg shadow-primary/10 transition-transform active:scale-[0.99] disabled:opacity-40"
           >
-            <Icon name="add" className="text-[26px]" />
+            <Icon name="check" className="text-[22px]" />
+            OK
           </button>
         </div>
-
-        <div className="grid grid-cols-3 gap-1 pt-1">
-          {QUICK_STATES.map((state) => (
-            <button
-              key={state.label}
-              type="button"
-              onClick={() => change(state.level, state.status)}
-              className="flex min-h-[50px] flex-col justify-center rounded-lg border border-outline-variant/30 bg-surface-container-low p-2 text-left transition-colors active:bg-surface-container-high"
-            >
-              <span className="text-label-md font-semibold text-on-surface">
-                {state.label}
-              </span>
-              <span className="text-label-sm text-on-surface-variant">
-                {state.hint}
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
+      )}
 
       <div className="flex items-center gap-2 rounded-lg border border-outline-variant/20 bg-surface-container-low p-4">
         <Icon name="favorite" className="text-[24px] text-primary" />
