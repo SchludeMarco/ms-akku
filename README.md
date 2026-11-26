@@ -34,3 +34,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Gäste (wie RetroMind)
+
+Die App ist privat für Freunde und Familie: Es gilt die gemeinsame Gästeliste aus dem
+RetroMind-Adminbereich (Marco, 2026-11-26). Ohne Gäste-Cookie leitet die Middleware
+(`guest-gate.js`) zur RetroMind-Tür (Google-Anmeldung) und zurück; API-Aufrufe ohne Cookie
+bekommen 401. Nötig ist die Umgebungsvariable `APPS_GUEST_SECRET` (gleicher Wert wie bei
+RetroMind); ohne sie und in Vorschau-Deployments bleibt die App offen. Abmelden: `/_gate/logout`.
