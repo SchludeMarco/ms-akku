@@ -87,12 +87,6 @@
     --on-fab: 0 55 49; /* #003731 */
     --nav-active: 87 241 219; /* #57F1DB */
 
-    /* Sonne der Begrüßung: im Dunkeln nur ein warmer Schein, nie grell */
-    --sun: 254 190 110;
-    --sun-core: 0.5;
-    --sun-halo: 0.16;
-    --sun-wash: 0.05;
-
     /* Lichtstimmung hinter dem Inhalt (Farbe und Deckkraft) */
     --ambient: 45 212 191;
     --ambient-alpha: 0.05;
@@ -181,49 +175,10 @@
     --on-fab: 255 255 255;
     --nav-active: 36 95 89; /* #245F59 */
 
-    --sun: 250 196 110;
-    --sun-core: 0.95;
-    --sun-halo: 0.42;
-    --sun-wash: 0.2;
-
     --ambient: 99 187 173;
     --ambient-alpha: 0.16;
 
     color-scheme: light;
-  }
-
-  /*
-   * Farben folgen der Stimmung (<html data-mood>, siehe lib/mood.ts). Es
-   * ändern sich nur der Seitengrund und die Lichtstimmung dahinter – Karten,
-   * Schrift und Akzente bleiben, damit die Lesbarkeit garantiert ist.
-   * sunny = warm, rest = kühl und gedämpft (beruhigend, nie alarmierend).
-   */
-  :root[data-mood="sunny"] {
-    --surface: 23 21 15; /* #17150F */
-    --ambient: 254 170 90;
-    --ambient-alpha: 0.12;
-  }
-
-  :root[data-mood="rest"] {
-    --surface: 11 18 30; /* #0B121E */
-    --ambient: 110 170 235;
-    --ambient-alpha: 0.1;
-    --sun-core: 0.3;
-    --sun-halo: 0.1;
-  }
-
-  :root[data-theme="pastel"][data-mood="sunny"] {
-    --surface: 244 238 223; /* #F4EEDF */
-    --ambient: 240 176 104;
-    --ambient-alpha: 0.3;
-  }
-
-  :root[data-theme="pastel"][data-mood="rest"] {
-    --surface: 228 236 244; /* #E4ECF4 */
-    --ambient: 143 180 227;
-    --ambient-alpha: 0.32;
-    --sun-core: 0.6;
-    --sun-halo: 0.25;
   }
 
   * {
@@ -238,8 +193,8 @@
     @apply flex min-h-full flex-col bg-surface font-sans text-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container;
     overscroll-behavior-y: none;
     -webkit-tap-highlight-color: transparent;
-    /* Stimmungswechsel gleiten langsam, nichts springt oder blinkt. */
-    transition: background-color 900ms ease;
+    /* Der Wechsel zwischen Hell und Dunkel gleitet, nichts springt. */
+    transition: background-color 600ms ease;
   }
 
   /* Weiche Lichtstimmung am oberen Rand, hinter allem Inhalt. */

@@ -5,7 +5,6 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "material-symbols/outlined.css";
 import "./globals.css";
 
-import { MoodSync } from "@/components/mood-sync";
 import { ServiceWorker } from "@/components/service-worker";
 import { TapFeedback } from "@/components/tap-feedback";
 import { THEME_INIT_SCRIPT, ThemeSync } from "@/components/theme-sync";
@@ -60,7 +59,6 @@ export default function RootLayout({
       <body>
         {children}
         <ThemeSync />
-        <MoodSync />
         <ServiceWorker />
         <TapFeedback />
       </body>

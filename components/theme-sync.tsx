@@ -5,21 +5,15 @@ import { useEffect } from "react";
 import { SETTINGS_KEY, useSettingsStore, type Theme } from "@/lib/stores/settings-store";
 import { nextSwitch } from "@/lib/theme";
 
-/**
- * Zuletzt gezeigte Stimmung. Nur damit die App beim Start gleich in der
- * richtigen Lichtstimmung erscheint; maßgeblich bleiben die Einträge.
- */
-export const MOOD_KEY = "ms-akku-mood";
-
 /** Farbe der Browser-Leiste je Erscheinungsbild (= jeweiliger Hintergrund). */
 const THEME_COLOR: Record<Theme, string> = { dark: "#0D1518", pastel: "#E9F0EC" };
 
 /**
- * Setzt Erscheinungsbild und letzte Stimmung schon vor dem ersten Zeichnen, damit die
+ * Setzt das Erscheinungsbild schon vor dem ersten Zeichnen, damit die
  * App beim Start nicht kurz im falschen Farbschema aufblitzt. Läuft als
  * Inline-Skript im <head>; die Einstellung liegt in localStorage.
  */
-export const THEME_INIT_SCRIPT = `try{var d=document.documentElement,s=(JSON.parse(localStorage.getItem(${JSON.stringify(SETTINGS_KEY)}))||{}).state||{},m=localStorage.getItem(${JSON.stringify(MOOD_KEY)}),o=s.themeOverride,l=s.lightHours||{},p=function(v,f){var x=/^(\\d{1,2}):(\\d{2})$/.exec(v||"");return x&&+x[1]<24&&+x[2]<60?+x[1]*60+ +x[2]:f},a=p(l.from,540),b=p(l.until,1020),n=new Date(),c=n.getHours()*60+n.getMinutes(),g=a===b?false:a<b?c>=a&&c<b:c>=a||c<b,t=s.themeMode==="dark"||s.themeMode==="pastel"?s.themeMode:o&&Date.now()<Date.parse(o.until)?o.theme:g?"pastel":"dark";if(t==="pastel")d.dataset.theme="pastel";if(s.moodColors!==false&&(m==="sunny"||m==="rest"))d.dataset.mood=m}catch(e){}`;
+export const THEME_INIT_SCRIPT = `try{var d=document.documentElement,s=(JSON.parse(localStorage.getItem(${JSON.stringify(SETTINGS_KEY)}))||{}).state||{},o=s.themeOverride,l=s.lightHours||{},p=function(v,f){var x=/^(\\d{1,2}):(\\d{2})$/.exec(v||"");return x&&+x[1]<24&&+x[2]<60?+x[1]*60+ +x[2]:f},a=p(l.from,540),b=p(l.until,1020),n=new Date(),c=n.getHours()*60+n.getMinutes(),g=a===b?false:a<b?c>=a&&c<b:c>=a||c<b,t=s.themeMode==="dark"||s.themeMode==="pastel"?s.themeMode:o&&Date.now()<Date.parse(o.until)?o.theme:g?"pastel":"dark";if(t==="pastel")d.dataset.theme="pastel"}catch(e){}`;
 
 /**
  * Hält <html data-theme> und die Farbe der Browser-Leiste aktuell und lässt

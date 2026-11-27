@@ -10,7 +10,7 @@
 //   gespeicherte Fassung.
 // - Dateien unter /_next/static/ tragen einen Hash im Namen und ändern sich
 //   nie: zuerst Speicher, sonst Netz.
-// - Alles andere (z. B. /api/feedback) geht unverändert ans Netz.
+// - Alles andere geht unverändert ans Netz.
 
 const CACHE = "ms-akku-app-v1";
 
@@ -21,16 +21,12 @@ const PAGES = [
   "/muster",
   "/mehr",
   "/erfassen",
-  "/akku",
   "/symptome",
   "/symptome/detail",
   "/daten",
-  "/feedback",
   "/datenschutz",
   "/impressum",
   "/willkommen",
-  "/willkommen/nutzung",
-  "/willkommen/symptome",
 ];
 
 const EXTRAS = ["/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png"];

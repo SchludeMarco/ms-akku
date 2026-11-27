@@ -70,7 +70,7 @@ export interface Moment {
   id: string;
   timestamp: string;
   kind: "feeling" | "good_day";
-  value?: string; // bei "feeling": Schlüssel aus lib/feelings.ts
+  value?: string; // bei "feeling": Schlüssel des früheren Befindens (wird nicht mehr erfasst)
 }
 
 // ---------------------------------------------------------------------------

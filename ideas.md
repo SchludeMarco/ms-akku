@@ -199,3 +199,18 @@ Katalog mit Erklärungen und Hilfen. Vier Bausteine:
   Fassung prüfen und `CATALOG_REVIEWED` anpassen.
 - Google-Sicherung einrichten: `NEXT_PUBLIC_GOOGLE_CLIENT_ID` setzen. Bis
   dahin ist der Abschnitt unsichtbar.
+
+## 12.10.2026 – Vereinfachung auf den Kern
+
+Fazit nach mehreren Durchgängen: Die App war für ihren Zweck zu komplex.
+Entscheidung: Variante A, nur den Akku festhalten (siehe
+`docs/vereinfachung-vorschlag.md`).
+
+- „Heute“ zeigt nur noch Akku-Zahl, Regler, Speichern und die Einträge von
+  heute. Unten zwei Ziele (Heute, Verlauf), „Mehr“ oben rechts.
+- Symptombibliothek, Symptome erfassen und Muster sind ausgeblendet und unter
+  „Mehr → Erweitert“ einschaltbar.
+- Entfallen: Tagesplan, Befinden, Stimmungsfarben, sonnige Begrüßung,
+  Nutzungspräferenz, Beispieldaten, Google-Drive-Sicherung, Feedback.
+- Die Idee „Google-Cloud-Speicher“ und die Feedback-Funktion weiter oben sind
+  damit zurückgestellt, nicht mehr eingebaut.
