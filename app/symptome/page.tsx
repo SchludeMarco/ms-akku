@@ -50,6 +50,14 @@ export default function SymptomkatalogPage() {
   const custom = (stored ?? []).filter((symptom) => symptom.isCustom);
   const searching = query.trim().length > 0;
   const hits = searching ? searchSymptoms(query) : [];
+  // Bei längeren Beschreibungen: alle erkannten Wörter über alle Treffer hinweg.
+  const recognised = [
+    ...new Set(
+      hits
+        .filter((hit) => hit.reason?.label === "Erkannt")
+        .flatMap((hit) => hit.reason!.text.split(", ")),
+    ),
+  ];
   const customMatches = custom.filter((symptom) =>
     symptom.name.toLowerCase().includes(query.trim().toLowerCase()),
   );
@@ -167,7 +175,7 @@ export default function SymptomkatalogPage() {
         )}
         {reason && (
           <p className="text-label-md text-primary">
-            Passt zu: {reason.text}
+            {reason.label}: {reason.text}
           </p>
         )}
         <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -212,22 +220,34 @@ export default function SymptomkatalogPage() {
         <div className="flex w-full flex-col gap-space-md px-margin pb-space-xl pt-space-md">
           <p className="text-body-md text-on-surface-variant">
 Tippe auf ein Symptom, um es aufzuklappen. Hake ab, was du beobachten möchtest.
-            Die Suche versteht auch Alltagsworte und Tippfehler.
+            Die Suche versteht Stichworte, ganze Sätze und Tippfehler.
           </p>
 
           <label className="relative block">
             <span className="sr-only">Symptome durchsuchen</span>
             <Icon
               name="search"
-              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[22px] text-outline"
+              className="pointer-events-none absolute left-3 top-[14px] text-[22px] text-outline"
             />
-            <input
-              type="search"
+            {/* Mehrzeilig: Platz für ein Stichwort oder eine ganze Beschreibung. */}
+            <textarea
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Beschreib es in deinen Worten"
-              className="min-h-[52px] w-full rounded-xl border border-outline-variant/40 bg-surface-container pl-11 pr-3 text-body-md text-on-surface placeholder:text-outline focus:border-primary focus:outline-none"
+              rows={Math.min(6, Math.max(2, Math.ceil(query.length / 30) + query.split("\n").length - 1))}
+              maxLength={600}
+              placeholder="Stichwort oder ganze Beschreibung, z. B. „Mir kribbelt es in den Beinen und ich bin schnell müde“"
+              className="block w-full resize-none rounded-xl border border-outline-variant/40 bg-surface-container py-3 pl-11 pr-12 text-body-md text-on-surface placeholder:text-outline focus:border-primary focus:outline-none"
             />
+            {query && (
+              <button
+                type="button"
+                aria-label="Eingabe löschen"
+                onClick={() => setQuery("")}
+                className="absolute right-0 top-0 flex h-12 w-12 items-center justify-center rounded-xl text-on-surface-variant"
+              >
+                <Icon name="close" className="text-[22px]" />
+              </button>
+            )}
           </label>
 
           <div className="flex items-center gap-1.5 text-on-surface-variant" aria-live="polite">
@@ -261,6 +281,13 @@ Tippe auf ein Symptom, um es aufzuklappen. Hake ab, was du beobachten möchtest.
                 <Icon name="search" className="text-[16px]" />
                 {hits.length === 1 ? "1 Treffer" : `${hits.length} Treffer`}, beste zuerst
               </h2>
+              {recognised.length > 0 && (
+                <p className="rounded-xl bg-surface-container-low p-3 text-body-sm text-on-surface-variant">
+                  <strong className="text-on-surface">Aus deiner Beschreibung erkannt:</strong>{" "}
+                  {recognised.join(", ")}. Die Suche vergleicht Wörter, sie deutet nichts
+                  und stellt keine Diagnose.
+                </p>
+              )}
               <ul className="space-y-space-sm">
                 {hits.map((hit) => renderRow(hit.symptom, hit.reason))}
               </ul>
